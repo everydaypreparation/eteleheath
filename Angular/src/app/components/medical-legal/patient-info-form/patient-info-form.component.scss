@@ -1,0 +1,231 @@
+@import '../../../../variables.scss';
+
+.inner-content-wrapper {
+    background-color: $light-gray;
+    border-radius: 15px;   
+    min-height: 85vh;
+
+    @media screen and  (min-width: 2000px) {
+        min-height:91vh;
+    }  
+
+    .payment-details {
+        min-height: 90vh;
+
+        @media screen and  (min-width: 2000px) {
+            min-height: 85vh;
+        }    
+
+        h5 {
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+        @media screen and (max-width: 1600px) and (min-width: 1200px) {
+
+            .mat-tab-body-content {
+                height: auto;
+            }
+        }
+
+        h3 {
+            font-weight: 500;
+            font-size: 23px;
+            letter-spacing: 0.92px;
+            color: $dark-gray;
+
+            @media screen and (max-width: 575px){
+                text-align: center;
+                font-size: 20px;
+            }
+        }
+        .sec-1 {
+            background-color: $white;
+            border-radius: 5px;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);        
+            
+            .next-btn {
+                border-radius: 31px;
+                background-color: $primary-color;
+                border-color:$primary-color;
+                font-family: $font-roboto;
+                color: $white;
+                border: 0px;               
+                padding: 0px 15px 0px 25px;
+                font-size: 16px;
+                letter-spacing: 0.85px;
+
+                @media screen and (max-width: 575px){
+                   width: 100%;
+                }
+            
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+            .consent-form-tab {
+                p {
+                    font-size: 13px;
+                    font-weight: normal;
+                    color: $dark-gray-light;
+                }
+            }
+            .signature-bottom {
+                width: 200px;
+                border-bottom: 2px solid $light-gray;
+                margin-top: 70px;
+            }
+            .signature-date {
+                width: 200px;
+                border-bottom: 2px solid $light-gray;
+                margin-top: 60px;
+            }
+            .clear-btn {
+                background-color: transparent;
+                border: 1px solid $primary-color;
+                color: $primary-color;
+                width: 100px;
+                border-radius: 30px;
+                margin-top: 25px;
+
+                &:hover {
+                    background-color: $primary-color;
+                    color: $white;
+                }
+            }
+            .prev-btn {
+                background-color: transparent;
+                border: 1px solid $primary-color;
+                color: $primary-color;
+                width: 120px;
+                border-radius: 30px;
+                letter-spacing: 0.85px;
+
+                @media screen and (max-width: 576px) {
+                    width: 100%;
+                }
+
+                &:hover {
+                    background-color: $primary-color;
+                    color: $white;
+                }
+            }
+            .submit-btn {
+                border-radius: 31px;
+                background-color: $primary-color;
+                border-color:$primary-color;
+                font-family: $font-roboto;
+                color: $white;
+                border: 0px;
+                width: 120px;
+                margin-left: 10px;
+                letter-spacing: 0.85px;
+            }    
+        }
+    }    
+}    
+.tabset {
+    input[type="radio"] {
+        position: absolute;
+        left: -200vw;
+    }
+    label {
+        margin: 0px 25px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 500;
+        color: $gray;
+
+        @media screen and (max-width: 575px) {
+            font-size: 13px;
+            margin: 0px 9px;
+        }
+    }
+  } 
+  
+  .tabset .tab-panel {
+    display: none;
+  }
+  .tab-panel {
+      .add-icon {
+          background-color: $white;
+          color: $primary-color;
+          font-size: 18px;
+          box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+          border-radius: 50%;
+          cursor: pointer;
+          padding: 5px;
+      }
+  }
+  
+  .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+  .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+  .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+  .tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+  .tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+  .tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+    display: block;
+  }
+#reports, #radiation, #others {
+    .doc-sec {
+        box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+    }
+    p {
+        font-size: 14px;
+    }
+    .doc-file {
+        box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+
+        img {
+            width: 140px;
+        }
+    }
+
+    .doc-file {
+        img {
+            width: 138px;
+            height: 179px;
+        }
+    }
+}
+.close {
+    position: absolute;
+    top: -7px;
+    right: 5px;
+    background: #dadada;
+    border-radius: 50%;
+    font-size: 14px !important;
+    width: 30px;
+    height: 30px;
+    font-weight: 500;
+    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+}
+.image-upload > input {
+    visibility:hidden;
+    width:0;
+    height:0
+  }
+
+.tabActive {
+    color: $dark-gray !important;
+}
+
+
+mat-icon {
+    position: relative;
+    float: right;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.54);
+}
+.disclaimer-text {
+    border: solid 1px #f1f4f8;
+    font-size: 14px !important;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%);
+    background: #fff;
+    padding: 15px;
+    text-align: justify;
+}
+
+.colorRed{
+    color: red;
+}

@@ -1,0 +1,27 @@
+<div mat-dialog-actions>
+  <div class="form-group w-100">
+    <div class="row w-100 mx-0">
+      <div class="col-12">
+        <!-- <h4 class="mb-3">View Details</h4> -->
+        <p class="mb-3">{{message}} </p>
+        <span *ngIf="!message">
+          <h4 class="mb-3">Consultant Details</h4>
+          <p>First Name: {{requestedDoctorDetails?.doctorFirstName}}</p>
+          <p> Last Name: {{requestedDoctorDetails?.doctorLastName}}</p>
+          <p> Email Address: {{requestedDoctorDetails?.doctorEmailAddress}}</p>
+          <p>Phone Number: {{requestedDoctorDetails?.phoneNumber}}</p>
+          <p>Hospital: {{requestedDoctorDetails?.hospital}}</p>
+
+          <h5 class="mb-3">User Details</h5>
+          <p>First Name: {{requestedDoctorDetails?.firstName}}</p>
+          <p>LastName: {{requestedDoctorDetails?.lastName}}</p>
+          <p>Email Address: {{requestedDoctorDetails?.emailAddress}}</p>
+        </span>
+      </div>
+    </div>
+    <div class="col-12 mt-5 d-flex align-items-center justify-content-end mb-4">
+      <button mat-button class="btn btn-primary submit-button mr-2" appDebounceClick [debounceTime]="400"
+        (debounceClick)="onDismiss()">Cancel</button>
+    </div>
+  </div>
+</div>

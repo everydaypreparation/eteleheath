@@ -1,0 +1,108 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper mt-0 pb-4 pr-4 pb-4 pl-4" id="all-doctor">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="row ">
+            <div class="col-12 d-block d-lg-flex align-items-center justify-content-end flex-sm-wrap">
+                <mat-form-field appearance="fill" class="dropdown-field mt-3 mb-3 mb-lg-0 mt-lg-0">
+                    <mat-label class="label-field">Specialty</mat-label>
+                    <mat-select [(ngModel)]="searchForm.specialtyName" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let specialty of specialties" [value]="specialty.specialtyName">
+                            {{specialty.specialtyName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="fields-mat mt-0 mx-0 mx-lg-2">
+                    <input matInput [(ngModel)]="searchForm.hospitalName" [ngModelOptions]="{standalone: true}"/>
+                    <mat-placeholder class="placeholder">Hospital Name</mat-placeholder>
+                </mat-form-field>
+                <mat-form-field class="fields-mat mr-lg-2 mt-3 mt-lg-0">
+                    <input matInput [(ngModel)]="searchForm.consultantName" [ngModelOptions]="{standalone: true}"/>
+                    <mat-placeholder class="placeholder">Consultant Name</mat-placeholder>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="mt-3 mt-lg-1 mr-md-2 date-picker-field">
+                    <mat-label>Next Availability</mat-label>
+                    <div class="d-flex align-items-center DOB-field">
+                        <input matInput #nextAvailability [matDatepicker]="picker" [(ngModel)]="searchForm.nextAvailability"
+                        [ngModelOptions]="{standalone: true}" (focus)="picker.open()" [min]="minDate">
+                        <mat-icon matDatepickerToggleIcon *ngIf="searchForm.nextAvailability && searchForm.nextAvailability!='Invalid Date'"
+                            appDebounceClick [debounceTime]="400" (debounceClick)="clearNextAvailability($event)">
+                            <span class="flaticon-cancel"></span>
+                        </mat-icon>
+                    </div>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker (closed)="nextAvailability.blur()"></mat-datepicker>
+                </mat-form-field>
+                <button type="submit" class="btn btn-primary submit-button mb-2 mb-md-0 mt-3 mt-xl-0 d-flex align-items-center"
+                    appDebounceClick [debounceTime]="400" (debounceClick)="searchConsultantClk()">
+                    <span class="material-icons pr-1">
+                        search
+                    </span>
+                    Refine your Search
+                </button>
+            </div>
+        </div>
+        <div class="doctor-row-wrapper">
+            <div class="row my-4">
+                <ng-template [ngIf]="consultants && consultants.length > 0" [ngIfElse]="noResults">
+                    <div *ngFor="let consultant of consultants" class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-4 doctor-card w-100">
+                        <div class="sec-3 p-3">
+                            <div class="py-2 row d-block text-center text-md-left d-md-flex align-items-center justify-content-center">
+                                <span class="doc-img-list d-flex align-items-center justify-content-center col-5">
+                                    <img [src]="consultant?.profileUrl ? consultant?.profileUrl : 'assets/images/user-default.svg'" class="img-fluid" />
+                                </span>
+                                <span class="col-7">
+                                    <h2 class="mb-1 mt-3 mt-md-0"> {{consultant?.title}} {{consultant?.consultantName}} </h2>
+                                    <p class="mb-1"> {{consultant?.specialtyName}} </p>
+                                    <p class="mb-1"> {{consultant?.hospitalName}} </p>
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center my-2">
+                                <h2 class="mb-1"> Available Time</h2>
+                                <p class="mb-1 ml-4"> {{consultant?.availabilitySlot?.availabilityDate | date: 'dd MMM, yyyy'}} </p>
+                            </div>
+                            <div class="row time-slot-wrapper">
+                                <div class="col-12 col-lg-9 pr-md-0">
+                                    <span *ngFor="let timeslot of consultant?.availabilitySlot?.timeslots; let i=index">
+                                        <p *ngIf="i>=0 && i<4">
+                                            {{formatDateTimeToUTC(timeslot?.slotStartTime) | date: 'h:mm a': userTimezone?.offset}}
+                                            to
+                                            {{formatDateTimeToUTC(timeslot?.slotEndTime) | date: 'h:mm a': userTimezone?.offset}}
+                                            {{userTimezone?.abbr}}
+                                        </p>
+                                    </span>
+                                    <span *ngIf="consultant?.availabilitySlot?.timeslots?.length>3" appDebounceClick [debounceTime]="400" (debounceClick)="viewDoctorDetail(consultant.consultantId)" class="cp d-flex more-appoint">
+                                        <u>More Appointments</u>
+                                    </span>
+                                </div>
+                                <div class="col-12 col-lg-4 d-flex align-items-end justify-content-end pl-lg-0 view-btn">
+                                    <button appDebounceClick [debounceTime]="400" (debounceClick)="viewDoctorDetail(consultant.consultantId)"
+                                        class="view-profile-btn col-12 col-xl-9 mt-2 mt-md-0 d-flex align-items-center justify-content-center">
+                                        <!-- <span class="material-icons mr-1">
+                                            visibility
+                                        </span> -->
+                                        View Profile
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #noResults>
+                    <div class="text-center col-12 mb-5">
+                        {{errMessage}}
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <span class="bottom-text py-2 py-sm-2 px-3 d-block d-sm-inline"> If you are looking for a specific
+                    doctor, ETeleHealth can request that doctor to
+                    <a href="javascript:void(0)" class="text-white" appDebounceClick [debounceTime]="400" (debounceClick)="requestDoc()">JOIN</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

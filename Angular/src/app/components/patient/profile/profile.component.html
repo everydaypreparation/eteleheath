@@ -1,0 +1,283 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper mt-0 pb-4 pr-4 pb-4 pl-4">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="outer-profile">
+            <div class="row content-row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="profile-detail-wrapper rounded row mx-0 py-3">
+                        <div class="col-12 col-sm-4 col-lg-2 text-center profile-img-sec">
+                            <h2> Profile </h2>
+                            <div class="profile-upload">
+                                <img [src]="profileUrl ? profileUrl : 'assets/images/user-default.svg'" />
+                                <label class="hoverable" for="fileInput">
+                                    <span class="mr-1 material-icons ico-upload">
+                                        upload
+                                    </span>
+                                    <div class="hover-text">Choose file</div>
+                                    <div class="background"></div>
+                                </label>
+                                <input id="fileInput" type='file' (change)="onSelectProfileFile($event)" accept="image/*">
+                                <span>ID - {{patientId}}</span>
+                            </div>
+                            
+                        </div>
+                        <div class="col-lg-10 col-sm-8 col-12">
+                            <div class="col-12 col-lg-12 col-xl-12 px-0 pt-0 pt-sm-4">
+                                <div class="row mx-0">
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.Name"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keypress)="validatorPress($event, 'firstName')"
+                                                (input)="validatorPress($event, 'firstName')" maxlength="40" />
+                                            <mat-placeholder class="placeholder">First Name*</mat-placeholder>
+                                        </mat-form-field>
+                                        <div *ngIf="eR && eR.key == 'firstName'" class="err-msg-cls">
+                                            {{eR.message}}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.Surname"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keypress)="validatorPress($event, 'lastName')"
+                                                (input)="validatorPress($event, 'lastName')" maxlength="40" />
+                                            <mat-placeholder class="placeholder">Last Name*</mat-placeholder>
+                                        </mat-form-field>
+                                        <div *ngIf="eR && eR.key == 'lastName'" class="err-msg-cls">
+                                            {{eR.message}}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.EmailAddress"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keypress)="validatorPress($event, 'email')"
+                                                (input)="validatorPress($event, 'email')" maxlength="50" />
+                                            <mat-placeholder class="placeholder"> Email*</mat-placeholder>
+                                        </mat-form-field>
+                                        <div *ngIf="eR && eR.key == 'email'" class="err-msg-cls">
+                                            {{eR.message}}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field appearance="fill" class="date-picker-field">
+                                            <mat-label>Date of Birth</mat-label>
+                                            <div class="d-flex align-items-center DOB-field">
+                                                <input matInput #dob [matDatepicker]="picker" [max]="maxDate"
+                                                    [(ngModel)]="regForm.DateOfBirth" [ngModelOptions]="{standalone: true}"
+                                                    (focus)="picker.open()" class="mat-datepicker-input" />
+                                                <mat-icon matDatepickerToggleIcon appDebounceClick [debounceTime]="400" (debounceClick)="clearDOBDate()">
+                                                    <span class="flaticon-cancel"></span>
+                                                </mat-icon>
+                                            </div>
+                                            <mat-datepicker-toggle matSuffix [for]="picker">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #picker (closed)="dob.blur()"></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row mx-0">
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field appearance="fill" class="dropdown-field">
+                                            <mat-label class="label-field">Gender</mat-label>
+                                            <mat-select [(ngModel)]="regForm.Gender">
+                                                <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                                    {{gender.viewValue}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.PostalCode"
+                                                [ngModelOptions]="{standalone: true}" maxlength="20"/>
+                                            <mat-placeholder class="placeholder">Postal Code/Zip Code</mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput [(ngModel)]="regForm.Address" type="search"
+                                                [ngModelOptions]="{standalone: true}" maxlength="80" id="autocomplete" #addressElement />
+                                            <mat-placeholder class="placeholder"> Address</mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.Country"
+                                                [ngModelOptions]="{standalone: true}" maxlength="80"/>
+                                            <mat-placeholder class="placeholder"> Country</mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row mx-0 mb-sm-3">
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.State"
+                                                [ngModelOptions]="{standalone: true}" maxlength="80"/>
+                                            <mat-placeholder class="placeholder"> State/Province </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.City"
+                                                [ngModelOptions]="{standalone: true}" maxlength="80"/>
+                                            <mat-placeholder class="placeholder"> City </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.PhoneNumber"
+                                                [ngModelOptions]="{standalone: true}" mask="(000) 000-0000"
+                                                [specialCharacters]="['(', ' ', '-', ')']" inputDigitsOnly />
+                                            <mat-placeholder class="placeholder"> Telephone </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-3 mb-sm-3 timezone-dropdown mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <mat-label>Select timezone</mat-label>
+                                            <mat-select [(ngModel)]="regForm.Timezone"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <input (input)="searchTimezone($event.target.value)" placeholder="Search"
+                                                    class="search-input-time">
+                                                <mat-option *ngFor="let timezone of filteredTimezones"
+                                                    [value]="timezone?.timeZoneId">{{timezone?.abbr}}
+                                                    {{timezone?.utcOffset.substring(0, timezone?.utcOffset.indexOf(')')+1)}}
+                                                    {{timezone?.timeZoneId}}</mat-option>
+                                                <mat-option *ngIf="filteredTimezones.length==0" disabled>No matches found</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <div *ngIf="eR && eR.key == 'timezone'" class="err-msg-cls">
+                                            {{eR.message}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-0 mx-sm-4 w-100 mt-3">
+                            <div class="col-12">
+                                <h6 class="mb-3">
+                                    Family Doctor Details
+                                </h6>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                            <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="regForm.DoctorFirstName"
+                                                    [ngModelOptions]="{standalone: true}" (keypress)="validatorPress($event, 'doctorFirstName')"
+                                                    (input)="familyDoctorNameInput($event.target.value, 'doctorFirstName')" maxlength="40"
+                                                    [matAutocomplete]="autoCompleteFirstName" (focusout)="checkfamilyDoctorDetails()"/>
+                                                    <mat-placeholder class="placeholder">First Name of Family Doctor</mat-placeholder>
+                                                    <mat-autocomplete #autoCompleteFirstName="matAutocomplete" (optionSelected)="familyDoctorSelected($event.option.value)"
+                                                        [displayWith]="displayDoctorFirstName">
+                                                        <mat-option *ngFor="let familyDoctor of familyDoctorList" [value]="familyDoctor">
+                                                            {{familyDoctor.doctorFirstName}} {{familyDoctor.doctorLastName}}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                            <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="regForm.DoctorLastName"
+                                                    [ngModelOptions]="{standalone: true}" (keypress)="validatorPress($event, 'doctorLastName')"
+                                                    (input)="familyDoctorNameInput($event.target.value, 'doctorLastName')" maxlength="40"
+                                                    [matAutocomplete]="autoCompleteLastName" (focusout)="checkfamilyDoctorDetails()"/>
+                                                    <mat-placeholder class="placeholder">Last Name of Family Doctor</mat-placeholder>
+                                                    <mat-autocomplete #autoCompleteLastName="matAutocomplete" (optionSelected)="familyDoctorSelected($event.option.value)"
+                                                        [displayWith]="displayDoctorLastName">
+                                                        <mat-option *ngFor="let familyDoctor of familyDoctorList" [value]="familyDoctor">
+                                                            {{familyDoctor.doctorFirstName}} {{familyDoctor.doctorLastName}}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                                <input matInput type="text" [(ngModel)]="regForm.DoctorEmailID"
+                                                [ngModelOptions]="{standalone: true}" (keypress)="validatorPress($event, 'doctorEmailID')"
+                                                (input)="validatorPress($event, 'doctorEmailID')" maxlength="50" />
+                                                <mat-placeholder class="placeholder">Doctor Email</mat-placeholder>
+                                            </mat-form-field>
+                                            <div *ngIf="eR && eR.key == 'doctorEmailID'" class="err-msg-cls">
+                                                {{eR.message}}
+                                            </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="search" [(ngModel)]="regForm.DoctorAddress"
+                                                (focus)="getDoctorPlaceAutocomplete()"
+                                                [ngModelOptions]="{standalone: true}" id="autocompleteDoctor"
+                                                #doctorAddressElement />
+                                            <mat-placeholder class="placeholder">Doctor Address </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.DoctorCountry"
+                                                [ngModelOptions]="{standalone: true}" maxlength="80"/>
+                                            <mat-placeholder class="placeholder"> Doctor Country </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.DoctorState"
+                                                [ngModelOptions]="{standalone: true}" maxlength="80"/>
+                                            <mat-placeholder class="placeholder"> Doctor State/Province </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.DoctorCity"
+                                                [ngModelOptions]="{standalone: true}" maxlength="80"/>
+                                            <mat-placeholder class="placeholder"> Doctor City </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.DoctorPostalCodes"
+                                                [ngModelOptions]="{standalone: true}" maxlength="80"/>
+                                            <mat-placeholder class="placeholder"> Doctor Postal Code/Zip Code </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" [(ngModel)]="regForm.DoctorTelePhone"
+                                                [ngModelOptions]="{standalone: true}" mask="(000) 000-0000"
+                                                [specialCharacters]="['(', ' ', '-', ')']" inputDigitsOnly />
+                                            <mat-placeholder class="placeholder"> Doctor TelePhone </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-6 col-xl-4 mb-sm-3 mb-4">
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text"
+                                                [(ngModel)]="regForm.ConsentMedicalInformationWithCancerCareProvider"
+                                                [ngModelOptions]="{standalone: true}" maxlength="200"/>
+                                            <mat-placeholder class="placeholder"> Consent Medical Information With Cancer
+                                                Care Provider
+                                            </mat-placeholder>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex align-items-center justify-content-end mt-0 mt-sm-4">
+                                <button class="prev-btn d-flex justify-content-center align-items-center mr-4"
+                                    appDebounceClick [debounceTime]="400" (debounceClick)="cancelClick()">
+                                    Cancel
+                                </button>
+                                <button class="next-btn d-flex justify-content-center align-items-center"
+                                    appDebounceClick [debounceTime]="400" (debounceClick)="submitFormClick()">
+                                    Ok
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

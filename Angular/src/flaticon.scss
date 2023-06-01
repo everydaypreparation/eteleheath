@@ -1,0 +1,132 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 31/12/2020 11:07
+    */
+
+    @font-face {
+      font-family: "Flaticon";
+      src: url("./assets/fonts/flaticon.eot");
+      src: url("./assets/fonts/flaticon.eot?#iefix") format("embedded-opentype"),
+           url("./assets/fonts/flaticon.woff2") format("woff2"),
+           url("./assets/fonts/flaticon.woff") format("woff"),
+           url("./assets/fonts/flaticon.ttf") format("truetype"),
+           url("./assets/fonts/flaticon.svg#flaticon") format("svg");
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+      @font-face {
+        font-family: "Flaticon";
+        src: url("./assets/fonts/flaticon.svg#flaticon") format("svg");
+      }
+    }
+    
+    .fi:before{
+      display: inline-block;
+    font-family: "Flaticon";
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-decoration: inherit;
+    text-rendering: optimizeLegibility;
+    text-transform: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    }
+    
+    .flaticon-web-page-with-right-column { font-family: "Flaticon"; }
+    .flaticon-enable{ font-family: "Flaticon"; }
+    .flaticon-calendar{ font-family: "Flaticon"; }
+    .flaticon-loupe{ font-family: "Flaticon"; }
+    .flaticon-edit{ font-family: "Flaticon"; }
+    .flaticon-printer{ font-family: "Flaticon"; }
+    .flaticon-home{ font-family: "Flaticon"; }
+    .flaticon-envelope{ font-family: "Flaticon"; }
+    .flaticon-delete{ font-family: "Flaticon"; }
+    .flaticon-upload{ font-family: "Flaticon"; }
+    .flaticon-previous{ font-family: "Flaticon"; }
+    .flaticon-ring{ font-family: "Flaticon"; }
+    .flaticon-pdf{ font-family: "Flaticon"; }
+    .flaticon-future{ font-family: "Flaticon"; }
+    .flaticon-cancel{ font-family: "Flaticon"; }
+    .flaticon-add-user{ font-family: "Flaticon"; }
+    .flaticon-box{ font-family: "Flaticon"; }
+    .flaticon-forbidden-sign{ font-family: "Flaticon"; }
+    .flaticon-plus{ font-family: "Flaticon"; }
+    .flaticon-patient{ font-family: "Flaticon"; }
+    .flaticon-doctor{ font-family: "Flaticon"; }
+    .flaticon-animal{ font-family: "Flaticon"; }
+    .flaticon-pharmacy{ font-family: "Flaticon"; }
+    .flaticon-computer{ font-family: "Flaticon"; }
+    .flaticon-diagnostic{ font-family: "Flaticon"; }
+    .flaticon-user{ font-family: "Flaticon"; }
+    .flaticon-healthcare{ font-family: "Flaticon"; }
+    .flaticon-cloud-service{ font-family: "Flaticon"; }
+    .flaticon-web-page{ font-family: "Flaticon"; }
+    .flaticon-video-camera{ font-family: "Flaticon"; }
+    
+    .flaticon-web-page-with-right-column:before { content: "\f100"; }
+    .flaticon-enable:before { content: "\f101"; }
+    .flaticon-calendar:before { content: "\f102"; }
+    .flaticon-loupe:before { content: "\f103"; }
+    .flaticon-edit:before { content: "\f104"; }
+    .flaticon-printer:before { content: "\f105"; }
+    .flaticon-home:before { content: "\f106"; }
+    .flaticon-envelope:before { content: "\f107"; }
+    .flaticon-delete:before { content: "\f108"; }
+    .flaticon-upload:before { content: "\f109"; }
+    .flaticon-previous:before { content: "\f10a"; }
+    .flaticon-ring:before { content: "\f10b"; }
+    .flaticon-pdf:before { content: "\f10c"; }
+    .flaticon-future:before { content: "\f10d"; }
+    .flaticon-cancel:before { content: "\f10e"; }
+    .flaticon-add-user:before { content: "\f10f"; }
+    .flaticon-box:before { content: "\f110"; }
+    .flaticon-forbidden-sign:before { content: "\f111"; }
+    .flaticon-plus:before { content: "\f112"; }
+    .flaticon-patient:before { content: "\f113"; }
+    .flaticon-doctor:before { content: "\f114"; }
+    .flaticon-animal:before { content: "\f115"; }
+    .flaticon-pharmacy:before { content: "\f116"; }
+    .flaticon-computer:before { content: "\f117"; }
+    .flaticon-diagnostic:before { content: "\f118"; }
+    .flaticon-user:before { content: "\f119"; }
+    .flaticon-healthcare:before { content: "\f11a"; }
+    .flaticon-cloud-service:before { content: "\f11b"; }
+    .flaticon-web-page:before { content: "\f11c"; }
+    .flaticon-video-camera:before { content: "\f11d"; }
+    
+    $font-Flaticon-web-page-with-right-column: "\f100";
+    $font-Flaticon-enable: "\f101";
+    $font-Flaticon-calendar: "\f102";
+    $font-Flaticon-loupe: "\f103";
+    $font-Flaticon-edit: "\f104";
+    $font-Flaticon-printer: "\f105";
+    $font-Flaticon-home: "\f106";
+    $font-Flaticon-envelope: "\f107";
+    $font-Flaticon-delete: "\f108";
+    $font-Flaticon-upload: "\f109";
+    $font-Flaticon-previous: "\f10a";
+    $font-Flaticon-ring: "\f10b";
+    $font-Flaticon-pdf: "\f10c";
+    $font-Flaticon-future: "\f10d";
+    $font-Flaticon-cancel: "\f10e";
+    $font-Flaticon-add-user: "\f10f";
+    $font-Flaticon-box: "\f110";
+    $font-Flaticon-forbidden-sign: "\f111";
+    $font-Flaticon-plus: "\f112";
+    $font-Flaticon-patient: "\f113";
+    $font-Flaticon-doctor: "\f114";
+    $font-Flaticon-animal: "\f115";
+    $font-Flaticon-pharmacy: "\f116";
+    $font-Flaticon-computer: "\f117";
+    $font-Flaticon-diagnostic: "\f118";
+    $font-Flaticon-user: "\f119";
+    $font-Flaticon-healthcare: "\f11a";
+    $font-Flaticon-cloud-service: "\f11b";
+    $font-Flaticon-web-page: "\f11c";
+    $font-Flaticon-video-camera: "\f11d";
+    

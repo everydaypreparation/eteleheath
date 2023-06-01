@@ -1,0 +1,58 @@
+<div mat-dialog-actions>
+    <div>
+        {{slotNotAvailableMessage}}
+    </div>
+    <div *ngIf="availabilitySlots.length > 0; else recordNotFound" class="col-12 reschedule-scroll">
+        <ul class="pl-0">
+            <li class="row align-items-center justify-content-center py-3 row-fields-seprator"
+                *ngFor="let availabilitySlot of availabilitySlots;">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <div class="row mx-0 w-100">
+                        <div class="col-3">
+                            <h6>
+                                Date
+                            </h6>
+                            <p>
+                                {{formatDateTimeToUTC(availabilitySlot?.slotStartTime) | date: 'dd MMM, yyyy' :
+                                userTimezone?.offset}}
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <h6>
+                                Time
+                            </h6>
+                            <p>
+                                {{formatDateTimeToUTC(availabilitySlot?.slotStartTime) | date: 'h:mm a':
+                                userTimezone?.offset}} to {{formatDateTimeToUTC(availabilitySlot?.slotEndTime) | date:
+                                'h:mm a': userTimezone?.offset}} {{userTimezone?.abbr}}
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center reschedule-btn col-3" appDebounceClick
+                            [debounceTime]="400" (debounceClick)="confirmReschedule(availabilitySlot?.id)">
+                            <span class="material-icons">
+                                update
+                            </span>
+                            Book
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row w-100 d-flex align-items-center justify-content-center mt-3">
+                    <div class="col-6 d-flex align-items-center justify-content-end appointment-btns">
+                        <button class="d-flex align-items-center text-white mt-3" >
+                            
+                        </button>
+                    </div>
+                </div>     -->
+            </li>
+        </ul>
+    </div>
+    <div class="row mx-0 w-100">
+        <div class="col-12 d-flex align-items-center justify-content-end my-3">
+            <ng-template #recordNotFound>
+                {{message}}
+            </ng-template>
+            <button mat-button class="btn btn-primary submit-button mr-2" appDebounceClick [debounceTime]="400"
+                (debounceClick)="onDismiss()">Cancel</button>
+        </div>
+    </div>
+</div>

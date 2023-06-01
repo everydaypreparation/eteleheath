@@ -1,0 +1,21 @@
+@import '../../../../variables.scss';
+
+.notification-sec {
+    h4 {
+        letter-spacing: 0.54px;
+        font-size: 18px;
+        font-weight: 400;
+        margin: 5px 0px;
+    }
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.upcoming-appoint-sec{
+    background-color: #e8e8e8 !important;
+}
+.remove-pointer{
+    cursor: default;
+}

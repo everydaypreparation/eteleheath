@@ -1,0 +1,69 @@
+@import '../../../../variables.scss';
+
+.inner-content-wrapper {
+    background-color: $light-gray;
+    border-radius: 15px;  
+    min-height: 90vh;  
+
+    @media screen and (min-width: 2000px) {
+        min-height: 91vh;
+    }  
+    
+    @media screen and (min-width:1200px) and (max-width:1600px) {
+        min-height: 80vh;
+    }      
+    .payment-wrapper {
+        background-color: #fff;
+        border-radius: 5px;
+        min-height: 85vh;
+        box-shadow: 0 0 9px 0 rgba(0,0,0,.08);
+
+        @media screen and (min-width:1200px) and (max-width:1600px) {
+            min-height: 78vh;
+        }  
+
+        @media screen and (min-width: 2000px) {
+            min-height: 87vh;
+        }   
+
+        .payment-strip-ico {
+            width: 250px;
+        }
+        
+
+        h3 {
+            font-size: 23px;
+            font-weight: 500;
+            color: $dark-gray;
+            letter-spacing: 0.92px;
+        }   
+        h5 {
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 0.52px;
+            padding-left: 5px;
+        }     
+        .pay-btn {
+            border-radius: 31px;
+            background-color: $primary-color;
+            border-color:$primary-color;
+            font-family: $font-roboto;
+            color: $white;
+            border: 0px;
+            padding: 0px 15px;
+            cursor: pointer;
+
+            @media screen and (max-width: 576px) {
+                width: 100%;
+            }
+        
+            &:focus {
+                box-shadow: none;
+            }
+        }
+    }
+} 
+
+.colorRed{
+    color: red;
+}

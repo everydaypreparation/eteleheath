@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.portal.name }}-portal
+spec:
+  replicas: {{.Values.portal.replicas }}
+  selector:
+    matchLabels:
+      app: {{.Values.portal.name }}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.portal.name }}
+    spec:
+      containers:
+        - name: {{.Values.portal.name }}
+          image: {{.Values.portal.image.name }}:{{.Values.portal.image.tag }}
+          imagePullPolicy: {{.Values.portal.image.imagePullPolicy }}
+          env:
+          - name: NODE_ENV
+            value: {{.Values.portal.env.NODE_ENV }}
+          - name: EMRO_PAYPAL_CLIENT_ID
+            value: {{.Values.portal.env.EMRO_PAYPAL_CLIENT_ID }}
+          - name: EMRO_GOOGLE_MAP_KEY
+            value: {{.Values.portal.env.EMRO_GOOGLE_MAP_KEY }}
+          - name: EMRO_WEATHER_API
+            value: {{.Values.portal.env.EMRO_WEATHER_API }}
+          - name: EMRO_WEATHER_API_KEY
+            value: {{.Values.portal.env.EMRO_WEATHER_API_KEY }}
+          - name: EMRO_SELLER_ID
+            value: {{.Values.portal.env.EMRO_SELLER_ID }}
+          - name: EMRO_BASE_URL
+            value: {{.Values.portal.env.EMRO_BASE_URL }}
+          - name: EMRO_HOST_URL
+            value: {{.Values.portal.env.EMRO_HOST_URL }}
+          - name: EMRO_SIGNAL_R_URL
+            value: {{.Values.portal.env.EMRO_SIGNAL_R_URL }}
+          ports:
+          - containerPort: {{.Values.portal.image.targetPort }}

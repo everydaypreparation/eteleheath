@@ -1,0 +1,410 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper mt-0 pb-4 pr-4 pb-4 pl-4">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <!-- <span>
+            Consultant Detail
+        </span> -->
+        <!-- <div class="col-12 d-flex align-items-center justify-content-end pr-0">
+            <button class="submit-btn d-flex align-items-center justify-content-center mt-4"
+                appDebounceClick [debounceTime]="400" (debounceClick)="addAppointmentSlot()">
+                Add Appointment Slot
+                <span class="material-icons pl-2">
+                    keyboard_return
+                </span>
+            </button>
+        </div> -->
+        <div class="row content-row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="profile-detail-wrapper rounded col-12 py-3" *ngIf="roleName == 'patient'">
+                    <div class="py-2 d-block d-md-flex align-items-start text-center text-md-left">
+                        <!-- <img src="assets/images/user-default.svg" class="dr-profile rounded" /> -->
+                        <img [src]="profileUrl ? profileUrl : 'assets/images/user-default.svg'"
+                            class="dr-profile rounded">
+                        <div class="row pl-3 view-details pt-3 w-100">
+                            <div class="col-12">
+                                <h2 class="mb-1 mt-2 mt-md-0">
+                                    {{user?.name}}&nbsp;{{user?.surname}} </h2>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Email Id: </span> {{user?.emailAddress}} </p>
+                                <p><span class="pr-1"> Date of Birth: </span> {{user?.dateOfBirth | date: 'MM/dd/yyyy'}}
+                                </p>
+                                <p><span class="pr-1"> Gender: </span> {{user?.gender}} </p>
+                                <p><span class="pr-1"> Postal Code/Zip Code: </span> {{user?.postalCode}} </p>
+                                <p><span class="pr-1"> Phone Number: </span> {{user?.phoneNumber | mask: '(000)
+                                    000-0000'}} </p>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Address: </span> {{user?.address}}</p>
+                                <p><span class="pr-1 text-black"> Country: </span> {{user?.country}} </p>
+                                <p><span class="pr-1"> State/Province: </span> {{user?.state}} </p>
+                                <p><span class="pr-1"> City: </span> {{user?.city}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 col-xl-8 px-0 my-5 text-center text-md-left about-wrapper">
+                        <h3 class="mb-2"> Disease Details </h3>
+                        <p>
+                            {{user?.diseaseDetails}}
+                        </p>
+                        <h3 class="mb-2"> Reason For Consult </h3>
+                        <p>
+                            {{user?.reasonForConsult}}
+                        </p>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-12 col-md-6 qualifications-sec">
+                            <ul class="pl-0">
+                                <h3> Family Doctor Details </h3>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">
+                                        <p><span>First Name: </span> {{user?.doctorFirstName}} </p>
+                                        <p><span>Last Name: </span> {{user?.doctorLastName}} </p>
+                                        <p><span>Address: </span> {{user?.doctorAddress}} </p>
+                                        <p><span>Country: </span> {{user?.doctorCountry}} </p>
+                                        <p><span>State/Province: </span> {{user?.doctorState}}</p>
+                                        <p><span>City: </span> {{user?.doctorCity}}</p>
+                                        <p><span>Postal Code/Zip Code: </span> {{user?.doctorPostalCodes}} </p>
+                                        <p><span>Phone Number:</span> {{user?.doctorTelePhone | mask: '(000) 000-0000'}}
+                                        </p>
+                                        <p><span>Note: </span>{{user?.adminNotes}} </p>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <p><span> Consent For Sharing And Accessing Medical Information:
+                                            </span>{{user?.consentMedicalInformationWithCancerCareProvider}} </p>
+                                        <!-- <p><span> Report: </span> {{user?.reportTypeId}} </p> -->
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-detail-wrapper rounded col-12 py-3" *ngIf="roleName == 'familydoctor'">
+                    <div class="py-2 d-block d-md-flex align-items-start text-center text-md-left">
+                        <!-- <img src="assets/images/user-default.svg" class="dr-profile rounded" /> -->
+                        <img [src]="profileUrl ? profileUrl : 'assets/images/user-default.svg'"
+                            class="dr-profile rounded">
+                        <div class="row pl-3 view-details pt-3 w-100">
+                            <div class="col-12">
+                                <h2 class="mb-1 mt-2 mt-md-0">
+                                    {{user?.title}}&nbsp;{{user?.name}}&nbsp;{{user?.surname}} </h2>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Email Id: </span> {{user?.emailAddress}} </p>
+                                <p><span class="pr-1"> Date of Birth: </span> {{user?.dateOfBirth | date: 'MM/dd/yyyy'}}
+                                </p>
+                                <p><span class="pr-1"> Gender: </span> {{user?.gender}} </p>
+                                <p><span class="pr-1"> Credentials: </span>{{user?.credentials}} </p>
+                                <p><span class="pr-1"> Postal Code/Zip Code: </span> {{user?.postalCode}} </p>
+                                <p><span class="pr-1"> Phone Number: </span> {{user?.phoneNumber | mask: '(000)
+                                    000-0000'}} </p>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Address: </span> {{user?.address}}</p>
+                                <p><span class="pr-1 text-black"> Country: </span> {{user?.country}} </p>
+                                <p><span class="pr-1"> State/Province: </span> {{user?.state}} </p>
+                                <p><span class="pr-1"> City: </span> {{user?.city}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 col-xl-8 px-0 my-5 text-center text-md-left about-wrapper">
+                        <h3 class="mb-2"> Disease Details </h3>
+                        <p>
+                            {{user?.diseaseDetails}}
+                        </p>
+                        <h3 class="mb-2"> Reason For Consult </h3>
+                        <p>
+                            {{user?.reasonForConsult}}
+                        </p>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-12 col-md-10 qualifications-sec">
+                            <ul class="pl-0">
+                                <h3> Details </h3>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 left-sec">
+                                        <p><span>Professional Bio: </span> {{user?.professionalBio}} </p>
+                                        <p><span>Hospital Affiliation: </span> {{user?.hospitalAffiliation}} </p>
+                                        <p><span>Specialty: </span> {{user?.oncologySpecialty}} </p>
+                                        <p><span>Residency1: </span> {{user?.residency1}}</p>
+                                        <p><span>Residency2: </span>{{user?.residency2}}</p>
+                                        <p><span>Certificate: </span> {{user?.certificate}} </p>
+                                        <p><span>Note: </span>{{user?.adminNotes}} </p>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <p><span>Experience Or Training: </span> {{user?.experienceOrTraining}} </p>
+                                        <p><span>Fellowship: </span> {{user?.fellowship}} </p>
+                                        <p><span> Undergraduate Medical Training:
+                                            </span>{{user?.undergraduateMedicalTraining}} </p>
+                                        <p><span>Date Confirmed: </span> {{user?.dateConfirmed | date: 'MM/dd/yyyy'}}
+                                        </p>
+                                        <!-- <p><span>Consultation Type: </span>{{user?.consultationType}} </p> -->
+                                        <p><span> Medical Association Membership: </span>
+                                            {{user?.medicalAssociationMembership}} </p>
+                                        <p><span> Licensing Number: </span> {{user?.licensingNumber}} </p>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-detail-wrapper rounded col-12 py-3" *ngIf="roleName == 'diagnostic'">
+                    <div class="py-2 d-block d-md-flex align-items-start text-center text-md-left">
+                        <!-- <img src="assets/images/user-default.svg" class="dr-profile rounded mt-0" /> -->
+                        <img [src]="profileUrl ? profileUrl : 'assets/images/user-default.svg'"
+                            class="dr-profile rounded">
+                        <div class="row pl-3 view-details pt-3 w-100">
+                            <div class="col-12">
+                                <h2 class="mb-1 mt-2 mt-md-0">
+                                    {{user?.name}}&nbsp;{{user?.surname}} </h2>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Email Id: </span> {{user?.emailAddress}} </p>
+                                <p><span class="pr-1"> Date of Birth: </span> {{user?.dateOfBirth | date: 'MM/dd/yyyy'}}
+                                </p>
+                                <p><span class="pr-1"> Gender: </span> {{user?.gender}} </p>
+                                <p><span class="pr-1"> Postal Code/Zip Code: </span> {{user?.postalCode}} </p>
+                                <p><span class="pr-1"> Phone Number: </span> {{user?.phoneNumber | mask: '(000)
+                                    000-0000'}} </p>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Address: </span> {{user?.address}}</p>
+                                <p><span class="pr-1 text-black"> Country: </span> {{user?.country}} </p>
+                                <p><span class="pr-1"> State/Province: </span> {{user?.state}} </p>
+                                <p><span class="pr-1"> City: </span> {{user?.city}}</p>
+                                <p><span class="pr-1"> Note: </span>{{user?.adminNotes}} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-detail-wrapper rounded col-12 py-3" *ngIf="roleName == 'insurance'">
+                    <div class="py-2 d-block d-md-flex align-items-start text-center text-md-left">
+                        <!-- <img src="assets/images/user-default.svg" class="dr-profile rounded" /> -->
+                        <img [src]="profileUrl ? profileUrl : 'assets/images/user-default.svg'"
+                            class="dr-profile rounded">
+                        <div class="row pl-3 view-details pt-3 w-100">
+                            <div class="col-12">
+                                <h2 class="mb-1 mt-2 mt-md-0">
+                                    {{user?.name}}&nbsp;{{user?.surname}} </h2>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Email Id: </span> {{user?.emailAddress}} </p>
+                                <p><span class="pr-1"> Date of Birth: </span> {{user?.dateOfBirth | date: 'MM/dd/yyyy'}}
+                                </p>
+                                <p><span class="pr-1"> Gender: </span> {{user?.gender}} </p>
+                                <p><span class="pr-1"> Postal Code/Zip Code: </span> {{user?.postalCode}} </p>
+                                <p><span class="pr-1"> Phone Number: </span> {{user?.phoneNumber | mask: '(000)
+                                    000-0000'}} </p>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Address: </span> {{user?.address}}</p>
+                                <p><span class="pr-1 text-black"> Country: </span> {{user?.country}} </p>
+                                <p><span class="pr-1"> State/Province: </span> {{user?.state}} </p>
+                                <p><span class="pr-1"> City: </span> {{user?.city}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-12 qualifications-sec">
+                            <ul class="pl-0 pt-sm-5">
+                                <h3> Details </h3>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12">
+                                        <p><span>Company: </span>
+                                            {{user?.company}} </p>
+                                        <p><span>Requested On Cology Subspecialty: </span>
+                                            {{user?.requestedOncologySubspecialty}} </p>
+                                        <p><span> Note: </span>{{user?.adminNotes}} </p>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-detail-wrapper rounded col-12 py-3" *ngIf="roleName == 'medicallegal'">
+                    <div class="py-2 d-block d-md-flex align-items-start text-center text-md-left">
+                        <!-- <img src="assets/images/user-default.svg" class="dr-profile rounded" /> -->
+                        <img [src]="profileUrl ? profileUrl : 'assets/images/user-default.svg'"
+                            class="dr-profile rounded">
+                        <div class="row pl-3 view-details pt-3 w-100">
+                            <div class="col-12">
+                                <h2 class="mb-1 mt-2 mt-md-0">
+                                    {{user?.name}}&nbsp;{{user?.surname}} </h2>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Email Id: </span> {{user?.emailAddress}} </p>
+                                <p><span class="pr-1"> Date of Birth: </span> {{user?.dateOfBirth | date: 'MM/dd/yyyy'}}
+                                </p>
+                                <p><span class="pr-1"> Gender: </span> {{user?.gender}} </p>
+                                <p><span class="pr-1"> Postal Code/Zip Code: </span> {{user?.postalCode}} </p>
+                                <p><span class="pr-1"> phone Number: </span> {{user?.phoneNumber | mask: '(000)
+                                    000-0000'}} </p>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Address: </span> {{user?.address}}</p>
+                                <p><span class="pr-1 text-black"> Country: </span> {{user?.country}} </p>
+                                <p><span class="pr-1"> State/Province: </span> {{user?.state}} </p>
+                                <p><span class="pr-1"> City: </span> {{user?.city}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6 qualifications-sec">
+                            <ul class="pl-0">
+                                <h3> Details </h3>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">
+                                        <p><span> Company: </span>
+                                            {{user?.company}} </p>
+                                        <p><span>Requested Oncology Subspecialty: </span>
+                                            {{user?.requestedOncologySubspecialty}} </p>
+
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 qualifications-sec">
+                            <ul class="pl-0">
+                                <h3> Note </h3>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">
+                                        <p>{{user?.adminNotes}} </p>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+                <div class="profile-detail-wrapper rounded col-12 py-3" *ngIf="roleName == 'consultant'">
+                    <div class="py-2 d-block d-md-flex align-items-start text-center text-md-left">
+                        <!-- <img src="assets/images/user-default.svg" class="dr-profile rounded" /> -->
+                        <img [src]="profileUrl ? profileUrl : 'assets/images/user-default.svg'"
+                            class="dr-profile rounded">
+                        <div class="row pl-3 view-details pt-3 w-100">
+                            <div class="col-12">
+                                <h2 class="mb-1 mt-2 mt-md-0">
+                                    {{user?.title}}&nbsp;{{user?.name}}&nbsp;{{user?.surname}} </h2>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Email Id: </span> {{user?.emailAddress}} </p>
+                                <p><span class="pr-1"> Date of Birth: </span> {{user?.dateOfBirth | date: 'MM/dd/yyyy'}}
+                                </p>
+                                <p><span class="pr-1"> Gender: </span> {{user?.gender}} </p>
+                                <p><span class="pr-1"> Credentials: </span>{{user?.credentials}} </p>
+                                <p><span class="pr-1"> Postal Code/Zip Code: </span> {{user?.postalCode}} </p>
+                                <p><span class="pr-1"> Phone Number: </span> {{user?.phoneNumber | mask: '(000)
+                                    000-0000'}} </p>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-6 col-xl-5">
+                                <p><span class="pr-1"> Address: </span> {{user?.address}}</p>
+                                <p><span class="pr-1 text-black"> Country: </span> {{user?.country}} </p>
+                                <p><span class="pr-1"> State/Province: </span> {{user?.state}} </p>
+                                <p><span class="pr-1"> City: </span> {{user?.city}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 col-xl-8 px-0 my-5 text-center text-md-left about-wrapper">
+                        <h3 class="mb-2"> Disease Details </h3>
+                        <p>
+                            {{user?.diseaseDetails}}
+                        </p>
+                        <h3 class="mb-2"> Reason For Consult </h3>
+                        <p>
+                            {{user?.reasonForConsult}}
+                        </p>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-12 col-md-10 qualifications-sec">
+                            <ul class="pl-0">
+                                <h3> Details </h3>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">
+                                        <p><span>Professional Bio: </span> {{user?.professionalBio}} </p>
+                                        <p><span>Hospital Affiliation: </span> {{user?.hospitalAffiliation}} </p>
+                                        <p><span>Specialty: </span> {{user?.oncologySpecialty}} </p>
+                                        <p><span>Sub Specialty: </span>{{user?.oncologySubSpecialty}} </p>
+                                        <p><span>Residency1: </span> {{user?.residency1}}</p>
+                                        <p><span>Residency2: </span>{{user?.residency2}}</p>
+                                        <p><span>Certificate: </span> {{user?.certificate}} </p>
+                                        <p><span>Note: </span>{{user?.adminNotes}} </p>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <p><span>Experience Or Training: </span> {{user?.experienceOrTraining}} </p>
+                                        <p><span>Fellowship: </span> {{user?.fellowship}} </p>
+                                        <p><span> Undergraduate Medical Training:
+                                            </span>{{user?.undergraduateMedicalTraining}} </p>
+                                        <p><span>Date Confirmed: </span> {{user?.dateConfirmed | date: 'MM/dd/yyyy'}}
+                                        </p>
+                                        <p><span>Consultation Type: </span>{{user?.consultationType}} </p>
+                                        <p><span> Medical Association Membership: </span>
+                                            {{user?.medicalAssociationMembership}} </p>
+                                        <p><span> Licensing Number: </span> {{user?.licensingNumber}} </p>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4 mt-4 mt-lg-0" *ngIf="roleName == 'consultant'">
+                <div class="appointment-sec rounded pt-3 col-12">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-6 col-sm-6">
+                            <h3 class="mb-0"> Availability </h3>
+                        </div>
+                        <div class="col-6 col-sm-6 d-flex align-items-center justify-content-end">
+                            <h5 class="slot-booking-btn d-flex align-items-center mb-0" appDebounceClick
+                                [debounceTime]="400" (debounceClick)="addAvailabilitySlot()">
+                                <span class="mr-1 material-icons">
+                                    add
+                                </span>
+                                Add Slot
+                            </h5>
+                        </div>
+                    </div>
+                    <ul class="pl-0">
+                        <li class="row align-items-center py-3"
+                            *ngFor="let availabilitySlot of availabilitySlots; let i=index">
+                            <div class="col-md-9 col-12 col-lg-6 col-sm-8 col-xl-8">
+                                <span>
+                                    <p class="mb-0">
+                                        {{availabilitySlot?.availabilityDate | date: 'dd MMM, yyyy'}}
+                                        {{formatTime24HourTo12Hour(availabilitySlot?.availabilityStartTime)}} to
+                                        {{formatTime24HourTo12Hour(availabilitySlot?.availabilityEndTime)}}
+                                        {{availabilitySlot?.abbr}}</p>
+                                </span>
+                            </div>
+                            <div
+                                class="col-12 col-sm-4 col-xl-4 col-lg-6 col-md-3 d-flex align-items-center justify-content-end appointment-btns">
+                                <button
+                                    class="d-flex align-items-center w-100 justify-content-center mt-3 mt-sm-0 col-6"
+                                    appDebounceClick [debounceTime]="400"
+                                    (debounceClick)="editvailabilitySlot(availabilitySlot?.id)">
+                                    <span class="flaticon-edit"></span>
+                                    Edit
+                                </button>
+                                <ng-template [ngIf]="availabilitySlot.isBooked==0">
+                                    <button
+                                        class="d-flex align-items-center w-100 justify-content-center mt-3  ml-2 mt-sm-0 col-6"
+                                        appDebounceClick [debounceTime]="400"
+                                        (debounceClick)="deleteAvailabilitySlot(availabilitySlot?.id)">
+                                        <span class="flaticon-delete"></span>
+                                        Delete
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

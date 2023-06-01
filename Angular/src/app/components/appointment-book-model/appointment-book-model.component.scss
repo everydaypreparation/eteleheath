@@ -1,0 +1,39 @@
+@import '../../../variables.scss';
+
+.submit-button {
+    background: transparent;
+    color: $primary-color;
+    border-radius: 30px;
+    padding: 3px 25px;
+    height: 28px;
+    font-size: 14px;
+    letter-spacing: 0.66px;
+    border-color: $primary-color;
+
+    &:hover {
+        background-color: $primary-color;
+        color: $white;
+    }
+}
+:focus {
+    outline: 0px;
+    box-shadow: none;
+}
+.form-group-appointment {
+    h6 {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.66px;
+        padding-left: 10px;        
+    } 
+    td {
+
+        label {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.66px; 
+            padding-left: 10px;
+            margin-bottom: 2px;
+        }         
+    }
+}

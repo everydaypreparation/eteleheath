@@ -1,0 +1,61 @@
+@import '../../../variables.scss';
+
+.heading-wrapper {
+    h6 {
+        font-weight: 400;
+        span {
+            font-weight: 500;
+        }
+    }
+}
+
+.prev-btn {
+    background-color: transparent;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    border-radius: 30px;
+    font-size: 14px;
+    letter-spacing: 0.66px;
+    font-weight: 400;
+    width: 120px;
+
+    span {
+        font-size: 18px;
+    }
+    &:hover {
+        background-color: $primary-color;
+        color: $white;
+    }
+}
+.next-btn {
+    background-color: $primary-color;
+    border: 0px;
+    color: $white;
+    border-radius: 30px;
+    width: 120px;
+    font-size: 14px;
+    letter-spacing: 0.66px;
+    font-weight: 400;
+
+    span {
+        font-size: 18px;
+    }
+    &:hover {
+        background-color: #195979;
+        border: 1px solid #195979;
+        color: $white;
+    }
+}
+
+.search-input {
+    border-radius: 30px;
+    border: solid 1px #f1f4f8;
+    font-size: 14px !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+    background: #fff;
+    height: 35px;
+    padding-top: 2px;
+    padding-left: 12px;
+    margin: 10px;
+    width: 90%;
+}

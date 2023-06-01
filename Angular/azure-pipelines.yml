@@ -1,0 +1,87 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - 'Angular/*'
+
+variables:
+  acrServiceConnection: 'EmroThinkAICorpACR'
+  releaseBranchName: 'master'
+
+stages:
+- stage: 'Build'
+  displayName: 'Build angular web portal'
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build Angular Project'
+
+    variables:
+      nodeVersion: '14.15.1'
+      buildFrom: 'Angular'
+      buildTo: 'prod'
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '$(nodeVersion)'
+      displayName: 'Install NodeJS version $(nodeVersion)'
+
+    - script: 'cd $(buildFrom) && npm install'
+      displayName: 'Install node dependencies in the local node_modules folder.'
+
+    - script: 'cd $(buildFrom) && node --max_old_space_size=5000 ./node_modules/@angular/cli/bin/ng build --prod --build-optimizer --base-href / --output-path=$(buildTo) --crossOrigin=anonymous'
+      displayName: 'Build angular web app in production mode'
+
+    - task: CopyPublishBuildArtifacts@1  
+      displayName: 'Copy Publish Artifact: test'  
+      inputs:  
+        CopyRoot: $(buildFrom)/$(buildTo)
+        Contents: '**'
+        ArtifactName: prod
+        ArtifactType: Container
+      condition: succeeded()
+
+- stage: 'Release'
+  displayName: 'Prepare docker container image for portal'
+  dependsOn: Build
+  condition: |
+    and
+    (
+      succeeded(),
+      eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
+    )
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  jobs:
+  - job: 'Containerize'
+    displayName: 'Containerize portal'
+
+    steps:
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Downloading all artifacts to destination directory'
+      inputs:
+        targetPath: Angular
+
+    - task: Docker@2
+      displayName: 'Build and Push docker image'
+      inputs:
+        command: buildAndPush
+        repository: 'emrocloud/portal'
+        dockerfile: 'Angular/Dockerfile'
+        containerRegistry: '$(acrServiceConnection)'
+        tags: |
+          latest
+      condition: succeeded()

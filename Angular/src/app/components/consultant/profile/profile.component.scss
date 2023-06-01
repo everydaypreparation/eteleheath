@@ -1,0 +1,147 @@
+@import '../../../../variables.scss';
+
+.inner-content-wrapper {
+    background-color: $light-gray;
+    border-radius: 15px;
+    min-height: 82vh;
+
+    @media screen and  (min-width: 2000px) {
+        min-height: 90vh;
+    }    
+
+    .appointment-btns {
+        span {
+            font-size: 14px;
+            margin-right: 2px;
+        }
+    }
+    .appointment-sec {
+      ul {
+          li {
+              .col-xl-8, .col-lg-8 {
+                  @media screen and (max-width: 1700px) and (min-width: 1150px){
+                      flex: 0 0 50% !important;
+                      max-width: 50% !important;                       
+                  }
+              }
+              .col-xl-4, .col-lg-4 {
+                  @media screen and (max-width: 1700px) and (min-width: 1150px){
+                      flex: 0 0 50% !important;
+                      max-width: 50% !important;
+                  }
+              }
+          }
+      }
+  }
+
+
+    .content-row {
+        min-height: 81.5vh;
+    }
+    .profile-detail-wrapper {
+        background-color: $white;
+        height: 100%; 
+        
+        .profile-upload {
+            img {
+              width: 150px;
+              border-radius: 8px;
+            }
+          }
+          
+        
+        h2 {
+            font-size: 16px;
+            letter-spacing: 0.66px;
+            font-weight: 500;
+        }
+
+        h4 {
+            padding-left: 12px;
+            letter-spacing: 0.66px;
+            margin-bottom: 6px;
+            color: $dark-gray;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .profile-img-sec {
+            height: 167px;
+
+            @media screen and (max-width: 576px) {
+              min-height: 167px;
+              height: auto;
+            }
+        }
+        
+        .ico-upload {
+            width: 39px;
+            position: absolute;
+            right: 0px;
+            bottom: 0;
+            background: #fff;
+            padding: 7px 8px;
+            border-radius: 50px;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+            color: $primary-color;
+          
+            &:hover {
+              background-color: $primary-color;
+              color: $white;
+            }
+          }    
+        .dr-profile {
+            width: 100px;
+        }
+    }
+}
+
+  .hoverable{
+    position: relative;
+    display: block;
+    cursor: pointer;
+    // height: 200px;
+    width: 150px;
+    //border: 5px solid #000;
+    border-radius: 50%;
+  }
+  .hoverable .hover-text{
+    position: absolute;
+    display: none;
+    top: 50%;
+    left:  23%;
+    transform: translate(-50%,-50%);   
+    z-index: 2;
+  }
+  .hoverable .background{
+    position: absolute;
+    display: none;
+    top: 0;
+    left:  0;
+    bottom: 0;
+    right: 0;
+    background-color:transparent;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 1;
+    height: 114px;
+    width: 114px;
+  }
+  // .hoverable:hover .hover-text{
+  //   display: block;
+  // }
+  .hoverable:hover .background{
+    display: block;
+  }
+  
+  
+  #fileInput{
+    display: none;
+  }
+
+  .errorMsg{
+    display: none;
+    color: red;
+    font-size: 14px;
+    letter-spacing: 0.66px;
+}

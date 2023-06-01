@@ -1,0 +1,78 @@
+@import '../../../../variables.scss';
+
+.inner-content-wrapper {
+    min-height: 100vh;
+
+    .profile-detail-wrapper {
+        min-height: 100vh;
+
+        .view-detail-wrapper {
+            border-top: 1px solid $placeholder;
+            border-bottom: 1px solid $placeholder;         
+            
+        .view-details {
+            max-height: 200px;
+            overflow: auto;
+            span {
+                color: $dark-gray;
+            }
+            h2 {
+                color: $primary-color;
+                font-size: 16px;
+            }
+            .receiver-mail {
+                color: $primary-color;
+                border: 1px solid $primary-color;
+                border-radius: 30px;
+                padding: 3px 5px;
+                font-size: 13px;            
+            }
+        }
+    }
+    .dr-profile {
+        width: 50px;
+    }
+    }
+    .left-bar {
+        ul {
+            li {
+                padding-left: 10px;
+                height: 35px;
+
+                &:hover {
+                    background-color: #e1e8f3;
+                    cursor: pointer;
+                    border-radius: 30px;
+                    height: 35px;
+                }
+            }
+        }
+        .compose-button {
+            background-color: $primary-color;
+            color: $white;
+            border: 0px;
+            box-shadow: -2px 6px 21px -10px rgba(0, 0, 0, 0.63);
+            border-radius: 30px;
+            cursor: pointer;
+            padding: 8px 18px;
+            width: 100%;
+    
+            &:hover {
+                background-color: #1e6283;
+            }
+    
+            .flaticon-plus {
+                font-size: 14px;
+                vertical-align: bottom;
+                margin-top: -1px;
+            }
+            
+        }
+        .inbox-btn {
+            background-color: transparent;
+            color: $dark-gray;
+            border: 0px;
+            margin: 5px 0px;
+        }
+    }
+}

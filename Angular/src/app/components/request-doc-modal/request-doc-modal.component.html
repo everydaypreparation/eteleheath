@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-12">
+        <!-- <h5 class="pl-3 mb-3"> Request a consultant </h5> -->
+        <div class="col-12">
+            <div class="row mt-4">
+                <div class="col-12">
+                    <ng-template [ngIf]="userRole && userRole != 'PATIENT'" [ngIfElse]="rolePatient">
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="reqDocForm.roleName">
+                            <mat-radio-button class="mr-3" *ngFor="let role of roleTypes" [value]="role.value"
+                                (change)="radioChange(role.value)">{{role.viewValue}}</mat-radio-button>
+                            <!-- <mat-radio-button value="PATIENT" (change)="radioChange($event)">Patient</mat-radio-button> -->
+                        </mat-radio-group>
+                    </ng-template>
+                    <ng-template #rolePatient>
+                        <h4> Invite Your Family Doctor</h4>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <mat-form-field class="fields-mat">
+                        <input matInput type="text" [(ngModel)]="reqDocForm.firstName"
+                            [ngModelOptions]="{standalone: true}" (keypress)="validatorPress($event, 'firstName')"
+                            (input)="validatorPress($event, 'firstName')" maxlength="40" />
+                        <mat-placeholder class="placeholder">First Name*</mat-placeholder>
+                    </mat-form-field>
+                    <div *ngIf="eR && eR.key == 'firstName'" class="err-msg-cls">
+                        {{eR.message}}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <mat-form-field class="fields-mat">
+                        <input matInput type="text" [(ngModel)]="reqDocForm.lastName"
+                            [ngModelOptions]="{standalone: true}" (keypress)="validatorPress($event, 'lastName')"
+                            (input)="validatorPress($event, 'lastName')" maxlength="40" />
+                        <mat-placeholder class="placeholder">Last Name*</mat-placeholder>
+                    </mat-form-field>
+                    <div *ngIf="eR && eR.key == 'lastName'" class="err-msg-cls">
+                        {{eR.message}}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <mat-form-field class="fields-mat">
+                        <input matInput type="text" [(ngModel)]="reqDocForm.emailAddress"
+                            [ngModelOptions]="{standalone: true}" (keypress)="validatorPress($event, 'email')"
+                            (input)="validatorPress($event, 'email')" maxlength="50" />
+                        <mat-placeholder class="placeholder"> Email*</mat-placeholder>
+                    </mat-form-field>
+                    <div *ngIf="eR && eR.key == 'email'" class="err-msg-cls">
+                        {{eR.message}}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 mb-4">
+                    <mat-form-field class="fields-mat">
+                        <input matInput type="text" [(ngModel)]="reqDocForm.phoneNumber"
+                            [ngModelOptions]="{standalone: true}" mask="(000) 000-0000"
+                            [specialCharacters]="['(', ' ', '-', ')']" inputDigitsOnly />
+                        <mat-placeholder class="placeholder"> Phone Number </mat-placeholder>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row" [hidden]="!isInputShown">
+                <div class="col-12">
+                    <mat-form-field class="fields-mat">
+                        <input matInput type="text" [(ngModel)]="reqDocForm.hospital"
+                            [ngModelOptions]="{standalone: true}" (keypress)="validatorPress($event, 'email')"
+                            (input)="validatorPress($event, 'email')" maxlength="50" />
+                        <mat-placeholder class="placeholder">Organization of hospital</mat-placeholder>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex align-items-center justify-content-end mt-4">
+            <button class="prev-btn d-flex justify-content-center align-items-center mr-4" appDebounceClick
+                [debounceTime]="400" (debounceClick)="onDismiss()">
+                Cancel
+            </button>
+            <button class="next-btn d-flex justify-content-center align-items-center" appDebounceClick
+                [debounceTime]="400" (debounceClick)="submitFormClick()">
+                <span class="material-icons">
+                    person_add_alt_1
+                </span>
+                <span class="text-invite"> Invite </span>
+
+            </button>
+        </div>
+    </div>
+</div>

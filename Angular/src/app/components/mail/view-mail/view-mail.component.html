@@ -1,0 +1,112 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper mt-0 px-4 pb-4 pt-0">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="row content-row">
+            <div class="col-12 col-sm-4 col-xl-2 left-bar">
+                <div class="col-12 px-0">
+                    <button
+                        class="compose-button d-flex align-items-center d-flex align-items-center justify-content-center"
+                        appDebounceClick [debounceTime]="400" (debounceClick)="composeMessage()">
+                        <span class="flaticon-plus mr-2">
+                        </span>
+                        Compose
+                    </button>
+                </div>
+                <ul class="pl-0 mt-4">
+                    <li class="d-flex align-items-center">
+                        <button
+                            class="inbox-btn d-flex align-items-center d-flex align-items-center justify-content-start"
+                            appDebounceClick [debounceTime]="400" (debounceClick)="inboxMessage()">
+                            <span class="material-icons mr-2">
+                                move_to_inbox
+                            </span>
+                            Inbox
+                        </button>
+                    </li>
+                    <li class="d-flex align-items-center">
+                        <button
+                            class="inbox-btn d-flex align-items-center d-flex align-items-center justify-content-start sendButton"
+                            appDebounceClick [debounceTime]="400" (debounceClick)="sentMessage()">
+                            <span class="material-icons mr-2">
+                                send
+                            </span>
+                            Sent
+                        </button>
+                    </li>
+                    <li class="d-flex align-items-center">
+                        <button
+                            class="inbox-btn d-flex align-items-center d-flex align-items-center justify-content-start"
+                            appDebounceClick [debounceTime]="400" (debounceClick)="trashMessage()">
+                            <span class="material-icons mr-2">
+                                delete
+                            </span>
+                            Trash
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-12 col-sm-8 col-xl-10">
+                <div class="profile-detail-wrapper rounded col-12 py-3">
+                    <div class="row">
+                        <div class="col-12 col-sm-11">
+                            <h3 class="mb-0">{{userEmails?.subject}} </h3>
+                        </div>
+                        <div class="col-12 col-sm-1 d-flex align-items-center justify-content-end">
+                            <ng-template [ngIf]="userEmails && (page == 'inbox' || page == 'sent')"
+                                [ngIfElse]="showRestoreIcon">
+                                <span class="material-icons" title="Reply" *ngIf="(userEmails && page == 'inbox')"
+                                    appDebounceClick [debounceTime]="400"
+                                    (debounceClick)="setReplyCurrentMailId(userEmails?.senderUserIds,userEmails?.subject)">reply</span>
+                                <span class="material-icons" title="Reply" *ngIf="(userEmails && page == 'sent')"
+                                    appDebounceClick [debounceTime]="400"
+                                    (debounceClick)="setReplyCurrentMailId(userEmails?.receiverUserIds,userEmails?.subject)">reply</span>
+                            </ng-template>
+                            <ng-template #showRestoreIcon>
+                                <span class="material-icons cursorPointer" title="Restore"
+                                    *ngIf="(userEmails && page == 'trash')" appDebounceClick [debounceTime]="400"
+                                    (debounceClick)="restoreTrashMailByMailId(userEmails?.messageId)">restore</span>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div
+                        class="py-4 my-3 d-block d-md-flex align-items-start text-center text-md-left view-detail-wrapper">
+                        <img src="assets/images/user-default.svg" class="dr-profile rounded pt-2" />
+                        <div class="row px-3 view-details w-100 pt-2">
+                            <div class="col-12 col-sm-10 col-md-6">
+                                <h2 class="mb-1 mt-2 mt-md-0"> <span>From:</span>
+                                    <h6 class="receiver-mail d-inline">{{userEmails?.senderUserIds}}</h6>
+                                </h2>
+                                <h2 class="mb-1 mt-3 d-flex align-items-center flex-wrap justify-content-center justify-content-sm-start"> <span class="mb-2">To:
+                                    </span>
+                                    <h6 *ngFor="let receiver of receiversArray; let i=index"
+                                        class="receiver-mail mb-0 mr-2 mb-2"> {{receiver}}</h6>
+                                </h2>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-4 col-xl-5" *ngIf="userEmails?.attachments.length > 0">
+                                <h3> Download Attachments </h3>
+                                <ul class="pl-0">
+                                    <li class="row align-items-center py-3"
+                                        *ngFor="let attachment of userEmails?.attachments; let i=index" appDebounceClick
+                                        [debounceTime]="400"
+                                        (debounceClick)="downloadAttachment(attachment?.attachmentId, attachment?.attachmentName);">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)">{{attachment?.attachmentName}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <h3 class="pr-1"> Message </h3>
+                        <p [innerHTML]="userEmails?.messagesText"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

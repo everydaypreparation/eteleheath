@@ -1,0 +1,131 @@
+
+@import '../../../variables.scss';
+.login-outer {
+    height: 100%;
+
+    @media screen and (max-width:575px) {
+        min-height:100%;
+        height: auto !important;
+        overflow: auto;
+    }
+    .logoImage {
+        width: 200px;
+        position: absolute;
+        z-index: 9999999;
+
+        @media screen and (min-width: 2000px) {
+            width: 300px;
+        }
+    }
+
+    .mobile-logo {
+        width: 150px; 
+        height: 100px;
+        margin-bottom: 15px;
+    }
+    .top-menus {
+        li {
+            display: inline-block;
+            padding: 0px 10px;
+            font-size: 13px;    
+            font-family: $font-roboto;;
+            font-weight: 500;
+            letter-spacing: 0.66px;
+        }
+    }
+    .form-wrapper {
+        height: 75%;
+    
+        @media screen and (max-width: 575px) {
+            padding-bottom: 20px;
+        }  
+    
+        .field-form {
+            @media screen and (min-width: 2000px) {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }  
+        }
+        h3 {    
+            color: $primary-color;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 1.32;
+            text-transform: uppercase;;
+            font-family: $font-roboto;;
+            letter-spacing: 1.03px;
+
+          
+        }
+        .submit-button {
+            border-radius: 31px;
+            background-color: $primary-color;
+            border-color:$primary-color;
+        
+            :focus {
+                box-shadow: none;
+            }
+        }
+    }  
+    .form-control {
+        border-radius: 30px !important;
+        border: solid 1px $light-gray;
+        font-size: 14px !important;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+        height: 48px;
+    }    
+    
+    .form-wrapper {
+        height: 85%;
+
+        @media screen and (max-width: 1500px) and (min-width: 1200px) {
+            height: 65%;
+        }   
+    
+        @media screen and (max-width: 576px) {
+            height: 50%;
+        }   
+    
+        .field-form {
+            @media screen and (min-width: 2000px) {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }  
+        }
+    
+        h3 {
+            color: $primary-color;
+            font-weight: 500;
+            font-size: 22px;
+            font-family: "Roboto", sans-serif;
+            letter-spacing: 1.79px;
+    
+            @media screen and (max-width: 1600px) {
+                font-size: 22px;
+            }
+        }
+        h4 {
+            color: #267399;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.32;
+            font-family: Roboto,sans-serif;
+            margin-top: 20px;
+            letter-spacing: .8px;
+        }
+        .submit-button {
+            border-radius: 31px;
+            background-color: $primary-color;
+            border-color:$primary-color;
+            font-family: $font-roboto;
+            height: 50px;
+            letter-spacing: 0.85px;
+            font-size: 18px;
+            font-weight: normal;
+        
+            &:focus {
+                box-shadow: none;
+            }
+        }
+    }
+}

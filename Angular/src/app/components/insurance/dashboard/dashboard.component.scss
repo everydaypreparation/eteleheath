@@ -1,0 +1,15 @@
+.next-appoint-sec {
+    height: 213px !important;
+
+    @media screen and (max-width: 575px) {
+        height: auto !important;
+    }
+}
+.cursorPointer{
+    cursor: pointer;
+}
+.upcoming-booked-by {
+    ul {
+        height: 155px !important;
+    }
+}

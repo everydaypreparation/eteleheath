@@ -1,0 +1,68 @@
+@import '../../../../variables.scss';
+.home-ico {
+        color: $white;
+}
+.inner-content-wrapper {
+    min-height: 99%; 
+        
+    .topfields-wrapper {
+        .submit-button {
+            border-radius: 31px;
+            background-color: $primary-color;
+            border-color:$primary-color;
+            font-family: $font-roboto;
+            padding: 0px 16px 0px 15px;
+            width: 100%;
+        
+            &:focus {
+                box-shadow: none;
+            }            
+        }    
+        .add-btn {
+                @media screen and (min-width: 1500px) and (max-width: 1600px) {
+                        flex: 0 0 15%;
+                        max-width: 15%;
+                }
+                @media screen and (min-width: 1601px) {
+                        flex: 0 0 15%;
+                        max-width: 15%;
+                }
+            }
+    }
+}
+
+  
+
+.side-nav {
+  padding-right: 1.25rem;
+  padding-bottom: 4rem;
+  margin-top: 65px;
+
+        ul {
+                li {
+                   list-style: none; 
+                   
+                   a {
+                           &:hover {
+                                   cursor: pointer;
+                                   text-decoration: none;
+                           }
+                   }
+                }
+        }
+}
+
+::ng-deep .mat-sort-header-sorted .mat-sort-header-arrow {
+        opacity: 1 !important;
+}
+.table-wrapper {
+        overflow-x: auto !important;
+}
+
+.home-ico {
+        color: #267399;
+        font-size: 26px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        cursor: pointer;
+    }

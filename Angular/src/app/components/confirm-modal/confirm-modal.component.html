@@ -1,0 +1,16 @@
+<div class="text-center">
+  <h1 mat-dialog-title class="pt-1">
+    {{title}}
+  </h1>
+
+  <div mat-dialog-content>
+    <p>{{message}}</p>
+  </div>
+
+  <div mat-dialog-actions class="d-flex align-items-center justify-content-center mb-1">
+    <button mat-button class="btn btn-primary submit-button mr-2" appDebounceClick [debounceTime]="400"
+      (debounceClick)="onDismiss()">No</button>
+    <button mat-raised-button class="btn btn-primary submit-button" appDebounceClick [debounceTime]="400"
+      (debounceClick)="onConfirm()">Yes</button>
+  </div>
+</div>

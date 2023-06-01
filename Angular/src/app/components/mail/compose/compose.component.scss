@@ -1,0 +1,107 @@
+@import '../../../../variables.scss';
+.msgColor{
+    color: red;
+    font-size: 14px;
+    letter-spacing: 0.66px;
+}
+
+.errorMsg{
+    display: none;
+    color: red;
+    font-size: 14px;
+    letter-spacing: 0.66px;
+}
+
+.composeScroll{
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.left-bar {
+    ul {
+        li {
+            padding-left: 10px;
+            height: 35px;
+            &:hover {
+                background-color: $light-gray;
+                cursor: pointer;
+                border-radius: 30px;
+                height: 35px;
+            }
+        }
+    }
+    .compose-button {
+        background-color: $primary-color;
+        color: $white;
+        border: 0px;
+        box-shadow: -2px 6px 21px -10px rgba(0, 0, 0, 0.63);
+        border-radius: 30px;
+        cursor: pointer;
+        padding: 8px 18px;
+        width: 100%;
+
+        &:hover {
+            background-color: #1e6283;
+        }
+
+        .flaticon-plus {
+            font-size: 14px;
+            vertical-align: bottom;
+            margin-top: -1px;
+        }
+        
+    }
+    .inbox-btn {
+        background-color: transparent;
+        color: $dark-gray;
+        border: 0px;
+        margin: 5px 0px;
+    }
+}
+.uploading-item {
+    // background-color: #f4f4f4;
+    padding: 3px 12px;
+    border-radius: 30px;
+    font-size: 14px;
+}
+.submit-btn {
+    border-radius: 31px;
+    background-color: $primary-color;
+    border-color:$primary-color;
+    font-family: $font-roboto;
+    color: $white;
+    border: 0px;
+    margin-left: 10px;
+    letter-spacing: 0.85px;
+    padding: 7px 14px;
+    cursor: pointer;
+
+
+    &:hover {
+        background-color: #1e6283;
+    }
+}   
+textarea {
+    border-radius: 30px;
+    border: solid 1px #f1f4f8;
+    font-size: 14px !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+    background: #fff;
+    height: 48px;
+    padding-top: 9px;
+    padding-left: 12px;
+    min-height: 200px;
+    width: 100%;
+
+    &::placeholder  {
+        color: $placeholder;
+        letter-spacing: 0.66px;
+    }
+}
+.dropdown-list {
+    z-index: 9 !important;
+}
+
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 30vh;
+  }

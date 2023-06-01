@@ -1,0 +1,286 @@
+<div class="container-fluid px-0 px-sm-3 container-wrapper" (window:resize)="onResize($event)">
+    <div class="row outer-samvaad mx-0">
+        <div class="inner-content-wrapper mb-3 w-100">
+            <div class="loading-shade" *ngIf="isLoadingResults">
+                <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+            </div>
+            <div class="col-12 p-0 h-100">
+                <b class="pageheading">{{pageTitle}}</b>
+                <div class="row m-0 h-100">
+                    <div class="p-0 video-sec" [ngClass]="selectedMobileTabIndex > 0?'ht-50-cls':''" [ngClass] = "roleName != 'Admin'?'':'fullvideoscreen'">
+                        <div class="samvaad-container">
+                            <iframe #iframe width="100%" height="100%" frameBorder="0" allowfullscreen="true"
+                                webkitallowfullscreen="true" mozallowfullscreen="true"
+                                allow="geolocation *; microphone *; camera *; display-capture *;"
+                                [src]="joinMeetingURL" [ngStyle]="roleName != 'Admin'?{} : {'border-radius': '20px'}"></iframe>
+                            <!-- <div class="row">
+                                <div class="col-12 text-center">
+                                    <a href="Javascript:;" class="btn btn-primary mr-1 rounded-pill px-5">Ok</a>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="col-1 samvaad-container p-0">
+                        <b class="pageheading">Notes</b>
+                        <ckeditor #ckeditor [config]="defaultConfig" [editor]="Editor" [(ngModel)]="signalRService.text"
+                            (keyup)="sendMessage()">
+                        </ckeditor>
+                    </div> -->
+                    <div class="samvaad-container p-0 samvaad-nav-cls">
+                        <mat-tab-group class="h-100" (selectedTabChange)="onTabChange($event)"
+                            [(selectedIndex)]="selectedTabIndex" *ngIf="roleName != 'Admin'">
+                            <!-- <mat-tab label="NOTES">
+                            <ckeditor #ckeditor [config]="defaultConfig" [editor]="Editor" [(ngModel)]="signalRService.text"
+                            (keyup)="sendMessage()">
+                            </ckeditor>
+                            </mat-tab>
+                            <mat-tab [label]="CHAT"> Second </mat-tab>
+                            <mat-tab [label]="UPLOADDOCUMETS"> Third </mat-tab> -->
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span class="material-icons">upload_file</span>
+                                    <p>FILES</p>
+                                </ng-template>
+                                <div class="upload h-100">
+                                    <span appDebounceClick [debounceTime]="400" (debounceClick)="recordUploadClick()">
+                                        <span class="material-icons">upload_file</span><br />
+                                        <p>UPLOAD DOCUMENTS</p>
+                                    </span>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span class="material-icons">notes</span>
+                                    <p>NOTES</p>
+                                </ng-template>
+                                <div class="wrapper-notes">
+                                    <ckeditor #ckeditor [config]="defaultConfig" [editor]="Editor"
+                                        [(ngModel)]="notesText">
+                                    </ckeditor>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span class="material-icons">chat</span>
+                                    <p>CHATS</p>
+                                </ng-template>
+                                <div class="chats h-100 d-flex align-items-end">
+                                    <div class="w-100">
+                                        <div class="mb-3 msg-inner">
+                                            <div *ngFor="let m of signalRService.messages">
+                                                <div *ngIf="m.ConnectionId === signalRService.connectionId"
+                                                    class="d-flex align-items-center justify-content-end">
+                                                    <span>
+                                                        <div class="text-right mx-3 mt-3 mb-1 msg-wrapper">
+                                                            <!-- <div><strong>ConnectionID</strong> {{m.ConnectionId}}</div> -->
+                                                            <p class="mb-0">{{m.Text}}</p>
+                                                        </div>
+                                                        <p class="mb-0 msg-date text-right">{{m.DateTime | date}}</p>
+                                                    </span>
+                                                </div>
+                                                <div *ngIf="m.ConnectionId !== signalRService.connectionId"
+                                                    class="d-flex align-items-center justify-content-start">
+                                                    <span>
+                                                        <div class="text-left mx-3 mt-3 mb-1 msg-wrapper-1">
+                                                            <!-- <div><strong>ConnectionID</strong> {{m.ConnectionId}}</div> -->
+                                                            <p class="mb-0">{{m.Text}}</p>
+                                                        </div>
+                                                        <p class="mb-0 msg-date-1 text-left">{{m.DateTime | date}}</p>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                            <div *ngIf="signalRService.messages.length==0">
+                                                <p>You haven't send or received messages</p>
+                                            </div>
+                                        </div>
+                                        <div class="chatsInner">
+                                            <div class="w-100">
+                                                <div
+                                                    class="d-flex align-items-center justify-content-center w-100 mb-3">
+                                                    <input (keyup.enter)="chat.length==0? '' : sendChatMessage()"
+                                                        type="text" [(ngModel)]="chat" placeholder="Type your message">
+                                                    <button class="btn btn-primary" [disabled]="chat.length==0"
+                                                        appDebounceClick [debounceTime]="400"
+                                                        (debounceClick)="sendChatMessage()">
+                                                        <span class="material-icons icon-msg">
+                                                            send
+                                                        </span>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span class="material-icons">description</span>
+                                    <p>Patient Records</p>
+                                </ng-template>
+                                <ul class="px-3 mb-0 patient-records">
+                                    <li *ngFor="let patientRecord of patientRecords">
+                                        <div class="d-flex align-items-center">
+                                            <div class="date-sec text-center pr-2">
+                                                <!-- {{patientRecord?.date}} <br />{{patientRecord?.month}} -->
+                                                {{formatDateTimeToUTC(patientRecord?.documentDate) | date: 'dd' :
+                                                userTimezone?.offset}}<br />
+                                                {{formatDateTimeToUTC(patientRecord?.documentDate) | date: 'MMM':
+                                                userTimezone?.offset}}
+                                            </div>
+                                            <div
+                                                [ngClass]="user.id == patientRecord?.uploadedBy ? 'detail-sec pl-2 detail-text text-left w-75' : 'detail-sec pl-2 text-left w-75'">
+                                                <p class="mb-0 report-name">{{patientRecord?.documentName}}</p>
+                                                <p class="mb-0 detail-by-name"
+                                                    *ngIf="user.id != patientRecord?.uploadedBy &&  patientRecord?.roleName">
+                                                    by
+                                                    {{patientRecord?.roleName}}</p>
+                                            </div>
+                                            <div
+                                                class="pl-3 text-right icon-sec d-flex align-items-center pr-2 w-25 justify-content-end">
+                                                <!-- <span class="material-icons delete-ico" *ngIf="user.id == patientRecord?.uploadedBy"
+                                                    appDebounceClick [debounceTime]="400" (debounceClick)="deleteDocumentById(patientRecord?.documentId)">
+                                                    delete_outline
+                                                </span> -->
+                                                <img src="{{patientRecord?.documentExtension}}" alt="pdf-ico"
+                                                    class="cp report-download" appDebounceClick [debounceTime]="400"
+                                                    (debounceClick)="patientRecordOpenDocClick(patientRecord?.documentId)"
+                                                    title="View Document" />
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                    <div [ngClass]="isShowSamvaadNav?'m-fadeIn':'m-fadeOut'"
+                        class="samvaad-container p-0 mobile-samvaad-nav-cls">
+                        <mat-tab-group class="h-100" (selectedTabChange)="onMobileTabChange($event)"
+                            [(selectedIndex)]="selectedMobileTabIndex" *ngIf="roleName != 'Admin'">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <p></p>
+                                </ng-template>
+                                <div class="wrapper-notes">
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span class="material-icons">upload_file</span>
+                                    <p>FILES</p>
+                                </ng-template>
+                                <div class="upload h-100">
+                                    <span appDebounceClick [debounceTime]="400" (debounceClick)="recordUploadClick()">
+                                        <span class="material-icons">upload_file</span><br />
+                                        <p>UPLOAD DOCUMENTS</p>
+                                    </span>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span class="material-icons">notes</span>
+                                    <p>NOTES</p>
+                                </ng-template>
+                                <div class="wrapper-notes">
+                                    <ckeditor #ckeditor [config]="defaultConfig" [editor]="Editor"
+                                        [(ngModel)]="notesText">
+                                    </ckeditor>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span class="material-icons">chat</span>
+                                    <p>CHATS</p>
+                                </ng-template>
+                                <div class="chats h-100 d-flex align-items-end">
+                                    <div class="w-100">
+                                        <div class="mb-3 msg-inner">
+                                            <div *ngFor="let m of signalRService.messages">
+                                                <div *ngIf="m.ConnectionId === signalRService.connectionId"
+                                                    class="d-flex align-items-center justify-content-end">
+                                                    <span>
+                                                        <div class="text-right mx-3 mt-3 mb-1 msg-wrapper">
+                                                            <!-- <div><strong>ConnectionID</strong> {{m.ConnectionId}}</div> -->
+                                                            <p class="mb-0">{{m.Text}}</p>
+                                                        </div>
+                                                        <p class="mb-0 msg-date text-right">{{m.DateTime | date}}</p>
+                                                    </span>
+                                                </div>
+                                                <div *ngIf="m.ConnectionId !== signalRService.connectionId"
+                                                    class="d-flex align-items-center justify-content-start">
+                                                    <span>
+                                                        <div class="text-left mx-3 mt-3 mb-1 msg-wrapper-1">
+                                                            <!-- <div><strong>ConnectionID</strong> {{m.ConnectionId}}</div> -->
+                                                            <p class="mb-0">{{m.Text}}</p>
+                                                        </div>
+                                                        <p class="mb-0 msg-date-1 text-left">{{m.DateTime | date}}</p>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                            <div *ngIf="signalRService.messages.length==0">
+                                                <p>You haven't send or received messages</p>
+                                            </div>
+                                        </div>
+                                        <div class="chatsInner">
+                                            <div class="w-100">
+                                                <div
+                                                    class="d-flex align-items-center justify-content-center w-100 mb-3">
+                                                    <input (keyup.enter)="chat.length==0? '' : sendChatMessage()"
+                                                        type="text" [(ngModel)]="chat" placeholder="Type your message">
+                                                    <button class="btn btn-primary" [disabled]="chat.length==0"
+                                                        appDebounceClick [debounceTime]="400"
+                                                        (debounceClick)="sendChatMessage()">
+                                                        <span class="material-icons icon-msg">
+                                                            send
+                                                        </span>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span class="material-icons">description</span>
+                                    <p>Patient Records</p>
+                                </ng-template>
+                                <ul class="px-3 mb-0 patient-records">
+                                    <li *ngFor="let patientRecord of patientRecords">
+                                        <div class="d-flex align-items-center">
+                                            <div class="date-sec text-center pr-2">
+                                                {{patientRecord?.date}} <br />{{patientRecord?.month}}
+                                            </div>
+                                            <div
+                                                [ngClass]="user.id == patientRecord?.uploadedBy ? 'detail-sec pl-2 detail-text text-left w-75' : 'detail-sec pl-2 text-left w-75'">
+                                                <p class="mb-0 report-name">{{patientRecord?.documentName}}</p>
+                                                <p class="mb-0 detail-by-name"
+                                                    *ngIf="user.id != patientRecord?.uploadedBy &&  patientRecord?.roleName">
+                                                    by
+                                                    {{patientRecord?.roleName}}</p>
+                                            </div>
+                                            <div
+                                                class="pl-3 text-right icon-sec d-flex align-items-center pr-2 w-25 justify-content-end">
+                                                <!-- <span class="material-icons delete-ico" *ngIf="user.id == patientRecord?.uploadedBy"
+                                                                            appDebounceClick [debounceTime]="400" (debounceClick)="deleteDocumentById(patientRecord?.documentId)">
+                                                                            delete_outline
+                                                                        </span> -->
+                                                <img src="{{patientRecord?.documentExtension}}" alt="pdf-ico"
+                                                    class="cp report-download" appDebounceClick [debounceTime]="400"
+                                                    (debounceClick)="patientRecordOpenDocClick(patientRecord?.documentId)"
+                                                    title="View Document" />
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

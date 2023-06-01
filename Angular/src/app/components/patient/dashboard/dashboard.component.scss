@@ -1,0 +1,604 @@
+@import '../../../../variables.scss';
+
+.inner-content-wrapper {
+    background-color: #f1f4f8;
+    border-radius: 15px;
+    min-height: 90vh;
+
+    @media screen and  (min-width: 2000px) {
+        min-height: 91vh;
+    }  
+
+    .sec-1 {
+        background-image: url('../../../../assets/images/landing-sec-BG.png');
+        background-position: -5px -30px;
+        background-repeat: no-repeat;
+        min-height: 90px;
+        box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+    
+        h1 {
+            font-size: 36px;
+        }
+        p {
+            font-size: 16px;
+        }
+    }
+    .dash-my-appoint-cam {
+        @media screen and (min-width: 577px) and (max-width: 768px) {
+            width: 70% !important;
+        }
+    }
+    .doctor-inner-detail {
+        @media screen and (min-width: 1400px) {
+            flex: 70%;
+            max-width: 70%;
+        } 
+
+        h3 {
+            font-size: 18px;
+            letter-spacing: 0.72px;
+            font-weight: 500;
+            color: $dark-gray;
+        }
+        h4 {
+            font-size: 14px;
+            color:$dark-gray-light;
+            letter-spacing: 0.84px;
+            font-weight: normal;
+        }
+    }
+    .doctor-inner-img {
+        @media screen and (min-width: 1100px) and (max-width: 1399px){
+            flex: 30%;
+            max-width: 30%;
+        }  
+        @media screen and (min-width: 1400px) {
+            flex: 30%;
+            max-width: 30%;
+        }       
+    }
+    .sec-2 {
+        .inner-sec-1 {
+            background: rgb(142,217,234);
+            background: linear-gradient(42deg, rgba(142,217,234,1) 6%, rgba(134,245,185,1) 95%);
+            min-height: 120px;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+
+            h1 {
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+                font-size: 40px;
+                font-weight: 500;
+            }
+            p {
+                font-size: 15px;
+                font-weight: 500;
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+            }
+        }
+        .inner-sec-2 {
+            background: rgb(170,145,212);
+            background: linear-gradient(-315deg, rgba(170,145,212,1) 1%, rgba(233,183,230,1) 100%);
+            min-height: 120px;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+
+            h1 {
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+                font-size: 40px;
+                font-weight: 500;
+            }
+            p {
+                font-size: 15px;
+                font-weight: 500;
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+            }
+        }
+        .inner-sec-3 {
+            background: rgb(115,196,255);
+            background: linear-gradient(-315deg, rgba(115,196,255,1) 1%, rgba(133,238,255,1) 97%);
+            min-height: 120px;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+
+            h1 {
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+                font-size: 40px;
+                font-weight: 500;
+            }
+            p {
+                font-size: 15px;
+                font-weight: 500;
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+            }
+        }
+    }
+    .sec-3 {
+        background-color: #fff;
+        min-height: 90px;
+        box-shadow: 0 0 9px 0 rgba(252, 109, 109, 0.59);
+
+        h2 {
+            font-size: 18px;
+        }
+        h4 {
+            font-size: 15px;
+        }
+
+        p {
+            font-size: 13px;
+            line-height: 16px;
+            letter-spacing: 0.39px;
+            color: #979faa;
+        }
+    }
+    .invite-doc {
+        background-color: $white;
+        height: 155px;
+
+        @media screen and (min-width: 1200px) and (max-width: 1215px) {
+            height: 183px;
+        }   
+        @media screen and (min-width: 1100px) and (max-width: 1215px) {
+            height: 175px;
+        }   
+
+        @media screen and (min-width: 1200px) and (max-width: 1600px) {
+            height: 170px;
+        }   
+        @media screen and (min-width: 768px) and (max-width: 1100px) {
+            height: 190px;
+        }   
+        @media screen and (min-width: 2000px) {
+            height: 165px;
+        }   
+
+        h4 {
+            color: $dark-gray;         
+            font-size: 13px;  
+        }
+        h3 {
+            color: $dark-gray;
+            font-size: 26px;
+        }
+        img {
+            width: 120px;
+        }
+        p {
+            color: $dark-gray-light;
+        }
+        button {
+            background-color: transparent;
+            border: 1px solid $primary-color;
+            border-radius: 20px;
+            font-size: 13px;
+            color: $primary-color;
+            height: auto;
+            padding: 3px 12px;
+            letter-spacing: 0.71px;
+
+            &:hover {
+                background-color: $primary-color;
+                border: 1px solid $primary-color;
+                color: $white;
+            }
+
+            span {
+                font-size: 16px;
+            }
+        }
+    }
+    .doctor-detail-sec {
+        background-color: $white;
+
+        @media screen and (max-width: 1599px) and (min-width:1200px) {
+            height: 172px;
+        }
+
+        @media screen and (max-width: 1200px) and (min-width:800px) {
+            height: 180px;
+        }
+
+        @media screen and (max-width: 2000px) and (min-width:1600px) {
+            height: 160px;
+        }
+
+        @media screen and (max-width: 2500px) and (min-width:2001px) {
+            height: 165px;
+        }
+        .doc-name {
+            color: $dark-gray-light;
+            font-size: 14px;
+        }
+        h4 {    
+            font-size: 14px;  
+            color: $dark-gray-light;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        h3 {
+            color: $dark-gray;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            @media screen and (min-width: 1201px) and (max-width:1600px){
+                width: 80px;
+                height: 80px;
+            } ;
+            height: 100px;
+        }
+        p {
+            color: $dark-gray-light;
+            font-size: 14px;
+        }
+        button {
+            background-color: transparent;
+            border: 1px solid $primary-color;
+            border-radius: 20px;
+            font-size: 13px;
+            color: $primary-color;
+            height: auto;
+            padding: 3px 12px;
+            letter-spacing: 0.71px;
+
+            &:hover {
+                background-color: $primary-color;
+                border: 1px solid $primary-color;
+                color: $white;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+        .invite-family-doc {
+            button {
+                background-color: transparent;
+                border: 1px solid $white;
+                border-radius: 20px;
+                font-size: 14px;
+                height: 28px;
+    
+                &:hover {
+                    background-color: #195979;
+                    border: 1px solid #195979;
+                }
+            }
+        }
+    }
+    .next-appoint-sec {
+        background-color:$primary-color ;
+        height: 175px;
+
+        @media screen and (max-width: 575px) {
+            min-height: 175px;
+            height: auto;
+        }
+
+        h3 {
+            font-size: 23px;
+            font-weight: 500;
+            letter-spacing: 0.92px;
+
+            @media screen and (max-width: 900px) {
+                font-size: 22px;
+            }
+
+        }
+        h4 {
+            font-size: 18px;
+            letter-spacing: 0.54px;
+            font-weight: normal;
+        }
+        button {
+            background-color: transparent;
+            border: 1px solid $white;
+            border-radius: 20px;
+            font-size: 15px;
+            height: 28px;
+            letter-spacing: 0.71px;
+            font-weight: normal;
+
+            &:hover {
+                background-color: #195979;
+                border: 1px solid #195979;
+            }
+
+            @media screen and (max-width: 400px) {
+                font-size: 13px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+        .button-wrap {
+            border-top: 1px solid #3885ab;
+        }
+        .video-cam {
+            width: 100%;
+        }
+    }       
+    .docotor-report {
+        ul {
+            height: 100px;
+            overflow: auto;
+        }
+    }
+
+    .docotor-report {
+        box-shadow: 0 0 9px 0 rgba(252, 109, 109, 0.59);
+        background-color: $white;   
+
+        h3 {
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 0.7px;
+            color: $dark-gray;
+        }
+
+        button {
+            background-color:$primary-color;
+            border:none;
+            border-radius: 20px;
+            font-size: 14px;
+            color: $white;
+            height: 30px; 
+            padding: 0px 15px 0px 10px;
+            letter-spacing: 0.71px;
+
+            @media screen and (max-width: 575px) {
+                height: 30px;
+                width: 80px;
+            }
+
+
+            &:hover {
+                background-color: $primary-color;
+                border:none;
+                color: $white;
+            }
+        }
+
+        ul {
+            height: 250px;
+            overflow: auto;
+            li {
+                display: flex;
+                align-items: center;
+                border-bottom: solid 1px #f1f4f8;
+                padding: 10px 0px;
+
+                .date-sec {
+                    color: $primary-color;
+                    font-size: 16px;
+                    font-weight: 500;
+                    border-right: 1px solid $primary-color;
+                }
+
+                .detail-by-name {                  
+                    font-size: 14px;
+                    color: $dark-gray !important;
+                    font-style: italic;
+                    font-weight: 500 !important;
+                }
+                .detail-sec {
+                    width: 86%;
+
+                    p {
+                        font-size: 14px;
+                        font-weight: 400;
+                        color: $dark-gray-light;
+                        letter-spacing: 0.94px;
+                    }
+                    .time-detail {
+                        color: $primary-color; 
+                        font-size: 12px;
+                        font-weight: normal;
+                    }                  
+                }
+                .icon-sec {
+                    color: $primary-color;                       
+                }
+            }
+        }
+    }
+
+    .upcoming-appoint-sec{
+        background-color: $white;   
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 0.7px;
+            color: $dark-gray;
+        }
+
+        button {
+            background-color:$primary-color;
+            border:none;
+            border-radius: 20px;
+            font-size: 14px;
+            color: $white;
+            height: 30px; 
+            padding: 0px 15px 0px 10px;
+            letter-spacing: 0.71px;
+
+            @media screen and (max-width: 575px) {
+                height: 30px;
+                width: 80px;
+            }
+
+
+            &:hover {
+                background-color: $primary-color;
+                border:none;
+                color: $white;
+            }
+        }
+
+        ul {
+            height: 250px;
+            overflow: auto;
+            li {
+                display: flex;
+                align-items: center;
+                border-bottom: solid 1px #f1f4f8;
+                padding: 10px 0px;
+
+                .date-sec {
+                    color: $primary-color;
+                    font-size: 16px;
+                    font-weight: 500;
+                    border-right: 1px solid $primary-color;
+                }
+
+                .detail-by-name {                  
+                    font-size: 14px;
+                    color: $dark-gray !important;
+                    font-style: italic;
+                    font-weight: 500 !important;
+                }
+                .detail-sec {
+                    width: 86%;
+
+                    p {
+                        font-size: 14px;
+                        font-weight: 400;
+                        color: $dark-gray-light;
+                        letter-spacing: 0.94px;
+                    }
+                    .time-detail {
+                        color: $primary-color; 
+                        font-size: 12px;
+                        font-weight: normal;
+                    }                  
+                }
+                .icon-sec {
+                    color: $primary-color;                       
+                }
+            }
+        }
+    }
+    .docotor-report {
+        box-shadow: 0 0 9px 0 rgba(60, 220, 103, 0.91);
+        ul {
+            height: 160px;
+            overflow: auto;
+
+            @media screen and (min-width: 1201px) and (max-width: 1600px) {
+                height: 185px;
+            }   
+
+            @media screen and (min-width: 800px) and (max-width: 1200px) {
+                height: 205px;
+            }   
+
+            @media screen and (min-width: 1100px) and (max-width: 1199px) {
+                height: 200px;
+            }   
+
+            @media screen and (min-width: 2000px) {
+                height: 170px;
+            }
+        }
+    }
+    .active-cases-sec {
+        ul {
+            height: 455px;
+
+            @media screen and (min-width: 1201px) and (max-width: 1600px) {
+                height: 480px;
+            }   
+
+            @media screen and (min-width: 2000px) {
+                height: 460px;
+            }
+        }
+    }
+    .messaged-sec-pat {
+        box-shadow: 0 0 9px 0 rgba(252, 109, 109, 0.59) !important;
+        height: 295px;
+
+        ul {
+            height: 210px;
+        }
+    }
+    .missed-appoint-sec {
+        height: 230px;
+
+        @media screen and (max-width: 2000px) and (min-width:1600px) {
+            height: 205px;
+        }
+
+        ul {
+            height: 180px;
+        }
+        .detail-sec {
+            width: 86%;
+        }
+    }
+    .missed-appoint-sec, .messaged-sec-pat {
+        box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+        background-color: $white;    
+        overflow: hidden;    
+        
+        ul {
+            overflow: auto;
+
+            li {
+                list-style: none;
+                border-bottom: 2px solid $light-gray;
+                padding: 10px 0px;
+
+                .date-sec {
+                    color: $primary-color;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border-right: 1px solid $primary-color;
+                }
+                .notes-detail-sec {
+                    p {
+                        font-size: 13px;
+                        line-height: 16px;
+                        letter-spacing: 0.39px;
+                        color:#979faa;
+                    }
+                    h2 {
+                        color: $dark-gray;
+                        font-size: 18px;
+                        letter-spacing: 0.54px;
+                    }
+                }
+                .icon-sec {
+                    color: #267399;                       
+                }                   
+                button {
+                    background-color: transparent;
+                    border: 1px solid $primary-color;
+                    border-radius: 20px;
+                    font-size: 14px;
+                    color: $primary-color;
+                    height: 28px;
+                    width: 80px;
+    
+                    &:hover {
+                        background-color: #1b5e80;
+                        border: 1px solid #1b5e80;
+                        color: $white;
+                    }
+    
+                    span {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+} 
+
+.message-para {
+    color: #979faa !important;
+}

@@ -1,0 +1,89 @@
+@import '../../../variables.scss';
+
+.inner-content-wrapper, .profile-detail-wrapper  {
+    min-height: 100vh;
+
+    .dr-profile {
+        width: 150px;
+        border-radius: 5px;
+        margin-top: 15px;
+    }
+    .left-sec {
+        word-break: break-word;
+    }
+    .appointment-btns {
+        span {
+            font-size: 14px;
+            margin-right: 2px;
+        }
+    }
+    .appointment-sec {
+        ul {
+            li {
+                .col-xl-8 {
+                    @media screen and (max-width: 1700px) and (min-width: 1200px){
+                        flex: 0 0 50%;
+                        max-width: 50%;
+                    }
+                }
+                .col-xl-4 {
+                    @media screen and (max-width: 1700px) and (min-width: 1200px){
+                        flex: 0 0 50%;
+                        max-width: 50%;
+                    }
+                }
+            }
+        }
+    }
+
+    .qualifications-sec {
+        p {
+            color: gray;
+            letter-spacing: 0.66px;
+            font-weight: 300;
+            word-break: break-word;
+        }
+        span {
+            font-weight: 400;
+            letter-spacing: 0.66px;
+            font-size: 16px;
+            color: $dark-gray;
+        }
+    }
+    .appointment-sec {
+        ul {
+            li {
+                .col-xl-9 {
+                    @media screen and (max-width: 1700px) and (min-width: 1200px){
+                        flex: 0 0 60%;
+                        max-width: 60%;
+                    }
+                }
+                .col-xl-3 {
+                    @media screen and (max-width: 1700px) and (min-width: 1200px){
+                        flex: 0 0 40%;
+                        max-width: 40%;
+                    }
+                }
+            }
+        }
+    }
+    
+    .view-details {
+
+        h2 {
+            font-size: 20px;
+            text-transform: capitalize;
+        }
+        p {
+            color: $gray;
+            font-weight: 300;
+            letter-spacing: 0.50px;
+
+            span {
+                color: $dark-gray;
+                font-weight: 400;
+            }
+        }
+    }
+}

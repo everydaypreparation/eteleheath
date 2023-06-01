@@ -1,0 +1,23 @@
+@import '../../../variables.scss';
+.footer-wrapper {
+
+    p {
+        font-size: 14px;
+        letter-spacing: 0.50px;
+    }
+    .footer-menu {
+        ul {
+            li {
+                display: inline-block;
+                padding: 0px 8px;
+                font-size: 14px;
+                font-weight: 400;
+                letter-spacing: 0.50px;
+    
+                a {
+                    color: $white;
+                }
+            }
+        }
+    }  
+}

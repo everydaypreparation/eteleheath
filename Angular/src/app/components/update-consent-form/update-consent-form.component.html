@@ -1,0 +1,76 @@
+<div class="container-fluid px-0 px-md-3 patient-form-wrapper pb-4">
+    <div class="col-12 col-sm-12 img-logo d-flex align-items-center justify-content-start px-0 py-2">
+        <img src="assets/images/emro-logo-white.svg" alt="logo-img" />
+    </div>
+    <div class="inner-content-wrapper mt-0 p-4 col-12">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="row mx-0 h-100">
+            <div class="col-12 payment-wrapper p-4">
+                <h3 class="mb-4"> {{consentFormsId ? 'Update Consent Form' : 'Add Consent Form'}} </h3>
+                <div class="row">
+                    <div class="col-12 col-sm-12 px-0">
+                        <div class="row mx-0 mb-sm-3">
+                            <div class="col-12 col-sm-6 col-lg-4 col-xl-4 mb-sm-3">
+                                <mat-form-field class="fields-mat">
+                                    <input matInput type="text" [(ngModel)]="form.title"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (keypress)="validatorPress($event, 'title')"
+                                        (input)="validatorPress($event, 'title')" />
+                                    <mat-placeholder class="placeholder">Title *</mat-placeholder>
+                                </mat-form-field>
+                                <div *ngIf="eR && eR.key == 'title'" class="err-msg-cls">
+                                    {{eR.message}}
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-4 col-xl-4 mb-sm-3">
+                                <mat-form-field class="fields-mat">
+                                    <input matInput type="text" [(ngModel)]="form.subTitle"
+                                        [ngModelOptions]="{standalone: true}" />
+                                    <mat-placeholder class="placeholder">Sub title</mat-placeholder>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-sm-12 col-lg-6 col-xl-6 mb-sm-6 consent-textarea">
+                                <mat-form-field class="fields-mat">
+                                    <textarea matInput type="text" [(ngModel)]="form.shortDescription"
+                                        [ngModelOptions]="{standalone: true}"></textarea>
+                                    <mat-placeholder class="placeholder"> Short Description </mat-placeholder>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-sm-12 col-lg-6 col-xl-6 mb-sm-6 consent-textarea">
+                                <mat-form-field class="fields-mat">
+                                    <textarea matInput type="text" [(ngModel)]="form.description"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (keypress)="validatorPress($event, 'description')"
+                                        (input)="validatorPress($event, 'description')">
+                                    </textarea>
+                                    <mat-placeholder class="placeholder">Description *</mat-placeholder>
+                                </mat-form-field>
+                                <div *ngIf="eR && eR.key == 'description'" class="err-msg-cls">
+                                    {{eR.message}}
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-lg-6 col-xl-6 mb-sm-6 consent-textarea">
+                                <mat-form-field class="fields-mat">
+                                    <textarea matInput type="text" [(ngModel)]="form.disclaimer"
+                                        [ngModelOptions]="{standalone: true}"></textarea>
+                                    <mat-placeholder class="placeholder"> Disclaimer </mat-placeholder>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 d-flex align-items-center justify-content-end pr-0">
+                <button class="submit-btn d-flex align-items-center justify-content-center mt-4" appDebounceClick
+                    [debounceTime]="400" (debounceClick)="submitFormClick()">
+                    Submit
+                    <span class="material-icons pl-2">
+                        keyboard_return
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

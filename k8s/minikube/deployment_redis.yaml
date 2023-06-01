@@ -1,0 +1,36 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: redis
+spec:
+  selector:
+      matchLabels:
+        app: redis
+  replicas: 1
+  template:
+      metadata:
+        labels:
+            app: redis
+      spec:
+        containers:
+        - name: redis
+          image: registry.emorphis.com/amit.agrawal/eteleheath/redis:4.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 6379
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+spec:
+  selector:
+    app: redis
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: 6379
+      nodePort: 30379
+  type: NodePort

@@ -1,0 +1,22 @@
+<span class="col-12 close-patient-modal" appDebounceClick [debounceTime]="400" (debounceClick)="onDismiss()">x</span>
+<div mat-dialog-content>
+
+  <h6>Enter Patient ID </h6>
+  <!-- <input matInput type="text" [(ngModel)]="reqDocForm.firstName"
+    [ngModelOptions]="{standalone: true}" (keypress)="validatorPress($event, 'firstName')"
+    (input)="validatorPress($event, 'firstName')" maxlength="40" />     -->
+  <mat-form-field class="fields-mat">
+    <input matInput type="text" maxlength="40" [(ngModel)]="searchPatientForm.patientId" />
+    <mat-placeholder class="placeholder">Patient ID</mat-placeholder>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="col-12 d-flex justify-content-center">
+  <button mat-button class="change-position align-items-center compose-tabs-btn justify-content-center d-flex"
+    appDebounceClick [debounceTime]="400" (debounceClick)="searchPatient()">
+    <span class="material-icons">
+      person_add_alt_1
+    </span>
+    <span class="text-invite pl-1">Add</span>
+  </button>
+</div>

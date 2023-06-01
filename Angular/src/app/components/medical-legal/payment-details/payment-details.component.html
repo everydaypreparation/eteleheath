@@ -1,0 +1,108 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper mt-0 pb-4 pr-4 pb-4 pl-4">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="row mx-0 payment-details">
+            <div class="col-12 sec-1 p-4">
+                <div class="row">
+                    <div
+                        class="col-12 col-sm-8 d-flex justify-content-center justify-content-sm-start align-items-center mb-4 mb-sm-0">
+                        <p class="mb-0"> ${{paymentDetails?.payAmount}} </p>
+                    </div>
+                    <div
+                        class="col-12 col-sm-4 d-flex justify-content-center justify-content-sm-end align-items-center">
+                        <button appDebounceClick [debounceTime]="400" (debounceClick)="printPaymentDetails()" class="print-btn d-flex align-items-center justify-content-center">
+                            <span class="material-icons mr-2">
+                                print
+                            </span>
+                            Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 sec-2 p-4 mt-4">
+                <h3> Payments Detail </h3>
+                <ul class="pl-0" *ngIf="verify == '1'">
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">Total Amount </div>
+                        <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3 "> <span>${{paymentDetails?.originalPayAmount}}</span> </div>
+                    </li>
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">Amount Paid </div>
+                        <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3 "><span>${{paymentDetails?.payAmount}}</span></div>
+                    </li>
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">Date </div>
+                        <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3 "><span>{{formatDateTimeToUTC(paymentDetails?.createdOn) | date: 'dd MMM, yyyy hh:mm a': userTimezone?.offset}} {{paymentDetails?.createdOn ? userTimezone?.abbr: ''}}</span></div>
+                    </li>
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">Status </div>
+                        <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3 "><span>{{paymentDetails?.status}}</span></div>
+                    </li>
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">Description </div>
+                        <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3"><span>{{paymentDetails?.description}}</span></div>
+                    </li>
+                </ul>
+                <ul class="pl-0" *ngIf="verify == '0'">
+                        <li class="d-block d-sm-flex align-items-center mb-3">
+                                <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">Order Id </div>
+                                <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3 "><span>{{paymentDetails?.paymentOrderId}}</span></div>
+                            </li>
+                            <li class="d-block d-sm-flex align-items-center mb-3">
+                                <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">payee Email Address </div>
+                                <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3"><span>{{paymentDetails?.payeeEmailAddress}}</span></div>
+                            </li>
+                        <li class="d-block d-sm-flex align-items-center mb-3">
+                            <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">Total Amount </div>
+                            <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3 "> <span>${{paymentDetails?.payAmount}}</span> </div>
+                        </li>
+                        <li class="d-block d-sm-flex align-items-center mb-3">
+                            <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">Currency Code </div>
+                            <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3 "><span>{{paymentDetails?.paymentCurrencyCode}}</span></div>
+                        </li>
+                        <li class="d-block d-sm-flex align-items-center mb-3">
+                            <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0 heading-text">Status </div>
+                            <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3 "><span>{{paymentDetails?.paymentStatus}}</span></div>
+                        </li>
+                        
+                    </ul>
+            </div>
+            <div class="col-12 sec-2 p-4 mt-4" *ngIf="verify == '1'">
+                <h3> Card </h3>
+                <ul class="pl-0">
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0">ID </div>
+                        <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3"> <span> **** **** **** {{paymentDetails?.cardNumber}}</span> </div>
+                    </li>
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0">Name </div>
+                        <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3"><span> {{paymentDetails?.nameOnCard}}</span></div>
+                    </li>
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0">Expires </div>
+                        <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3"><span>{{paymentDetails?.expirationMonth}}/{{paymentDetails?.expirationYear}}</span></div>
+                    </li>
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0">Type </div>
+                        <div class="col-12 col-sm-7 col-lg-3 pl-0 pl-sm-3"><span>{{paymentDetails?.cardType}}</span></div>
+                    </li>
+                    <li class="d-block d-sm-flex align-items-center mb-3">
+                        <div class="col-12 col-sm-5 col-lg-2 col-xl-1 pl-0">Origin </div>
+                        <div class="col-12 col-sm-7 col-lg-3 col-xl-2 pl-0 pl-sm-3"><span>{{paymentDetails?.cardOrigin}}
+                            <span class="flag-icon flag-icon-{{paymentDetails?.cardOrigin | lowercase }}"></span></span></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-12 d-flex justify-content-end mt-4 pr-0">
+                <button appDebounceClick [debounceTime]="400" (debounceClick)="paymentClick()" class="next-btn d-flex justify-content-center align-items-center">
+                    Submit
+                    <span class="material-icons">
+                        keyboard_arrow_right
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

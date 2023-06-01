@@ -1,0 +1,125 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper mt-0 pb-4 pr-4 pb-4 pl-4">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="row content-row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="profile-detail-wrapper rounded py-3">
+                    <div class="row mx-0">
+                        <div class="col-12 mb-3">
+                            <h6> Purpose of Consult * </h6>
+                            <textarea matInput placeholder="Purpose of Consult" [(ngModel)]="consultantReportBody.Purpose"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000">
+                            </textarea>
+                            <div *ngIf="eR && eR.key == 'purpose'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <h6> Review of History *</h6>
+                            <textarea matInput placeholder="Review of History" [(ngModel)]="consultantReportBody.ReviewOfHistory"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'reviewOfHistory'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <h6> Consult Notes *</h6>
+                            <textarea matInput placeholder="Consult Notes" [(ngModel)]="consultantReportBody.Notes"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'notes'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <h6> Past Medical History *</h6>
+                            <textarea matInput placeholder="Past Medical History"
+                                [(ngModel)]="consultantReportBody.PastMedicalHistory"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'pastMedicalHistory'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 mb-3">
+                            <h6> Allergies * </h6>
+                            <textarea matInput placeholder="Allergies" [(ngModel)]="consultantReportBody.Allergies"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'allergies'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <h6> Medications *</h6>
+                            <textarea matInput placeholder="Medications" [(ngModel)]="consultantReportBody.Medication"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'medication'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <h6> Social History *</h6>
+                            <textarea matInput placeholder="Social History" [(ngModel)]="consultantReportBody.SocialHistory"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'socialHistory'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <h6> Family History *</h6>
+                            <textarea matInput placeholder="Family History" [(ngModel)]="consultantReportBody.FamilyHistory"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'familyHistory'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <h6> Investigations * </h6>
+                            <textarea matInput placeholder="Investigations" [(ngModel)]="consultantReportBody.Investigation"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'investigation'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                       
+                        <div class="col-12 mb-3">
+                            <h6> Impression *</h6>
+                            <textarea matInput placeholder="Impression" [(ngModel)]="consultantReportBody.Impression"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'impression'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                       
+                        <div class="col-12 mb-3">
+                            <h6> Plan *</h6>
+                            <textarea matInput placeholder="Plan" [(ngModel)]="consultantReportBody.Plan"
+                                [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                            <div *ngIf="eR && eR.key == 'plan'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                       
+                        <div class="col-12 mb-3 signature-sec">
+                            <h6 class="px-0"> Signature *</h6>
+                            <signature-pad #signaturePad [options]="signaturePadOptions" (onBeginEvent)="validatorPress($event, 'signature')">
+                            </signature-pad>
+                            <div>
+                                <button class="clear-btn mt-1 mb-3" appDebounceClick [debounceTime]="400" (debounceClick)="clearSignature()"> Clear </button>
+                            </div>
+                            <div *ngIf="eR && eR.key == 'signature'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-end">
+                            <button class="submit-btn" appDebounceClick [debounceTime]="400" (debounceClick)="consultReportCancle()"> Cancel </button>
+                            <button class="submit-btn" appDebounceClick [debounceTime]="400" (debounceClick)="consultReportSave()"> Save </button>
+                            <button class="submit-btn" appDebounceClick [debounceTime]="400" (debounceClick)="consultReportSubmit()"> Submit </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

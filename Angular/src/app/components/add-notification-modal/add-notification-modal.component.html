@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-12">
+        <ng-template [ngIf]="!notificationId" [ngIfElse]="updateHeading">
+            <h5 class="pl-3 mb-3 send-notification-head"> Send Notification </h5>
+        </ng-template>
+        <ng-template #updateHeading>
+            <h5 class="pl-3 mb-3"> Update Notification </h5>
+        </ng-template>
+        <div class="col-12">
+            <div class="row mt-4">
+                <div class="col-12 mb-4 notification-modal">
+                    <ng-multiselect-dropdown class="multMain mul dropInd" [placeholder]="'To:'"
+                        [settings]="dropdownRoleSettings" [data]="roles" [(ngModel)]="selectedRoleItems">
+                    </ng-multiselect-dropdown>
+                    <span class="errorRoleMessage msgColor err-msg-cls pt-0 pb-2" *ngIf="selectedRoleItems?.length == 0"
+                        [ngStyle]="{'display':selectedRoleItems?.length == 0? 'none' : 'block'}"></span>
+                </div>
+                <div class="col-12 mb-4">
+                    <mat-form-field class="fields-mat">
+                        <input matInput type="text" [(ngModel)]="notificationBody.title"
+                            [ngModelOptions]="{standalone: true}" (keypress)="validatorPress($event, 'title')"
+                            (input)="validatorPress($event, 'title')" maxlength="30" />
+                        <mat-placeholder class="placeholder"> Title*</mat-placeholder>
+                    </mat-form-field>
+                    <div *ngIf="eR && eR.key == 'title'" class="err-msg-cls">
+                        {{eR.message}}
+                    </div>
+                </div>
+                <div class="col-12">
+                    <textarea placeholder="Message" [(ngModel)]="notificationBody.content"
+                        [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea>
+                    <div *ngIf="eR && eR.key == 'content'" class="err-msg-cls pt-0 pb-2">
+                        {{eR.message}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex align-items-center justify-content-end mt-0 mt-sm-4">
+            <button class="prev-btn d-flex justify-content-center align-items-center mr-4" appDebounceClick
+                [debounceTime]="400" (debounceClick)="onDismiss()">
+                Cancel
+            </button>
+            <ng-template [ngIf]="!notificationId" [ngIfElse]="updateButtonShow">
+                <button class="next-btn d-flex justify-content-center align-items-center" appDebounceClick
+                    [debounceTime]="400" (debounceClick)="saveNotification()">
+                    Save
+                </button>
+            </ng-template>
+            <ng-template #updateButtonShow>
+                <button class="next-btn d-flex justify-content-center align-items-center" appDebounceClick
+                    [debounceTime]="400" (debounceClick)="updateNotification()">
+                    Update
+                </button>
+            </ng-template>
+        </div>
+    </div>
+</div>

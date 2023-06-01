@@ -1,0 +1,117 @@
+@import '../../../../variables.scss';
+
+.left-bar {
+    ul {
+        li {
+            margin: 10px 0px;
+            height: 35px;
+            &:hover {
+                background-color: $light-gray;
+                cursor: pointer;
+                border-radius: 30px;
+                height: 35px;
+            }
+        }
+    }
+    .compose-button {
+        background-color: $primary-color;
+        color: $white;
+        border: 0px;
+        box-shadow: -2px 6px 21px -10px rgba(0, 0, 0, 0.63);
+        border-radius: 30px;
+        cursor: pointer;
+        padding: 8px 18px;
+        width: 100%;
+
+        &:hover {
+            background-color: #1e6283;
+        }
+
+        .flaticon-plus {
+            font-size: 14px;
+            vertical-align: bottom;
+            margin-top: -1px;
+        }
+        
+    }
+    .inbox-btn {
+        background-color: transparent;
+        color: $dark-gray;
+        border: 0px;
+        margin: 5px 0px;
+        padding: 0px 10px;
+        width: 100%;
+
+        span {
+            font-size: 20px;
+        }
+    }
+}
+.inbDelete {  
+
+    span.material-icons {
+        font-size: 20px;
+        color: $primary-color;
+        margin-left: 10px;
+        margin-right: 3px;
+    }
+}
+.mailsubject {
+    p {
+        display: inline;
+        margin-right: 5px;
+        font-weight: 400;
+    }
+}
+.uploading-item {
+    background-color: #f4f4f4;
+    padding: 3px 12px;
+    border-radius: 30px;
+    font-size: 14px;
+}
+.submit-btn {
+    border-radius: 31px;
+    background-color: $primary-color;
+    border-color:$primary-color;
+    font-family: $font-roboto;
+    color: $white;
+    border: 0px;
+    margin-left: 10px;
+    letter-spacing: 0.85px;
+    padding: 7px 14px;
+    cursor: pointer;
+
+
+    &:hover {
+        background-color: #1e6283;
+    }
+}   
+textarea {
+    border-radius: 30px;
+    border: solid 1px #f1f4f8;
+    font-size: 14px !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+    background: #fff;
+    height: 48px;
+    padding-top: 9px;
+    padding-left: 12px;
+    min-height: 200px;
+    width: 100%;
+
+    &::placeholder  {
+        color: $placeholder;
+        letter-spacing: 0.66px;
+    }
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.selectedLeftBar{
+    background-color: $light-gray !important;
+    cursor: pointer;
+    border-radius: 30px;
+    height: 35px;
+    width: 100%;    
+}

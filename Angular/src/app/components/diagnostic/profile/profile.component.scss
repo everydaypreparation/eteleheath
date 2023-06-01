@@ -1,0 +1,77 @@
+@import '../../../../variables.scss';
+
+.profile-upload {
+  img {
+    width: 150px;
+    border-radius: 8px;
+  }
+}
+
+.hoverable {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  // height: 200px;
+  width: 150px;
+  //border: 5px solid #000;
+  border-radius: 50%;
+}
+
+.hoverable .hover-text {
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 23%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.hoverable .background {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 1;
+  height: 114px;
+  width: 114px;
+}
+
+// .hoverable:hover .hover-text{
+//   display: block;
+// }
+.hoverable:hover .background {
+  display: block;
+}
+
+#fileInput {
+  display: none;
+}
+
+.errorMsg {
+  display: none;
+  color: red;
+  font-size: 14px;
+  letter-spacing: 0.66px;
+}
+
+.ico-upload {
+  width: 39px;
+  position: absolute;
+  right: -14px;
+  bottom: 0;
+  background: #fff;
+  padding: 7px 8px;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+  color: $primary-color;
+
+  &:hover {
+    background-color: $primary-color;
+    color: $white;
+  }
+}    

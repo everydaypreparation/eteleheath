@@ -1,0 +1,79 @@
+<div class="container-fluid" *ngIf="showContent">
+    <div class="row">
+        <div class="col-12 inner-content-wrapper mt-0 p-4">
+            <div class="col-8 mx-auto survey-form-wrapper px-0" *ngIf="!showThanks">
+                <div class="heading-wrapper p-4">
+                    <h1> Survey</h1>
+                    <p> We would like to hear about your experience using the ETeleHealth platform. Please take a minute to
+                        complete our survey. Your
+                        feedback is very much appreciated.
+                    </p>
+                </div>
+
+                <div class="questions-sec p-4">
+                    <ul class="px-4">
+                        <ng-container *ngFor="let question of questions; let i=index">
+                            <li *ngIf="question.questionType == 'INPUT'">
+                                <h6>
+                                    <span> Q{{i+1}}. </span>
+                                    {{question.questionText}}
+                                </h6>
+                                <textarea placeholder="Your Answer" [(ngModel)]="question.answers"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (keypress)="validatorPress($event, question, option)"
+                                    (input)="validatorPress($event, question, option)" maxlength="2000"></textarea>
+                            </li>
+                            <li *ngIf="question.questionType == 'SINGLE_CHOICE'">
+                                <h6>
+                                    <span> Q{{i+1}}. </span>
+                                    {{question.questionText}}
+                                </h6>
+                                <mat-radio-group class="mat-radio-btn">
+                                    <ng-container
+                                        *ngFor="let option of question.options; let i=index; let f=first;let l=last;">
+
+                                        <!-- <div> -->
+                                        <mat-radio-button [value]="option" class="pr-3"
+                                            (change)="onChanged($event, question, option)">{{option}}
+                                        </mat-radio-button>
+                                        <!-- </div> -->
+                                    </ng-container>
+                                </mat-radio-group>
+                            </li>
+                            <li *ngIf="question.questionType == 'MULTI_CHOICE'">
+                                <h6>
+                                    <span> Q{{i+1}}. </span>
+                                    {{question.questionText}}
+                                </h6>
+                                <ng-container
+                                    *ngFor="let option of question.options; let i=index; let f=first;let l=last;">
+                                    <div class="d-flex align-items-center checkbox-field mt-3">
+                                        <label class="label-field">
+                                            <input type="checkbox" (change)="onChanged($event, question, option)">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <p>{{option}}</p>
+                                    </div>
+                                </ng-container>
+                            </li>
+                        </ng-container>
+                        <div *ngIf="errObj.isError" class="err-msg-s-cls">
+                            {{errObj.errMsg}}
+                        </div>
+                    </ul>
+                    <div class="col-12 d-flex align-items-center justify-content-end">
+                        <button class="submit-button" (click)="submitClk()"> Submit </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 mx-auto survey-form-wrapper px-0" *ngIf="showThanks">
+                <div class="heading-wrapper p-4">
+                    <h1> Thank You</h1>
+                    <p> Your feedback is very much appreciated.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!showContent" class="cntn-lyr-cls"></div>

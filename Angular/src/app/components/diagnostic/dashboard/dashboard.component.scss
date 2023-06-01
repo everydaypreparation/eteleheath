@@ -1,0 +1,16 @@
+.top-logo {
+    min-height: 40vh;
+
+    a {
+        width: 270px;
+    }
+}
+
+.outer-dashboard {
+    min-height: auto;
+}
+#dashboard-wrapper {
+    .outer-dashboard {
+        min-height: auto;
+    }
+}

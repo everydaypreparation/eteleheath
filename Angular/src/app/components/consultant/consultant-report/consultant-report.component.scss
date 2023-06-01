@@ -1,0 +1,56 @@
+@import '../../../../variables.scss';
+
+.content-row {
+    min-height: 100vh;
+    .profile-detail-wrapper {
+
+   
+        textarea {
+            border-radius: 30px;
+            border: solid 1px #f1f4f8;
+            font-size: 14px !important;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+            background: #fff;
+            padding-top: 9px;
+            padding-left: 12px;
+            min-height: 90px;
+            width: 100%;
+        
+            &::placeholder  {
+                color: $placeholder;
+                letter-spacing: 0.66px;
+            }
+        }
+        h6 {
+            // padding-left: 15px;
+            color: $dark-gray;
+            font-weight: 500;
+            letter-spacing: 0.66px;
+        }
+        .submit-btn {
+            border-radius: 31px;
+            background-color: $primary-color;
+            border-color:$primary-color;
+            font-family: $font-roboto;
+            color: $white;
+            border: 0px;
+            width: 120px;
+            margin-left: 10px;
+            letter-spacing: 0.85px;
+        }
+        .clear-btn {
+            background-color: transparent;
+            border: 1px solid $primary-color;
+            color: $primary-color;
+            width: 100px;
+            border-radius: 30px;
+            margin-top: 25px;
+
+            &:hover {
+                background-color: $primary-color;
+                color: $white;
+            }
+        }
+    }
+}
+

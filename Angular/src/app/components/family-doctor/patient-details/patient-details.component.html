@@ -1,0 +1,336 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper patient-details  mt-0 pb-4 pr-4 pb-4 pl-4">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-4">
+                <div class="row mx-0 doctor-patient-sec text-white rounded p-3 align-items-center w-100 h-100">
+                    <div
+                        class="col-12 col-sm-3 col-md-3 col-xl-3 doctor-inner-img d-flex align-items-center justify-content-center">
+                        <img [src]="profileUrl ? profileUrl : 'assets/images/user-default.svg'" />
+                    </div>
+                    <div
+                        class="col-12 col-sm-9 col-md-9 col-xl-9 doctor-patient-detail text-center text-sm-left align-items-center d-flex">
+                        <div class="w-100">
+                            <h3 class="mb-2 mt-2 mt-sm-0"> {{appointmentDetails?.firstName}}
+                                {{appointmentDetails?.lastName}} </h3>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-xl-12 right-doc-detail">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <p>
+                                                <strong>Patient ID:</strong>
+                                                {{appointmentDetails?.id}}
+                                            </p>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <p>
+                                                <strong>Gender:</strong> {{appointmentDetails?.gender}}
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p>
+                                                <strong>Telephone:</strong>
+                                                {{appointmentDetails?.telePhone | mask: '(000) 000-0000'}}
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p>
+                                                <strong>DOB:</strong>
+                                                {{appointmentDetails?.dateOfBirth | date: 'dd-MMM-yyyy'}}
+                                                {{(appointmentDetails?.dateOfBirth) ? '(' + appointmentDetails.age + ' Years)' : ''}}
+                                            </p>
+                                        </div>
+                                        <!-- <div class="col-12">
+                                                    <span>Email:</span> {{appointmentDetails?.emailID}}
+                                                </div> -->
+                                        <div class="col-12">
+                                            <p>
+                                                <strong>Address:</strong> {{appointmentDetails?.address}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xl-4 mt-4 mt-xl-0 AI-summary-sec">
+                <img src="assets/images/AI-BG.png" alt="video-cam" class="ai-img w-100 h-100">
+            </div>
+            <div class="col-12 col-md-12 col-lg-6 col-xl-4 mt-4 mt-lg-4 m-xl-0">
+                <div class="col-12 px-0 upcoming-appoint-sec rounded pb-0 pb-sm-2">
+                    <div class="row mx-0 mb-3">
+                        <div class="col-8 pl-0">
+                            <h3 class="pt-2 px-3 mb-0"> Consultant Reports </h3>
+                        </div>
+                        <!-- <div class="col-4 d-flex justify-content-end align-items-end">
+                                <button class="d-flex align-items-center icon-btn justify-content-center mt-2">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                    Create
+                                </button>
+                            </div> -->
+                    </div>
+                    <ul #consultantReportUl class="px-3 mb-0" (scroll)="scrollHandler($event,'consultantReport')">
+                        <li *ngFor="let report of consultantReports" class="d-flex align-items-center">
+                            <div class="date-sec text-center pr-2">
+                                <ng-template [ngIf]="!report?.appointmentDate" [ngIfElse]="updateButtonShow">
+                                    <span class="mr-1 material-icons remove-pointer" title="Book Later" appDebounceClick
+                                        [debounceTime]="400">
+                                        event_available
+                                    </span>
+                                </ng-template>
+                                <ng-template #updateButtonShow>
+                                    {{formatDateTimeToUTC(report?.appointmentDate) | date: 'dd' :
+                                            userTimezone?.offset}}<br />
+                                    {{formatDateTimeToUTC(report?.appointmentDate) | date: 'MMM':
+                                            userTimezone?.offset}}
+                                </ng-template>
+                            </div>
+                            <div class="detail-sec pl-2">
+                                <p class="mb-0">Patient: {{report.patientName}}, Consultant: {{report.doctorName}}</p>
+                            </div>
+                            <div class="ext-right icon-sec d-flex align-items-center justify-content-end">
+                                <img src="assets/images/pdf.svg" alt="pdf-ico" appDebounceClick [debounceTime]="400"
+                                    (debounceClick)="downloadReport(report.consultId)" class="report-download"
+                                    title="Download" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xl-4">
+                <div class="row mx-0 next-appoint-sec text-white rounded p-3">
+                    <div class="col-12 col-sm-8 pl-0">
+                        <h3 class="mb-0 no-app-cls" *ngIf="!nextAppointment"> No Appointment </h3>
+                        <!-- <h3 class="mb-0" *ngIf="nextAppointment"> Next Appointment </h3> -->
+                        <h4 class="pt-1 pt-sm-3">
+                            {{formatDateTimeToUTC(nextAppointment?.slotStartTime) | date: 'MMMM dd, yyyy':
+                            userTimezone?.offset}}
+                        </h4>
+                        <h4 class="mb-4">
+                            {{formatDateTimeToUTC(nextAppointment?.slotStartTime) | date: 'h:mm a':
+                            userTimezone?.offset}}
+                            {{nextAppointment?.appointmentId ? userTimezone?.abbr: ''}} </h4>
+                        <!-- <ng-template [ngIf]="nextAppointment?.isBookingResechdule">
+                                <span class="d-flex align-items-center button-wrap">
+                                    <button class="d-flex align-items-center text-white mt-3"
+                                        appDebounceClick [debounceTime]="400" (debounceClick)="rescheduleClick(nextAppointment?.appointmentId, nextAppointment?.doctorId)">
+                                        <span class="material-icons text-white pr-1">
+                                            update
+                                        </span>
+                                        Reschedule
+                                    </button>
+                                    <button class="d-flex align-items-center ml-2 text-white mt-3"
+                                        appDebounceClick [debounceTime]="400" (debounceClick)="cancelClick(nextAppointment?.appointmentId)">
+                                        <span class="material-icons text-white pr-1">
+                                            highlight_off
+                                        </span>
+                                        Cancel
+                                    </button>
+                                </span>
+                            </ng-template> -->
+                    </div>
+                    <div
+                        class="col-12 col-sm-4 d-flex align-items-center justify-content-start justify-content-sm-center">
+                        <img src="assets/images/white-video.png" alt="video-cam" class="video-cam">
+                        <!-- <ng-template [ngIf]="nextAppointment?.isJoinMeeting" [ngIfElse]="disableImgApply">
+                                <img *ngIf="nextAppointment?.meetingId === undefined || nextAppointment?.meetingId === null || nextAppointment?.meetingId === ''"
+                                    src="assets/images/white-video.png" alt="video-cam" class="w-100">
+                                <a *ngIf="nextAppointment?.meetingId !== undefined && nextAppointment?.meetingId !== null && nextAppointment?.meetingId !== ''"
+                                    appDebounceClick [debounceTime]="400" (debounceClick)="gotoSamvaad(nextAppointment?.appointmentId, nextAppointment?.meetingId, nextAppointment?.Title, nextAppointment?.patientId, nextAppointment?.roleName)"
+                                    target="_blank"><img src="assets/images/samvaad.png" style="cursor: pointer;"
+                                        alt="Video Conference" class="w-100"></a>
+                            </ng-template>
+                            <ng-template #disableImgApply>
+                                <img src="assets/images/white-video.png" alt="video-cam" class="w-100">
+                            </ng-template> -->
+                    </div>
+                </div>
+                <div class="row mx-0 doctor-detail-sec text-white rounded p-3 mt-4 mb-sm-4">
+                    <div class="col-12 px-0">
+                        <p class="mb-1 text-center text-sm-left"> Consultant </p>
+                    </div>
+                    <div
+                        class="col-12 col-sm-4 col-md-3 col-xl-3 doctor-inner-img d-flex align-items-center align-items-sm-start justify-content-center">
+                        <img [src]="consultantProfileUrl ? consultantProfileUrl : 'assets/images/user-default.svg'" />
+                    </div>
+                    <div
+                        class="col-12 col-sm-8 col-md-9 col-xl-9 doctor-inner-detail pl-2 text-center text-sm-left invite-family-doc">
+                        <h3 class="mt-2 mt-sm-0"> {{appointmentDetails?.doctorTitle}}
+                            {{appointmentDetails?.doctorFirstName}} {{appointmentDetails?.doctorLastName}} </h3>
+                        <h4 class="mb-2"> {{appointmentDetails?.doctorSpecialty}} </h4>
+                        <h4 class="mb-2"> {{appointmentDetails?.hospitalName}} </h4>
+                        <span class="d-flex align-items-center justify-content-center justify-content-sm-end">
+                            <ng-template [ngIf]="appointmentDetails?.doctorId" [ngIfElse]="disableEmail">
+                                <button class="d-flex align-items-center justify-content-center icon-btn"
+                                    appDebounceClick [debounceTime]="400"
+                                    (debounceClick)="setEmailReply(appointmentDetails?.doctorId)">
+                                    <span class="material-icons pr-1">
+                                        mail_outline
+                                    </span>
+                                    Email
+                                </button>
+                            </ng-template>
+                            <ng-template #disableEmail>
+                                <button class="d-flex align-items-center justify-content-center icon-btn">
+                                    <span class="material-icons pr-1">
+                                        mail_outline
+                                    </span>
+                                    Email
+                                </button>
+                            </ng-template>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xl-4 mt-4 mt-sm-0">
+                <div class="docotor-report rounded mb-4">
+                    <div class="row mx-0 mb-3 mb-sm-0">
+                        <div class="col-7 col-sm-5 patient-rec-head">
+                            <h3 class="pt-3"> Patient Records </h3>
+                            <!-- <span class="reportSize">(Small)</span> -->
+                        </div>
+                        <div
+                            class="col-5 col-sm-7 d-flex justify-content-center justify-content-sm-end align-items-center right-btn-wrapper">
+                            <!-- <button class="d-flex align-items-center req-btn justify-content-center">
+                                    <span class="material-icons pr-1">
+                                        account_circle
+                                    </span>
+                                    Request test
+                                </button> -->
+                            <button *ngIf="patientId" appDebounceClick [debounceTime]="400"
+                                (debounceClick)="patientRecordUploadClick()"
+                                class="d-flex align-items-center icon-btn justify-content-center ml-2">
+                                <span class="material-icons">
+                                    upgrade
+                                </span>
+                                Upload
+                            </button>
+                        </div>
+                    </div>
+                    <ul #patientRecordsUl class="px-3 mb-0" (scroll)="scrollHandler($event,'patientRecords')">
+                        <li *ngFor="let patientRecord of patientRecords">
+                            <div class="d-flex align-items-center w-100">
+                                <div class="date-sec text-center pr-2">
+                                    {{formatDateTimeToUTC(patientRecord?.documentDate) | date: 'dd' : userTimezone?.offset}}<br />
+                                    {{formatDateTimeToUTC(patientRecord?.documentDate) | date: 'MMM' : userTimezone?.offset}}
+                                </div>
+                                <div class="detail-sec pl-2">
+                                    <p class="mb-1">
+                                        {{patientRecord.documentName}}</p>
+                                    <p class="mb-0 detail-by-name"
+                                        *ngIf="loginUserId != patientRecord?.uploadedBy &&  patientRecord?.roleName">by
+                                        {{patientRecord?.roleName}}</p>
+                                </div>
+                                <div class="pl-3 text-right icon-sec d-flex align-items-center pr-2">
+                                    <span class="material-icons pr-1" *ngIf="loginUserId == patientRecord?.uploadedBy"
+                                        appDebounceClick [debounceTime]="400"
+                                        (debounceClick)="deleteDocumentById(patientRecord?.documentId)">
+                                        delete_outline
+                                    </span>
+                                    <img src="{{patientRecord?.documentExtension}}" alt="pdf-ico"
+                                        class="cp report-download" appDebounceClick [debounceTime]="400"
+                                        (debounceClick)="patientRecordOpenDocClick(patientRecord?.documentId)"
+                                        title="View Document" />
+                                </div>
+                            </div>
+                            <!-- <div class="detail-sec pl-2">
+                                        <p class="mb-0">by {{patientRecord?.roleName}}</p>
+                                </div> -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-4">
+                <div class="messaged-sec">
+                    <mat-tab-group (selectedTabChange)="onTabChange($event)">
+                        <mat-tab label="Messages">
+                            <ul #messagesUl class="px-3 mb-0 mt-3 tabs-ul" (scroll)="scrollHandler($event,'messages')">
+                                <li *ngFor="let userEmail of userEmails; let i=index">
+                                    <div class="detail-sec pl-2">
+                                        <div class="row mb-3">
+                                            <div class="col-6">
+                                                <h4 class="mb-0">{{userEmail?.firstName}} {{userEmail?.lastName}}</h4>
+                                            </div>
+                                            <div class="col-6 d-flex justify-content-end">
+                                                <p> {{formatDateTimeToUTC(userEmail?.mailDateTime) | date: 'MMM dd, yyyy
+                                                    hh:mm a': userTimezone?.offset}}
+                                                    {{userTimezone?.abbr}} </p>
+                                            </div>
+                                        </div>
+                                        <p class="text-justify" [innerHTML]="userEmail?.messagesText">
+                                        </p>
+                                    </div>
+                                    <div class="d-flex justify-content-end"
+                                        *ngIf="userEmail?.senderUserIds != loginUserId">
+                                        <button class="d-flex align-items-center ml-2 mt-3 justify-content-center"
+                                            appDebounceClick [debounceTime]="400"
+                                            (debounceClick)="setReplyCurrentMailId(userEmail?.emailId,userEmail?.subject)">
+                                            <span class="material-icons pr-1">
+                                                reply
+                                            </span>
+                                            Reply
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </mat-tab>
+                        <mat-tab label="Notes">
+                            <ul #notesUl class="px-3 mb-0 mt-3" (scroll)="scrollHandler($event,'notes')">
+                                <li *ngFor="let note of notes; let i=index" class="notes-list">
+                                    <div class="detail-sec pl-2">
+                                        <div class="row mb-3">
+                                            <div class="col-12 d-flex justify-content-end">
+                                                <p> {{formatDateTimeToUTC(note?.noteDate) | date: 'MMM dd, yyyy hh:mm
+                                                    a': userTimezone?.offset}}
+                                                    {{userTimezone?.abbr}} </p>
+                                            </div>
+                                        </div>
+                                        <span class="table-border">
+                                            <p class="text-justify notes-sub-list" [innerHTML]="note?.notes">
+
+                                            </p>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </mat-tab>
+                    </mat-tab-group>
+                    <button *ngIf="selectedTab == 'Messages'"
+                        class="align-items-center compose-tabs-btn justify-content-center d-none d-sm-flex"
+                        appDebounceClick [debounceTime]="400" (debounceClick)="composeMessage()" title="Compose">
+                        <span class="material-icons">
+                            add
+                        </span>
+                        <span class="text-note">Compose</span>
+                    </button>
+                    <button *ngIf="selectedTab == 'Notes'"
+                        class="align-items-center compose-tabs-btn justify-content-center d-none d-sm-flex"
+                        appDebounceClick [debounceTime]="400" (debounceClick)="addNote()" title="Notes">
+                        <span class="material-icons">
+                            add
+                        </span>
+                        <span class="text-note">Note</span>
+                    </button>
+                    <!-- <button mat-menu-item class="compose-tabs-btn dropdown-header msg-dropdown d-flex align-items-center" appDebounceClick [debounceTime]="400" (debounceClick)="composeMessage()">
+                                <span class="material-icons mt-1">
+                                    message
+                                </span>
+                            </button>
+                            <button mat-menu-item class="note-tabs-btn dropdown-header msg-dropdown d-flex align-items-center" appDebounceClick [debounceTime]="400" (debounceClick)="addNote()">
+                                <span class="material-icons mt-1">
+                                    notes
+                                </span>
+                            </button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

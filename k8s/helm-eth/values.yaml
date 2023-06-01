@@ -1,0 +1,122 @@
+# Default values for myapi-chart.
+# This is a YAML-formatted file.
+redis:
+  name: redis
+  image:
+    name: registry.emorphis.com/amit.agrawal/eteleheath/redis
+    imagePullPolicy: IfNotPresent
+    tag: "4.0"
+    targetPort: 6379
+    nodePort: 30379
+
+  replicas: 1
+    
+  service:
+    type: NodePort
+
+portal:
+  name: portal
+
+  image:
+    name: registry.emorphis.com/amit.agrawal/eteleheath/portal
+    imagePullPolicy: IfNotPresent
+    tag: latest
+    targetPort: 80
+    nodePort: 30420
+
+  replicas: 1
+  env:
+    NODE_ENV: production
+    EMRO_PAYPAL_CLIENT_ID: Aa-tqrGgg29jyM7v6tKkIdK89NpZsLq4MtdtTrfse89mVfayYPV-_BDRw3wyAmgZNX7x2yEc8uV_is2Y
+    EMRO_GOOGLE_MAP_KEY: AIzaSyDgr_7V9SLRItD1SGgePa1dw0p7NaR0DT0
+    EMRO_WEATHER_API: https://api.openweathermap.org/data/2.5/weather?q=
+    EMRO_WEATHER_API_KEY: 32838566376f685b3ad9e56e751f08de
+    EMRO_SELLER_ID: sb-pj6bp5145300@business.example.com
+    EMRO_BASE_URL: http://192.168.49.2:30431/api/
+    EMRO_HOST_URL: http://portal
+    EMRO_SIGNAL_R_URL: http://192.168.49.2:30431/signalr
+
+  service:
+    type: NodePort
+
+appserver:
+  name: appserver
+
+  image:
+    name: registry.emorphis.com/amit.agrawal/eteleheath/api
+    imagePullPolicy: IfNotPresent
+    tag: latest
+    targetPort: 21021
+    nodePort: 30431
+
+  replicas: 1
+
+  env:
+    ASPNETCORE_ENVIRONMENT: Production
+    ConnectionStrings__Default: "Host=postgresql;Port=5432;Database=EMRONewDB;User Id=postgres;Password=password;"
+    App__ServerRootAddress: "http://0.0.0.0:21021/"
+    # App__ServerRootAddress=http://192.168.49.2:30431/
+    # App__ClientRootAddress=http://192.168.49.2:30420/
+    App__CorsOrigins: "http://portal,http://portal:30420,http://appserver:21021,http://appserver:30431,http://localhost:21021,http://192.168.49.2:30420,http://192.168.49.2:30431"
+    Abp__RedisCache__ConnectionString: "redis:6379"
+    Kestrel__Endpoints__Http__Url: "http://appserver:21021/"
+    App__ClientRootAddress: "http://portal/"
+    SamvaadParams__API_URL: "http://samvaad.emorphis.com/bigbluebutton/api/"
+    SamvaadParams__API_SECRET: "rl8hWlTuwnxkmlFJU2NoQ3DZ0S0RcySSdnlQEC1mVvI"
+    SamvaadParams__SamvaadMeetingParams__name: "ETeleHealth Meeting"
+    SamvaadParams__SamvaadMeetingParams__logoutURL: "http://portal/#/meeting/logout"
+    PORTAL_URL: "http://portal"
+    # - PORTAL_URL=https://portaleth.emorphis.com
+    ConsultFee__Amount: 350
+    SmtpSettings__Server: smtp.gmail.com
+    SmtpSettings__Port: 587
+    SmtpSettings__SenderName: ETeleHealth Emorphis
+    SmtpSettings__SenderEmail: web@emorphis.com
+    SmtpSettings__Username: web@emorphis.com
+    SmtpSettings__Password: Admin@420
+    UplodedFilePath__IsBlob: false
+
+  service:
+    type: NodePort
+
+postgresql:
+  name: postgresql
+
+  image:
+    name: registry.emorphis.com/amit.agrawal/eteleheath/postgres
+    imagePullPolicy: IfNotPresent
+    tag: 11
+    targetPort: 5432
+    nodePort: 30432
+
+  replicas: 1
+  env:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: password
+    POSTGRES_DB: postgres
+    PGDATA: /var/lib/postgresql/data/pgdata
+  volumeMounts:
+    name: postgres-data
+    mountPath: /var/lib/postgresql/data
+  volumes:
+    name: postgres-data
+    claimName: postgres-data
+  postgresPVC:
+    name: postgre
+    accessModes: ReadWriteOnce
+    storageSize: 1Gi
+     
+  service:
+    type: NodePort
+
+  
+
+
+
+
+
+
+
+
+
+

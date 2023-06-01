@@ -1,0 +1,583 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper mt-0 pb-4 pr-4 pb-4 pl-4">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="row mx-0 payment-details">
+            <div class="col-12 sec-1 px-0 pb-4">
+                <mat-tab-group #tabs>
+                    <mat-tab label="Personal info">
+                        <div class="p-4 m-h-75">
+                            <mat-radio-group class="mat-radio-btn">
+                                <mat-radio-button value="patient" [checked]="patientInputShown" class="pr-3"
+                                    (change)="radioChange('patient')">Are you a Patient
+                                </mat-radio-button>
+                                <mat-radio-button value="representative" [checked]="representativeInputShown"
+                                    class="pr-3" (change)="radioChange('representative')">Are you a Patient
+                                    Representative</mat-radio-button>
+                            </mat-radio-group>
+                            <h3 class="mt-3 mb-3"> Let's start with the basic information</h3>
+                            <div class="col-12 col-lg-10 col-xl-8 px-0">
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-lg-8 col-xl-10 px-0">
+                                        <div class="row mx-0 mb-sm-3">
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="intakeForm.FirstName"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (keypress)="validatorPress($event, 'firstName')"
+                                                        (input)="validatorPress($event, 'firstName')" maxlength="40" />
+                                                    <mat-placeholder class="placeholder">First Name *</mat-placeholder>
+                                                </mat-form-field>
+                                                <div *ngIf="eR && eR.key == 'firstName'" class="err-msg-cls">
+                                                    {{eR.message}}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="intakeForm.LastName"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (keypress)="validatorPress($event, 'lastName')"
+                                                        (input)="validatorPress($event, 'lastName')" maxlength="40" />
+                                                    <mat-placeholder class="placeholder">Last Name *</mat-placeholder>
+                                                </mat-form-field>
+                                                <div *ngIf="eR && eR.key == 'lastName'" class="err-msg-cls">
+                                                    {{eR.message}}
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput #dob [(ngModel)]="intakeForm.EmailID"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (keypress)="validatorPress($event, 'email')"
+                                                        (input)="validatorPress($event, 'email')" maxlength="50" />
+                                                    <mat-placeholder class="placeholder">Email *</mat-placeholder>
+                                                </mat-form-field>
+                                                <div *ngIf="eR && eR.key == 'email'" class="err-msg-cls">
+                                                    {{eR.message}}
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                        <div class="row mx-0 mb-sm-3">
+                                            <!-- <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="intakeForm.TelePhone"
+                                                        [ngModelOptions]="{standalone: true}" mask="(000) 000-0000"
+                                                        [specialCharacters]="['(', ' ', '-', ')']" inputDigitsOnly />
+                                                    <mat-placeholder class="placeholder">Phone</mat-placeholder>
+                                                </mat-form-field>
+                                            </div> -->
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field appearance="fill" class="dropdown-field">
+                                                    <mat-label class="label-field">Gender</mat-label>
+                                                    <mat-select [(ngModel)]="intakeForm.Gender">
+                                                        <mat-option *ngFor="let gender of genders"
+                                                            [value]="gender.value">
+                                                            {{gender.viewValue}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field appearance="fill" class="date-picker-field">
+                                                    <mat-label>Date of Birth</mat-label>
+                                                    <input matInput #dob [matDatepicker]="dobpicker"
+                                                        [(ngModel)]="intakeForm.DateOfBirth"
+                                                        [ngModelOptions]="{standalone: true}" (focus)="dobpicker.open()"
+                                                        class="mat-datepicker-input" [max]="maxDate">
+                                                    <mat-icon matDatepickerToggleIcon
+                                                        *ngIf="intakeForm.DateOfBirth && intakeForm.DateOfBirth!='Invalid Date'"
+                                                        appDebounceClick [debounceTime]="400"
+                                                        (debounceClick)="clearDOB($event)">X</mat-icon>
+                                                    <mat-datepicker-toggle matSuffix [for]="dobpicker">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #dobpicker (closed)="dob.blur()"></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row mx-0 mb-sm-3">
+                                            <div class="col-12 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="search" [(ngModel)]="intakeForm.Address"
+                                                        (focus)="getPlaceAutocomplete()"
+                                                        [ngModelOptions]="{standalone: true}" id="autocomplete"
+                                                        #addressElement />
+                                                    <mat-placeholder class="placeholder">Address </mat-placeholder>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row mx-0 mb-sm-3">
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="intakeForm.Country"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                    <mat-placeholder class="placeholder">Country</mat-placeholder>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="intakeForm.State"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                    <mat-placeholder class="placeholder">State / Province
+                                                    </mat-placeholder>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="intakeForm.City"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                    <mat-placeholder class="placeholder">City</mat-placeholder>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row mx-0 mb-sm-3">
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="intakeForm.PostalCode"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                    <mat-placeholder class="placeholder"> Postal Code </mat-placeholder>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-lg-8 mb-sm-12 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text"
+                                                        [(ngModel)]="intakeForm.ReasonForConsult"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                    <mat-placeholder class="placeholder">Reason for Consult
+                                                    </mat-placeholder>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row mx-0 mb-sm-6">
+                                            <div class="col-12 col-sm-12 col-lg-6 mb-sm-12 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="intakeForm.DiseaseDetails"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                    <mat-placeholder class="placeholder">Disease Details
+                                                    </mat-placeholder>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <hr />
+
+                                        <ng-template [ngIf]="!representativeInputShown" [ngIfElse]="headingContactInfo">
+                                            <h3 class="mt-3 mb-3 m-3">Contact info of Patient</h3>
+                                        </ng-template>
+                                        <ng-template #headingContactInfo>
+                                            <h3 class="mt-3 mb-3 m-3">Contact info of Representative</h3>
+                                        </ng-template>
+                                        <div class="row mx-0 mb-sm-3" *ngIf="representativeInputShown">
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text"
+                                                        [(ngModel)]="intakeForm.RepresentativeFirstName"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (keypress)="validatorPress($event, 'representativeFirstName')"
+                                                        (input)="validatorPress($event, 'representativeFirstName')"
+                                                        maxlength="40" />
+                                                    <mat-placeholder class="placeholder">First Name *</mat-placeholder>
+                                                </mat-form-field>
+                                                <div *ngIf="eR && eR.key == 'representativeFirstName'"
+                                                    class="err-msg-cls">
+                                                    {{eR.message}}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text"
+                                                        [(ngModel)]="intakeForm.RepresentativeLastName"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (keypress)="validatorPress($event, 'representativeLastName')"
+                                                        (input)="validatorPress($event, 'representativeLastName')"
+                                                        maxlength="40" />
+                                                    <mat-placeholder class="placeholder">Last Name *</mat-placeholder>
+                                                </mat-form-field>
+                                                <div *ngIf="eR && eR.key == 'representativeLastName'"
+                                                    class="err-msg-cls">
+                                                    {{eR.message}}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text"
+                                                        [(ngModel)]="intakeForm.RelationshipWithPatient"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                    <mat-placeholder class="placeholder">Relationship with patient*
+                                                    </mat-placeholder>
+                                                </mat-form-field>
+                                                <div *ngIf="eR && eR.key == 'relationshipWithPatient'"
+                                                    class="err-msg-cls">
+                                                    {{eR.message}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mx-0 mb-sm-3">
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput #dob [(ngModel)]="intakeForm.EmailID"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (keypress)="validatorPress($event, 'email')"
+                                                        (input)="validatorPress($event, 'email')" maxlength="50" />
+                                                    <mat-placeholder class="placeholder">Email *</mat-placeholder>
+                                                </mat-form-field>
+                                                <div *ngIf="eR && eR.key == 'email'" class="err-msg-cls">
+                                                    {{eR.message}}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                                <mat-form-field class="fields-mat">
+                                                    <input matInput type="text" [(ngModel)]="intakeForm.TelePhone"
+                                                        [ngModelOptions]="{standalone: true}" mask="(000) 000-0000"
+                                                        [specialCharacters]="['(', ' ', '-', ')']" inputDigitsOnly />
+                                                    <mat-placeholder class="placeholder">Phone</mat-placeholder>
+                                                </mat-form-field>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12 d-flex align-items-center justify-content-end mt-3 mt-lg-0">
+                                            <button appDebounceClick [debounceTime]="400"
+                                                (debounceClick)='moveToSelectedTab("Family Doctor")'
+                                                class="next-btn d-flex align-items-center justify-content-center ml-3">
+                                                Next
+                                                <span class="material-icons">
+                                                    keyboard_arrow_right
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Family Doctor">
+                        <div class="p-4 m-h-75 col-12 col-lg-10 col-xl-8 px-0">
+                            <h3 class="mt-3 mb-3"> Family Doctor Information (Optional)</h3>
+                            <div class="row mb-sm-3">
+                                <div class="col-12 col-sm-12"><small
+                                        class="colorRed">{{familyDoctorNotRegisteredMsg}}</small></div>
+                                <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="intakeForm.DoctorFirstName"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (keypress)="validatorPress($event, 'doctorFirstName')"
+                                            (input)="familyDoctorNameInput($event.target.value, 'doctorFirstName')"
+                                            maxlength="40" [matAutocomplete]="autoCompleteFirstName"
+                                            (focusout)="checkfamilyDoctorDetails()" />
+                                        <mat-placeholder class="placeholder">First Name</mat-placeholder>
+                                        <mat-autocomplete #autoCompleteFirstName="matAutocomplete"
+                                            (optionSelected)="familyDoctorSelected($event.option.value)"
+                                            [displayWith]="displayDoctorFirstName">
+                                            <mat-option *ngFor="let familyDoctor of familyDoctorList"
+                                                [value]="familyDoctor">
+                                                {{familyDoctor.doctorFirstName}} {{familyDoctor.doctorLastName}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="intakeForm.DoctorLastName"
+                                            [disabled]="familyDetails" [ngModelOptions]="{standalone: true}"
+                                            (keypress)="validatorPress($event, 'doctorLastName')"
+                                            (input)="familyDoctorNameInput($event.target.value, 'doctorLastName')"
+                                            maxlength="40" [matAutocomplete]="autoCompleteLastName"
+                                            (focusout)="checkfamilyDoctorDetails()" />
+                                        <mat-placeholder class="placeholder">Last Name</mat-placeholder>
+                                        <mat-autocomplete #autoCompleteLastName="matAutocomplete"
+                                            (optionSelected)="familyDoctorSelected($event.option.value)"
+                                            [displayWith]="displayDoctorLastName">
+                                            <mat-option *ngFor="let familyDoctor of familyDoctorList"
+                                                [value]="familyDoctor">
+                                                {{familyDoctor.doctorFirstName}} {{familyDoctor.doctorLastName}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="intakeForm.DoctorEmailID"
+                                            [disabled]="familyDetails" [ngModelOptions]="{standalone: true}"
+                                            (keypress)="validatorPress($event, 'doctorEmail')"
+                                            (input)="validatorPress($event, 'doctorEmail')" maxlength="50" />
+                                        <mat-placeholder class="placeholder">Email</mat-placeholder>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mb-sm-3">
+                                <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="intakeForm.DoctorTelePhone"
+                                            [disabled]="familyDetails" [ngModelOptions]="{standalone: true}"
+                                            mask="(000) 000-0000" [specialCharacters]="['(', ' ', '-', ')']"
+                                            inputDigitsOnly />
+                                        <mat-placeholder class="placeholder">Telephone</mat-placeholder>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="intakeForm.DoctorPostalCodes"
+                                            [disabled]="familyDetails" [ngModelOptions]="{standalone: true}" />
+                                        <mat-placeholder class="placeholder">Postal Code</mat-placeholder>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                    <!-- <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="intakeForm.DoctorAddress" [disabled]="familyDetails"
+                                        [ngModelOptions]="{standalone: true}" />
+                                        <mat-placeholder class="placeholder">Address</mat-placeholder>
+                                    </mat-form-field> -->
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="search" [(ngModel)]="intakeForm.DoctorAddress"
+                                            (focus)="getPlaceAutocompleteForDoctor()" [disabled]="familyDetails"
+                                            [ngModelOptions]="{standalone: true}" id="doctorAddressAutocomplete"
+                                            #doctorAddressElement />
+                                        <mat-placeholder class="placeholder">Address </mat-placeholder>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mb-sm-3">
+                                <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="intakeForm.DoctorCity"
+                                            [disabled]="familyDetails" [ngModelOptions]="{standalone: true}" />
+                                        <mat-placeholder class="placeholder">City</mat-placeholder>
+                                    </mat-form-field>
+                                    <!-- <mat-form-field appearance="fill" class="dropdown-field">
+                                        <mat-label class="label-field">City</mat-label>
+                                        <mat-select>
+                                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                                                {{food.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field> -->
+                                </div>
+                                <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="intakeForm.DoctorState"
+                                            [disabled]="familyDetails" [ngModelOptions]="{standalone: true}" />
+                                        <mat-placeholder class="placeholder">State / Province</mat-placeholder>
+                                    </mat-form-field>
+                                    <!-- <mat-form-field appearance="fill" class="dropdown-field">
+                                        <mat-label class="label-field">State / Province *</mat-label>
+                                        <mat-select>
+                                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                                                {{food.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field> -->
+                                </div>
+                                <div class="col-12 col-sm-4 mb-3 mb-md-0">
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="intakeForm.DoctorCountry"
+                                            [disabled]="familyDetails" [ngModelOptions]="{standalone: true}" />
+                                        <mat-placeholder class="placeholder">Country</mat-placeholder>
+                                    </mat-form-field>
+                                    <!-- <mat-form-field appearance="fill" class="dropdown-field">
+                                        <mat-label class="label-field">Country </mat-label>
+                                        <mat-select>
+                                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                                                {{food.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field> -->
+                                </div>
+                            </div>
+                            <div class="row h-25 d-flex align-items-end mx-0 pb-3 pb-sm-0">
+                                <div class="col-12 d-flex justify-content-end align-items-center px-0">
+                                    <button appDebounceClick [debounceTime]="400"
+                                        (debounceClick)='moveToSelectedTab("Personal info")'
+                                        class="prev-btn d-flex align-items-center justify-content-center">
+                                        <span class="material-icons">
+                                            keyboard_arrow_left
+                                        </span>
+                                        Previous
+                                    </button>
+                                    <button appDebounceClick [debounceTime]="400"
+                                        (debounceClick)='moveToSelectedTab("Document")'
+                                        class="next-btn d-flex align-items-center justify-content-center ml-3">
+                                        Next
+                                        <span class="material-icons">
+                                            keyboard_arrow_right
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Document" class="document-outer-tab">
+                        <div class="row mx-0">
+                            <div class="col-12 col-sm-12 col-lg-8 col-xl-8 px-0">
+                                <div class="m-h-75">
+                                    <div class="col-12 px-3 px-sm-4">
+                                        <div class="tabset p-1 pt-3 pt-sm-5 text-center text-sm-left">
+                                            <div class="tab-panels p-4">
+                                                <div class="row">
+                                                    <div *ngFor="let reportDoc of intakeForm?.OtherDocumentPaths"
+                                                        class="col-12 col-sm-4 col-lg-4 col-xl-2 text-center">
+                                                        <span class="text-center doc-file">
+                                                            <img [src]="reportDoc.preview" class="img-fluid" />
+                                                            <button type="button" mat-button class="close"
+                                                                appDebounceClick [debounceTime]="400"
+                                                                (debounceClick)="removeFile(reportDoc.id)">X</button>
+                                                            <p> {{reportDoc.name}}
+                                                            </p>
+                                                        </span>
+                                                    </div>
+                                                    <span class="image-upload d-flex align-items-center">
+                                                        <label for="file-input-report">
+                                                            <!-- <span class="material-icons add-icon ml-0 ml-sm-3" appDebounceClick [debounceTime]="400" (debounceClick)="selectFile()">
+                                                                            add
+                                                                        </span> -->
+                                                            <button appDebounceClick [debounceTime]="400"
+                                                                (debounceClick)="selectFile()"
+                                                                class="next-btn d-flex align-items-center justify-content-center ml-3">
+                                                                Add Document
+                                                                <!-- <span class="material-icons">
+                                                                    keyboard_arrow_right
+                                                                </span> -->
+                                                            </button>
+                                                        </label>
+                                                        <!-- <input type="file" (change)="selectFile()" id="file-input-report"
+                                                                        accept=".pdf, .doc, .docx, image/*, .xls, .xlsx"/> -->
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-sm-12 col-lg-4 col-xl-4 px-0">
+                                <div class="m-h-75">
+                                    <h4 class="mt-4 ml-6 heading-doc-sec" *ngIf="consultantReports && consultantReports.length > 0">
+                                        Check to include reports</h4>
+                                    <div class="col-12 px-3 px-sm-4">
+                                        <div class="tabset p-1 pt-3 pt-sm-2 text-center text-sm-left">
+                                            <div class="tab-panels p-0">
+                                                <div class="row">
+                                                    <div *ngFor="let reportDoc of consultantReports"
+                                                        class="col-12 col-sm-6 text-center">
+                                                        <span class="text-center doc-file">
+                                                            <img [src]="'assets/images/report-2.png'"
+                                                                class="img-fluid" />
+                                                            <!-- <button type="button" mat-button class="close"
+                                                                appDebounceClick [debounceTime]="400" (debounceClick)="removeFile(reportDoc.consultId)">X</button> -->
+                                                            <p> Consultation Report by {{reportDoc.doctorName}}
+                                                                ({{formatDateTimeToUTC(reportDoc?.appointmentDate) | date: 'dd' :
+                                                                userTimezone?.offset}}/{{formatDateTimeToUTC(reportDoc?.appointmentDate) | date: 'MMM':
+                                                                userTimezone?.offset}})
+                                                            </p>
+                                                            <!-- <mat-list-item [(ngModel)]="intakeForm.ConsultantReportsIds" >
+                                                            <mat-checkbox value="reportDoc.consultId"></mat-checkbox>
+                                                           </mat-list-item> -->
+                                                            <!-- <ng-template [ngIf]="intakeForm.ConsultantReportsIds.includes(consultantReportsIds)" [ngIfElse]="checkboxCon">
+                                                                <mat-checkbox checked="true" (change)="addConsultReport($event, reportDoc.consultId)"></mat-checkbox>
+                                                            </ng-template>
+                                                            <ng-template #checkboxCon>
+                                                                <mat-checkbox (change)="addConsultReport($event, reportDoc.consultId)"></mat-checkbox>
+                                                            </ng-template> -->
+                                                            <mat-checkbox [checked]="canbeChecked(reportDoc.consultId)"
+                                                                [color]="'primary'"
+                                                                (change)="addConsultReport($event, reportDoc.consultId)">
+                                                            </mat-checkbox>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-25 d-flex align-items-end mx-0 pb-3 pb-sm-0 w-100">
+                                <div class="col-12 d-flex justify-content-end align-items-center">
+                                    <button appDebounceClick [debounceTime]="400"
+                                        (debounceClick)='moveToSelectedTab("Family Doctor")'
+                                        class="prev-btn d-flex align-items-center justify-content-center">
+                                        <span class="material-icons">
+                                            keyboard_arrow_left
+                                        </span>
+                                        Previous
+                                    </button>
+                                    <button appDebounceClick [debounceTime]="400"
+                                        (debounceClick)='moveToSelectedTab("Consent form")'
+                                        class="next-btn d-flex align-items-center justify-content-center ml-3">
+                                        Next
+                                        <span class="material-icons">
+                                            keyboard_arrow_right
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Consent form">
+                        <div class="col-12 col-lg-10 col-xl-8 px-0">
+                            <div class="m-h-75">
+                                <div class="col-12 consent-form-tab p-4">
+                                    <!-- <h3 class="mt-3 mb-1"> {{patientConsentForm?.title}} </h3> -->
+                                    <h3 class="mt-3"> Consent form </h3>
+                                    <div class="mt-2">
+                                        <p style="white-space: pre-wrap;">
+                                            {{patientConsentForm?.shortDescription}}
+                                        </p>
+                                        <br />
+                                        <p style="white-space: pre-wrap;">
+                                            {{patientConsentForm?.description}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row mx-0">
+                                    <div class="col-12 col-sm-8 p-4">
+                                        <h3 class="mb-4"> Signature *</h3>
+                                        <div>
+                                            <signature-pad #signaturePad [options]="signaturePadOptions"
+                                                (onBeginEvent)="validatorPress($event, 'signature')">
+                                            </signature-pad>
+                                        </div>
+                                        <div *ngIf="eR && eR.key == 'signature'" class="err-msg-cls">
+                                            {{eR.message}}
+                                        </div>
+                                        <div>
+                                            <button class="clear-btn" appDebounceClick [debounceTime]="400"
+                                                (debounceClick)="clearSignature()"> Clear </button>
+                                        </div>
+                                        <div class="col-12 col-sm-6 px-0 mt-3">
+                                            <mat-form-field appearance="fill" class="date-picker-field">
+                                                <input matInput [matDatepicker]="picker" disabled
+                                                    [(ngModel)]="formattedDateConfirmation">
+                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-25 d-flex align-items-end mx-0 pb-3 pb-sm-0">
+                                <div class="col-12 d-flex justify-content-end align-items-center">
+                                    <button appDebounceClick [debounceTime]="400"
+                                        (debounceClick)='moveToSelectedTab("Document")'
+                                        class="prev-btn d-flex align-items-center justify-content-center">
+                                        <span class="material-icons">
+                                            keyboard_arrow_left
+                                        </span>
+                                        Previous
+                                    </button>
+                                    <button class="next-btn d-flex align-items-center justify-content-center ml-3"
+                                        appDebounceClick [debounceTime]="400" (debounceClick)="submitFormClick()">
+                                        Next
+                                        <span class="material-icons">
+                                            keyboard_arrow_right
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

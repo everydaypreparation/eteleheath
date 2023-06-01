@@ -1,0 +1,63 @@
+<div mat-dialog-actions>
+    <div class="col-12 px-0">
+        <div class="form-group-appointment">
+            <h6 class="mb-4"> Book Appointment </h6>
+            <table>
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label>Description<span style="color:red;">*</span></label>
+                            <mat-form-field class="fields-mat">
+                                <input matInput type="text" [(ngModel)]="appointmentBookForm.title"
+                                    [ngModelOptions]="{standalone: true}" />
+                                <mat-placeholder class="placeholder">Description</mat-placeholder>
+                            </mat-form-field>
+                            <div *ngIf="eR && eR.key == 'title'" class="err-msg-cls pt-0 pb-2">
+                                {{eR.message}}
+                            </div>
+                        </td>
+
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            <label>Agenda*</label>
+                            <mat-form-field class="fields-mat">
+                                <input matInput type="text" [(ngModel)]="appointmentBookForm.agenda"
+                                    [ngModelOptions]="{standalone: true}" />
+                                <mat-placeholder class="placeholder">Agenda</mat-placeholder>
+                            </mat-form-field>
+                            <div *ngIf="eR && eR.key == 'agenda'" class="err-msg-cls pt-0 pb-2">
+                                    {{eR.message}}
+                            </div>
+                        </td>
+                        
+                    </tr> -->
+                    <tr>
+                        <td>
+                            <label>Referral</label>
+                            <mat-form-field class="fields-mat">
+                                <input matInput type="text" [(ngModel)]="appointmentBookForm.referral"
+                                    [ngModelOptions]="{standalone: true}" />
+                                <mat-placeholder class="placeholder">Referral</mat-placeholder>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-end">
+                                <button mat-button class="btn btn-primary submit-button mr-2 my-3" appDebounceClick
+                                    [debounceTime]="400" (debounceClick)="onDismiss()">Cancel</button>
+                                <button mat-raised-button class="btn btn-primary submit-button" appDebounceClick
+                                    [debounceTime]="400" (debounceClick)="onConfirm()">Book</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- <pre>{{rows.value | json}}</pre> -->

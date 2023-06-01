@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portal
+  template:
+    metadata:
+      labels:
+        app: portal
+    spec:
+      containers:
+        - name: portal
+          image: registry.emorphis.com/amit.agrawal/eteleheath/portal:latest
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: NODE_ENV
+            value: production
+          - name: EMRO_PAYPAL_CLIENT_ID
+            value: Aa-tqrGgg29jyM7v6tKkIdK89NpZsLq4MtdtTrfse89mVfayYPV-_BDRw3wyAmgZNX7x2yEc8uV_is2Y
+          - name: EMRO_GOOGLE_MAP_KEY
+            value: AIzaSyDgr_7V9SLRItD1SGgePa1dw0p7NaR0DT0
+          - name: EMRO_WEATHER_API
+            value: https://api.openweathermap.org/data/2.5/weather?q=
+          - name: EMRO_WEATHER_API_KEY
+            value: 32838566376f685b3ad9e56e751f08de
+          - name: EMRO_SELLER_ID
+            value: sb-pj6bp5145300@business.example.com
+          - name: EMRO_BASE_URL
+            value: http://192.168.49.2:30431/api/
+          - name: EMRO_HOST_URL
+            value: http://portal-service
+          - name: EMRO_SIGNAL_R_URL
+            value: http://192.168.49.2:30431/signalr
+          ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: portal-service
+spec:
+  selector:
+    app: portal
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30420
+  type: NodePort

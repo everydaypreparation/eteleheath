@@ -1,0 +1,17 @@
+@import '../../../variables.scss';
+
+.submit-btn {
+    border-radius: 31px;
+    background-color: $primary-color;
+    border-color:$primary-color;
+    font-family: $font-roboto;
+    color: $white;
+    border: 0px;
+    margin-left: 10px;
+    letter-spacing: 0.85px;
+    padding: 8px 23px;
+}
+
+.errorMessage{
+    color: red;
+}

@@ -1,0 +1,93 @@
+@import '../../../variables.scss';
+
+.submit-button {
+    background: transparent;
+    color: $primary-color;
+    border-radius: 30px;
+    padding: 3px 25px;
+    height: 28px;
+    font-size: 14px;
+    letter-spacing: 0.66px;
+    border-color: $primary-color;
+
+    &:hover {
+        background-color: $primary-color;
+        color: $white;
+    }
+}
+.next-avalabilty {   
+    color: $primary-color;
+    letter-spacing: 0.66px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 400;
+
+    span {
+        font-size: 13px;
+        margin-right: 5px;
+    }
+}
+.search-input {
+    border-radius: 30px;
+    border: solid 1px #f1f4f8;
+    font-size: 14px !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+    background: #fff;
+    height: 35px;
+    padding-top: 2px;
+    padding-left: 12px;
+    margin: 10px;
+    width: 90%;
+}
+.availability-slot-form {
+    max-height: 350px;
+    overflow-y: auto;
+    h6 {
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0.66px;
+        padding-left: 10px;        
+    } 
+    
+    .row-fields {
+        border-bottom: 1px solid #f4f4f4;
+    }
+    .remove-ico {
+        color: red;
+        cursor: pointer;
+    }   
+}
+.btn-am {
+    padding: 5px;
+    font-size: 12px;
+    height: 30px;
+    color: #2d3748;
+    border-color: #2d3748;
+
+    &:hover {
+        background-color: #2d3748;
+        color: $white;
+    }
+}
+
+:focus {
+    outline: 0px;
+    box-shadow: none;
+}
+
+.mat-datepicker-input {
+    width: 85%;
+}
+
+mat-icon {
+    position: relative;
+    float: right;
+    top: 0px;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.tz-m{
+    margin-top: -18px;
+    margin-bottom: 10px;
+}

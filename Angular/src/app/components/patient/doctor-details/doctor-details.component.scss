@@ -1,0 +1,27 @@
+@import '../../../../variables.scss';
+
+.inner-content-wrapper {
+    background-color: $light-gray;
+    border-radius: 15px;
+    min-height: 82vh;
+
+    @media screen and  (min-width: 2000px) {
+        min-height: 90vh;
+    }    
+
+    .content-row {
+        min-height: 81.5vh;
+
+        .specialties-sec-wrapper {
+            .doc-sub-specialties {
+                max-height: 200px;
+                overflow: auto;
+            }
+        }
+    }
+}
+
+img {
+    width: 120px;
+}
+

@@ -1,0 +1,117 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <RootNamespace>EMRO</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\20210217115154_Message functions.cs" />
+    <Compile Remove="Migrations\20210217115154_Message functions.Designer.cs" />
+    <Compile Remove="Migrations\20210224120926_InviteUser table.cs" />
+    <Compile Remove="Migrations\20210224120926_InviteUser table.Designer.cs" />
+    <Compile Remove="Migrations\20210309072713_Add CostConfiguration table.cs" />
+    <Compile Remove="Migrations\20210309072713_Add CostConfiguration table.Designer.cs" />
+    <Compile Remove="Migrations\20210319085148_Add cron histor table.cs" />
+    <Compile Remove="Migrations\20210319085148_Add cron histor table.Designer.cs" />
+    <Compile Remove="Migrations\20210524123227_Alter_SurveyResponse_Table.cs" />
+    <Compile Remove="Migrations\20210524123227_Alter_SurveyResponse_Table.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EMRO.Core\EMRO.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="EntityFrameworkCore\Pgscript\couponmaster.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\create-extension.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\create-function.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\get-message-5.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\get-message.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\get-sent-4.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\get-trash-4.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\insert-specialty.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\insert-timezone.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\update-usp-getinbox.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\update-usp-getsent.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\update-usp-gettrash.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-getinbox-1.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-getinbox-2.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-getinbox-3.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-getinbox-4.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-getInbox.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-getsent-1.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-getsent-2.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-getsent-3.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-getsent.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-gettrash-1.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-gettrash-2.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-gettrash-3.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp-gettrash.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EntityFrameworkCore\Pgscript\usp_GetMessages-3.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

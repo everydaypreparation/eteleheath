@@ -1,0 +1,13 @@
+.vc-img {
+    @media screen and (min-width: 800px) and (max-width: 1000px) {
+        width: 70% !important;
+    }
+}
+.cursorPointer{
+    cursor: pointer;
+}
+.upcoming-booked-by {
+    ul {
+        height: 155px !important;
+    }
+}

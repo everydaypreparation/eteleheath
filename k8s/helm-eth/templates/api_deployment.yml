@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.appserver.name }}
+spec:
+  replicas: {{.Values.appserver.replicas }}
+  selector:
+    matchLabels:
+      app: {{.Values.appserver.name }}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.appserver.name }}
+    spec:
+      containers:
+        - name: {{.Values.appserver.name }}
+          image: {{.Values.appserver.image.name }}:{{.Values.appserver.image.tag }}
+          imagePullPolicy: {{.Values.appserver.image.imagePullPolicy }}
+          env:
+          - name: ConnectionStrings__Default
+            value: {{.Values.appserver.env.ConnectionStrings__Default }}
+          - name: Abp__RedisCache__ConnectionString
+            value: {{.Values.appserver.env.Abp__RedisCache__ConnectionString }}
+          - name: App__ServerRootAddress
+            value : {{.Values.appserver.env.App__ServerRootAddress }}
+          - name: Kestrel__Endpoints__Http__Url
+            value: {{.Values.appserver.env.Kestrel__Endpoints__Http__Url }}
+          - name: App__CorsOrigins
+            value: {{.Values.appserver.env.App__CorsOrigins }}
+          - name: App__ClientRootAddress
+            value: {{.Values.appserver.env.App__ClientRootAddress }}
+          - name: SamvaadParams__API_URL
+            value: {{.Values.appserver.env.SamvaadParams__API_URL }}
+          - name: SamvaadParams__API_SECRET
+            value: {{.Values.appserver.env.SamvaadParams__API_SECRET }}
+          - name: SamvaadParams__SamvaadMeetingParams__name
+            value: {{.Values.appserver.env.SamvaadParams__SamvaadMeetingParams__name }}
+          - name: SamvaadParams__SamvaadMeetingParams__logoutURL
+            value: {{.Values.appserver.env.SamvaadParams__SamvaadMeetingParams__logoutURL }}
+          - name: PORTAL_URL
+            value: {{.Values.appserver.env.PORTAL_URL }}
+          - name: ConsultFee__Amount
+            value: {{.Values.appserver.env.ConsultFee__Amount | quote }}
+          - name: SmtpSettings__Server
+            value: {{.Values.appserver.env.SmtpSettings__Server }}
+          - name: SmtpSettings__Port
+            value: {{.Values.appserver.env.SmtpSettings__Port | quote }}
+          - name: SmtpSettings__SenderName
+            value: {{.Values.appserver.env.SmtpSettings__SenderName }}
+          - name: SmtpSettings__SenderEmail
+            value: {{.Values.appserver.env.SmtpSettings__SenderEmail }}
+          - name: SmtpSettings__Username
+            value: {{.Values.appserver.env.SmtpSettings__Username }}
+          - name: SmtpSettings__Password
+            value: {{.Values.appserver.env.SmtpSettings__Password }}
+          - name: UplodedFilePath__IsBlob
+            value: {{.Values.appserver.env.UplodedFilePath__IsBlob | quote }}
+          ports:
+          - containerPort: {{.Values.appserver.image.targetPort }}
+

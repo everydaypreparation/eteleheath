@@ -1,0 +1,67 @@
+.messaged-sec {
+    ul {
+        height: 308px;
+
+        @media screen and (min-width: 2000px) {
+            height: 350px;
+        }
+    }    
+}
+.admin-inner-content {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+}
+
+.side-nav {
+        padding-right: 1.25rem;
+        padding-bottom: 4rem;
+        margin-top: 65px;
+      
+              ul {
+                      li {
+                         list-style: none; 
+                         
+                         a {
+                                 &:hover {
+                                         cursor: pointer;
+                                         text-decoration: none;
+                                 }
+                         }
+                      }
+              }
+      }
+      .meeting-ico {
+        img {
+            width: 80px;
+        }
+    }
+    .dropInd {
+        color: black;
+    }
+ 
+#dashboard-wrapper {
+    .outer-dashboard {
+        .inner-content-wrapper {
+            min-height: 99%;
+
+          
+
+            .sec-3  {
+                box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);     
+                height: 168px;
+
+                @media screen and (min-width: 992px) and (max-width: 1199px) {
+                        min-height: 205px;
+                }               
+            }
+
+            .next-appoint-sec {
+                    @media screen and (min-width: 1000px) and (max-width: 1440px) {
+                        min-height: 205px;
+                        height: auto;
+                    }
+            }
+        }
+    }
+}

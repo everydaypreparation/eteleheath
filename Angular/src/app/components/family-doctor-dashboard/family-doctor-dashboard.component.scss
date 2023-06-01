@@ -1,0 +1,21 @@
+@import '../../../variables.scss';
+
+#dashboard-wrapper {
+    background-color: $primary-color;
+    min-height: 100vh;
+
+    // img {
+    //     width: 250px;
+    // }
+    .top-logo {
+        min-height: 40vh;
+
+        a {
+            width: 270px;
+        }
+    }
+
+    .outer-dashboard {
+        min-height: auto;
+    }
+}

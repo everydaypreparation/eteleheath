@@ -1,0 +1,42 @@
+@import '../../../variables.scss';
+
+.submit-button {
+    background: transparent;
+    color: $primary-color;
+    border-radius: 30px;
+    padding: 3px 25px;
+    height: 28px;
+    font-size: 14px;
+    letter-spacing: 0.66px;
+    border-color: $primary-color;
+
+    &:hover {
+        background-color: $primary-color;
+        color: $white;
+    }
+}
+
+textarea {
+    border-radius: 30px;
+    border: solid 1px #f1f4f8;
+    font-size: 14px !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+    background: #fff;
+    height: 48px;
+    padding-top: 9px;
+    padding-left: 12px;
+    min-height: 300px;
+    width: 100%;
+
+    &::placeholder  {
+        color: $placeholder;
+        letter-spacing: 0.66px;
+    }
+}
+.add-notes-modal {
+    overflow-x: hidden;
+}
+
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 30vh;
+  }

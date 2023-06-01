@@ -1,0 +1,140 @@
+version: '3'
+
+services:
+  db:
+    image: registry.emorphis.com/amit.agrawal/eteleheath/postgres:11
+    container_name: db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+ 
+  redis:
+    image: registry.emorphis.com/amit.agrawal/eteleheath/redis:4.0
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  api:
+    image: registry.emorphis.com/amit.agrawal/eteleheath/api:latest
+    container_name: api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__Default=Server=db;Port=5432;Database=EMRONewDB;User Id=postgres;Password=password;
+      - App__ServerRootAddress=https://apieth.emorphis.com/
+      - App__ClientRootAddress=https://portaleth.emorphis.com/
+      - App__CorsOrigins=https://portaleth.emorphis.com,http://portal,http://localhost:4200
+      - Abp__RedisCache__ConnectionString=redis:6379
+      - Kestrel__Endpoints__Http__Url=http://api:21021/
+      - SamvaadParams__API_URL=https://samvaad.emorphis.com/bigbluebutton/api/
+      - SamvaadParams__API_SECRET=rl8hWlTuwnxkmlFJU2NoQ3DZ0S0RcySSdnlQEC1mVvI
+      - SamvaadParams__SamvaadMeetingParams__name=ETeleHealth Meeting
+      - SamvaadParams__SamvaadMeetingParams__logoutURL=https://portaleth.emorphis.com/#/meeting/logout
+      - PORTAL_URL=https://portaleth.emorphis.com
+      - ConsultFee__Amount=350
+      - SmtpSettings__Server=smtp.gmail.com
+      - SmtpSettings__Port=587
+      - SmtpSettings__SenderName=ETeleHealth Emorphis
+      - SmtpSettings__SenderEmail=web@emorphis.com
+      - SmtpSettings__Username=web@emorphis.com
+      - SmtpSettings__Password=Admin@420
+      - UplodedFilePath__IsBlob=false
+#      - BlobContainer=
+#      - Twilio__AccountSID=
+#      - Twilio__AuthToken=
+#      - Twilio__From=
+#      - Stripe__PublicKey=
+#      - Stripe__SecretKey=
+#      - PauboxParams__FROM=
+#      - PauboxParams__PAUBOX_API_URL=
+#      - PauboxParams__PAUBOX_TOKEN=
+    restart: unless-stopped
+    ports:
+      - 21021:21021/tcp
+      - 21021:21021/udp
+    volumes:
+      - "./Aspdotnetcore/.aspnet:/root/.aspnet"
+      - "./Aspdotnetcore/appsettings.json:/app/appsettings.json"
+      - "./Aspdotnetcore/App_Data:/app/App_Data"
+      - "./Aspdotnetcore/wwwroot:/app/wwwroot"
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis
+    extra_hosts:
+      - "samvaad.emorphis.com:40.121.134.239"
+      - "apieth.emorphis.com:40.121.134.239"
+      - "portaleth.emorphis.com:40.121.134.239"
+
+  portal:
+    image: registry.emorphis.com/amit.agrawal/eteleheath/portal:latest
+    container_name: portal
+    environment:
+      - NODE_ENV=production
+      - EMRO_PAYPAL_CLIENT_ID=Aa-tqrGgg29jyM7v6tKkIdK89NpZsLq4MtdtTrfse89mVfayYPV-_BDRw3wyAmgZNX7x2yEc8uV_is2Y
+      - EMRO_GOOGLE_MAP_KEY=AIzaSyDgr_7V9SLRItD1SGgePa1dw0p7NaR0DT0
+      - EMRO_WEATHER_API=https://api.openweathermap.org/data/2.5/weather?q=
+      - EMRO_WEATHER_API_KEY=32838566376f685b3ad9e56e751f08de
+      - EMRO_SELLER_ID=sb-pj6bp5145300@business.example.com
+      - EMRO_BASE_URL=https://apieth.emorphis.com/api/
+      - EMRO_HOST_URL=https://portaleth.emorphis.com
+      - EMRO_SIGNAL_R_URL=https://apieth.emorphis.com/signalr
+    restart: unless-stopped
+    ports:
+      - 4200:80
+    depends_on:
+      - api
+    extra_hosts:
+      - "samvaad.emorphis.com:40.121.134.239"
+      - "apieth.emorphis.com:40.121.134.239"
+      - "portaleth.emorphis.com:40.121.134.239"
+
+  nginx:
+    image: registry.emorphis.com/amit.agrawal/eteleheath/nginx:1.21
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "./nginx/conf.d:/etc/nginx/conf.d"
+      - "./nginx/logs:/var/log/nginx/"
+      - "./nginx/dhparam:/etc/nginx/dhparam"
+      - "./nginx/letsencrypt-etc:/etc/letsencrypt"
+      - "./nginx/letsencrypt-var:/var/lib/letsencrypt"
+      - "./nginx/web-root:/var/www/html"
+    depends_on:
+      - api
+      - portal
+    links:
+      - api
+      - portal
+
+#  certbot:
+#    image: registry.emorphis.com/amit.agrawal/eteleheath/certbot:v1.31.0
+#    container_name: certbot
+#    volumes:
+#      - "./nginx/letsencrypt-etc:/etc/letsencrypt"
+#      - "./nginx/letsencrypt-var:/var/lib/letsencrypt"
+#      - "./nginx/letsencrypt-logs:/var/log/letsencrypt"
+#      - "./nginx/web-root:/var/www/html"
+#    depends_on:
+#      - nginx
+#    command: > 
+#      certonly 
+#      --webroot --webroot-path /var/www/html --preferred-challenges http --register-unsafely-without-email --agree-tos --no-eff-email --force-renewal --rsa-key-size 4096 -d apieth.emorphis.com
+#      --webroot --webroot-path /var/www/html --preferred-challenges http --register-unsafely-without-email --agree-tos --no-eff-email --force-renewal --rsa-key-size 4096 -d portaleth.emorphis.com
+#      --webroot --webroot-path /var/www/html --preferred-challenges http --register-unsafely-without-email --agree-tos --no-eff-email --force-renewal --rsa-key-size 4096 -d samvaad.emorphis.com
+
+# docker build -f Aspdotnetcore/Dockerfile -t emrocloud/api:latest Aspdotnetcore/.
+# docker-compose up -d
+# docker-compose down
+# docker ps -a
+# docker logs <container-id>

@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapi
+  template:
+    metadata:
+      labels:
+        app: myapi
+    spec:
+      containers:
+      - name: myapi
+        image: registry.emorphis.com/amit.agrawal/eteleheath/api:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ConnectionStrings__Default
+          value: Host=postgres-service;Port=5432;Database=EMRONewDB;User Id=postgres;Password=password;
+        - name: Abp__RedisCache__ConnectionString
+          value: redis-service:6379
+        - name: App__ServerRootAddress
+          value : http://0.0.0.0:21021/
+        - name: Kestrel__Endpoints__Http__Url
+          value: http://myapi-service:21021/
+        - name: App__CorsOrigins
+          value: http://portal-service,http://portal-service/,http://myapi-service:30431,http://myapi-service:21021,http://myapi-service:21021/,http://portal-service:30420/,http://192.168.49.2:30420,http://192.168.49.2:30420/,http://localhost:21021
+        - name: App__ClientRootAddress
+          value: http://portal-service/
+        - name: SamvaadParams__API_URL
+          value: http://samvaad.emorphis.com/bigbluebutton/api/
+        - name: SamvaadParams__API_SECRET
+          value: rl8hWlTuwnxkmlFJU2NoQ3DZ0S0RcySSdnlQEC1mVvI
+        - name: SamvaadParams__SamvaadMeetingParams__name
+          value: ETeleHealth Meeting
+        - name: SamvaadParams__SamvaadMeetingParams__logoutURL
+          value: http://portal-service/#/meeting/logout
+        - name: PORTAL_URL
+          value: http://portal-service
+        - name: ConsultFee__Amount
+          value: "350"
+        - name: SmtpSettings__Server
+          value: smtp.gmail.com
+        - name: SmtpSettings__Port
+          value: "587"
+        - name: SmtpSettings__SenderName
+          value: ETeleHealth Emorphis
+        - name: SmtpSettings__SenderEmail
+          value: web@emorphis.com
+        - name: SmtpSettings__Username
+          value: web@emorphis.com
+        - name: SmtpSettings__Password
+          value: Admin@420
+        - name: UplodedFilePath__IsBlob
+          value: "false" 
+        ports:
+        - containerPort: 21021
+          hostPort: 21021
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapi-service
+spec:
+  selector:
+    app: myapi 
+  ports:
+    - port: 21021
+      targetPort: 21021
+      nodePort: 30431
+  type: NodePort
+

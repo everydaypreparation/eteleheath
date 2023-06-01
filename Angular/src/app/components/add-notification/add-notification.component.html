@@ -1,0 +1,84 @@
+<div class="inner-content-wrapper mt-0 p-4 w-100 min-h100-cls">
+    <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+        home
+    </span>
+    <div class="row justify-content-end mx-0">
+        <div class="col-12 col-sm-6 align-items-center justify-content-start d-flex pl-0">
+            <h5 class="mb-0">Send Notification</h5>
+        </div>
+        <div class="col-12 col-sm-6 align-items-center justify-content-end d-flex topfields-wrapper pr-0">
+            <div class="col-12 col-sm-3 px-0 pl-sm-3 pr-sm-0 add-btn">
+                <button appDebounceClick [debounceTime]="400" (debounceClick)="addNotification()"
+                    class="btn btn-primary submit-button mb-2 mb-md-0 d-flex align-items-center d-flex align-items-center justify-content-center">
+                    <span class="material-icons mr-2">
+                        person_add_alt_1
+                    </span>
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-main-wrapper">
+        <div class="row mt-3 py-4 px-2 px-sm-4 mx-0">
+            <div class="col-12 d-flex justify-content-end align-items-center">
+                <mat-form-field class="col-12 col-sm-6 col-lg-4 col-xl-3 px-0 mb-3">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                </mat-form-field>
+            </div>
+            <div class="col-12 table-inner-wrapper">
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort class="table-wrapper"
+                        style="table-layout:initial;">
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef class="action-heading" style="width: 10%;"> ID# </th>
+                            <td mat-cell *matCellDef="let notifications; let i=index"> {{i+1}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="title">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header width="20%"> Title </th>
+                            <td mat-cell *matCellDef="let notifications" width="20%"> {{notifications?.title}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="role">
+                            <th mat-header-cell *matHeaderCellDef class="action-heading" style="width: 20%;"> Roles
+                            </th>
+                            <td mat-cell *matCellDef="let notifications" style="width: 20%;"> {{notifications?.roleName
+                                | lowercase}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="description">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100%;"> Description
+                            </th>
+                            <td mat-cell *matCellDef="let notifications" style="width: 100%;">
+                                {{notifications?.content?.length > 110 ? (notifications?.content | slice:0:110) + '...'
+                                : notifications?.content }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef class="action-heading" width="20%"> Action </th>
+                            <td mat-cell *matCellDef="let notifications"
+                                style="width: 10%; height: 50px; display: flex; align-items: center;">
+                                <span class="flaticon-edit" appDebounceClick [debounceTime]="400"
+                                    (debounceClick)="updateNotification(notifications?.id)"></span>
+                                <span class="flaticon-delete" appDebounceClick [debounceTime]="400"
+                                    (debounceClick)="deleteNotification(notifications?.id)"></span>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        <!-- Row shown when there is no matching data. -->
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="8">{{input.value ? 'No data matching the search' + '"' +
+                                input.value + '"' : 'No data available'}}
+                            </td>
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"> </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

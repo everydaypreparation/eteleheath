@@ -1,0 +1,148 @@
+@import '../../../variables.scss';
+
+
+.survey-form-wrapper {
+    background-color: white;
+    border-radius: 8px;
+
+    .heading-wrapper {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        color: #fff;
+        background-image: url('../../../assets/images/survey-BG.png');
+    }
+    
+    ul {
+        li {
+            list-style: none;
+            margin-bottom: 30px;
+
+            .mat-radio-btn {
+                .mat-radio-button {
+                    margin-left: 25px;
+                    margin-bottom: 0px;
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+}
+:host ::ng-deep .mat-radio-label-content {
+    color: #000 !important;
+    // font-weight: 500;
+    font-size: 1rem;
+}
+:host ::ng-deep .mat-form-field-flex {
+    box-shadow: none !important;
+    border-bottom: 1px solid #eee;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    border-radius: 0px !important;
+    padding-left: 0px !important;
+    height: 40px !important;
+}
+
+
+
+
+/* Hide the browser's default checkbox */
+.label-field input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    background-color: #fff;
+    margin-left: 22px;
+    margin-top: -10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .label-field:hover input ~ .checkmark {
+    background-color: #f2f2f2;
+    margin-left: 22px;
+    margin-top: -10px;
+    border-radius: 5px;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .label-field input:checked ~ .checkmark {
+    background-color: $primary-color;
+    margin-top: -10px;
+    margin-left: 22px;
+    border-radius: 5px;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .label-field input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .label-field .checkmark:after {
+    left: 10px;
+    top: 7px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .checkbox-field {
+      p {
+          padding-left: 60px;
+          margin-bottom: 0px;
+      }
+  }
+  .submit-button {
+    border-radius: 30px;
+    background-color: transparent;
+    border: 1px solid #195979;
+    color: #195979;
+    width: 120px;
+    &:hover {
+      border-radius: 30px;
+      background-color: #195979;
+      border: 1px solid #195979;
+      color: #fff;
+    }
+    
+  }
+
+.submit-button {
+    background: transparent;
+    color: $primary-color;
+    border-radius: 30px;
+    padding: 3px 25px;
+    height: 28px;
+    font-size: 14px;
+    letter-spacing: 0.66px;
+    border-color: $primary-color;
+
+    &:hover {
+        background-color: $primary-color;
+        color: $white;
+    }
+}

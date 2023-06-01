@@ -1,0 +1,52 @@
+@import '../../../../variables.scss';
+
+.notification-sec {
+    h4 {
+        letter-spacing: 0.54px;
+        font-size: 18px;
+        font-weight: 400;
+        margin: 5px 0px;
+    }
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+.sec-3 {
+    p {
+        margin-bottom: 0px;
+    }
+}
+.active-cases-sec {
+    ul {
+        height: 150px;
+    }
+}
+.next-appoint-sec {
+    height: 190px !important;
+
+    @media screen and (max-width: 576px) {
+        height: auto !important;
+    }
+}
+.next-appoint-sec.booked-by{
+    height: 212px !important;
+}
+.upcoming-booked-by-none {
+    ul {
+        height: 185px !important;
+    }
+}
+.upcoming-booked-by {
+    ul {
+        height: 155px !important;
+    }
+}
+
+.fs-n-cls{
+    font-style: normal;
+}
+
+.remove-pointer{
+    cursor: default;
+}

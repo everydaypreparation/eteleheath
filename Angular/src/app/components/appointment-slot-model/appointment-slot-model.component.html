@@ -1,0 +1,133 @@
+<div mat-dialog-actions>
+  <div [formGroup]="availabilitySlotForm">
+    <div class="form-group">
+      <div class="err-msg-cls tz-m" *ngIf="overlapErrorMsg">{{overlapErrorMsg}}</div>
+      <div class="row">
+        <div class="col-12 col-sm-6 mb-3 timezone-field">
+          <h6>Timezone <span style="color:red;">*</span></h6>
+          <div>
+            <mat-form-field>
+              <mat-label>Select timezone</mat-label>
+              <mat-select [(ngModel)]="selectedTimezoneId" [ngModelOptions]="{standalone: true}"
+                (selectionChange)="selectTimezone($event.value)">
+                <input (input)="searchTimezone($event.target.value)" placeholder="Search" class="search-input">
+                <mat-option *ngFor="let timezone of filteredTimezones" [value]="timezone?.timeZoneId">{{timezone?.abbr}}
+                  {{timezone?.utcOffset.substring(0, timezone?.utcOffset.indexOf(')')+1)}} {{timezone?.timeZoneId}}
+                </mat-option>
+                <mat-option *ngIf="filteredTimezones.length==0" disabled>No matches found</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="err-msg-cls tz-m" *ngIf="timezoneErrorMsg">{{timezoneErrorMsg}}</div>
+            <span><i>Note: Only 1 hour time slot applicable</i></span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 d-flex align-items-start justify-content-end mb-3">
+          <h5 appDebounceClick [debounceTime]="400" (debounceClick)="addNextAvailability()" class="mb-0 next-avalabilty"
+            *ngIf="availabilitySlotForm.get('rows') && editFlag == false">
+            <span class="flaticon-plus"></span>
+            Next Availability
+          </h5>
+        </div>
+      </div>
+      <div class="row w-100 mx-0 availability-slot-form">
+        <div class="row w-100 mx-0 row-fields pb-3 pb-sm-0"
+          *ngFor="let row of availabilitySlotForm.get('rows')?.controls;let index = index;">
+          <div class="row mx-0 my-3 w-100">
+            <div class="col-12 col-sm-12 col-lg-3 col-xl-3 px-0">
+              <h6>Availability Date <span style="color:red;">*</span> </h6>
+              <!-- <input [formControl]="row.get('AvailabilityDate')"> -->
+              <mat-form-field appearance="fill" class="mt-0 mt-lg-sw2 mr-2 date-picker-field">
+                <mat-label>Availability date</mat-label>
+                <div class="d-flex align-items-center DOB-field">
+                  <input matInput #date [matDatepicker]="picker" [min]="minDate" (dateChange)="dateChanged(row)"
+                    (dateInput)="dateChanged(row)" [formControl]="row.get('availabilityDate')" (focus)="picker.open()"
+                    class="mat-datepicker-input">
+                  <mat-icon matDatepickerToggleIcon appDebounceClick [debounceTime]="400"
+                    (debounceClick)="clearDate($event, index)" *ngIf="row.get('availabilityDate').value">
+                    <span class="flaticon-cancel"></span>
+                  </mat-icon>
+                </div>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker (closed)="date.blur()"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3 col-xl-3 mt-xl-0 mt-4 mt-lg-0 mt-md-4 mt-sm-4">
+              <h6 class="pl-0">Start Time <span *ngIf="selectedTimezoneAbbr">({{selectedTimezoneAbbr}})</span><span style="color:red;">*</span></h6>
+              <div class="row">
+                <div class="col-5 px-1">
+                  <mat-form-field appearance="fill" class="dropdown-field">
+                    <mat-label class="label-field">HH</mat-label>
+                    <mat-select [formControl]="row.get('availabilityStartHour')"
+                      (selectionChange)="onStartHourChange(row, $event.value)">
+                      <mat-option *ngFor="let hour of hoursDD" [value]="hour.value">
+                        {{hour.text}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-5 px-1">
+                  <mat-form-field appearance="fill" class="dropdown-field">
+                    <mat-label class="label-field">MM</mat-label>
+                    <mat-select [formControl]="row.get('availabilityStartMinutes')"
+                      (selectionChange)="onStartMinutesChange(row, $event.value)">
+                      <mat-option *ngFor="let minutes of minutesDD" [value]="minutes.value">
+                        {{minutes.text}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 d-flex align-items-center pl-0">
+                  <button type="button" class="btn btn-outline-primary btn-am" appDebounceClick [debounceTime]="400"
+                    (debounceClick)="onStartMeridiemIndicatorChange(row)">
+                    {{row.get('availabilityStartMeridiemIndicator').value}}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-4 mt-xl-0 mt-4 px-0 px-sm-3 mt-lg-0 mt-md-4 mt-sm-4">
+              <h6>End Time <span *ngIf="selectedTimezoneAbbr">({{selectedTimezoneAbbr}})</span></h6>
+              <div class="row mx-0">
+                <div class="col-5 pr-1 pl-2">
+                  <mat-form-field appearance="fill" class="dropdown-field">
+                    <mat-label class="label-field">HH</mat-label>
+                    <input matInput type="text" [formControl]="row.get('availabilityEndHour')"
+                      [ngModelOptions]="{standalone: true}" />
+                  </mat-form-field>
+                </div>
+                <div class="col-5 pr-1 pl-2">
+                  <mat-form-field appearance="fill" class="dropdown-field">
+                    <mat-label class="label-field">MM</mat-label>
+                    <input matInput type="text" [formControl]="row.get('availabilityEndMinutes')"
+                      [ngModelOptions]="{standalone: true}" />
+                  </mat-form-field>
+                </div>
+                <div class="col-1 pl-1 d-flex align-items-center">
+                  <button type="button" disabled
+                    class="btn btn-outline-primary btn-am">{{row.get('availabilityEndMeridiemIndicator').value}}</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-2 mt-4 d-flex align-items-center text-break col-xl-2">
+              <!-- {{selectedTimezoneAbbr}} -->
+              <div class="ml-1 remove-ico" *ngIf="index != 0">
+                <span appDebounceClick [debounceTime]="400" (debounceClick)="onAvailability(index)"
+                  class="mr-1 flaticon-delete"></span>
+              </div>
+            </div>
+            <div class="err-msg-cls" *ngIf="row.get('errorMsg').value">{{row.get('errorMsg').value}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-5 d-flex align-items-center justify-content-end mb-4 px-0">
+        <button mat-button class="btn btn-primary submit-button mr-2" appDebounceClick [debounceTime]="400"
+          (debounceClick)="onDismiss()">Cancel</button>
+        <button mat-raised-button class="btn btn-primary submit-button" appDebounceClick [debounceTime]="400"
+          (debounceClick)="createAvailabilitySlot()" *ngIf="editFlag == false">Save</button>
+        <button mat-raised-button class="btn btn-primary submit-button" appDebounceClick [debounceTime]="400"
+          (debounceClick)="updateAvailabilitySlot()" *ngIf="editFlag == true">Update</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- <pre>{{rows.value | json}}</pre> -->

@@ -1,0 +1,30 @@
+@import '../../../../variables.scss';
+
+.inner-content-wrapper {
+    background-color: $light-gray;
+    border-radius: 15px;
+    min-height: 82vh;
+
+    @media screen and  (min-width: 2000px) {
+        min-height: 90vh;
+    }    
+
+    .content-row {
+        min-height: 81.5vh;
+    }  
+    .appointment-sec {
+        .book-later-btn {
+            color: $primary-color;
+        }
+        .material-icons {
+            font-size: 21px;
+            margin-right: 5px;
+        }
+    }
+}
+
+.profile-img {
+    max-width: 150px;
+    height: 150px;
+  }
+

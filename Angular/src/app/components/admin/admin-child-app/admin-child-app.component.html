@@ -1,0 +1,39 @@
+<div class="container-fluid px-4 container-wrapper" id="dashboard-wrapper" (window:resize)="onResize($event)">
+    <div class="row outer-dashboard">
+        <div class="row w-100 mx-0">
+
+            <div class="col-4 col-sm-2 px-0 d-none d-sm-block" *ngIf="!mobileNav.isMobileNav">
+                <nav class="side-nav px-0">
+                    <ul class="pl-0">
+                        <li *ngFor="let item of menuItems; let i=index" [attr.data-index]="i"
+                            appDebounceClick [debounceTime]="400" (debounceClick)="changePath(item.path)">
+                            <a href="javascript:void(0)" class="side-menu" [ngClass]="item.cls">
+                                <div class="side-menu__icon"> <span [ngClass]="item.icon"> </span></div>
+                                <div class="side-menu__title"> {{item.title}} </div>
+                                <span class="material-icons">
+                                    navigate_next
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="mobile-nav-cls" style="width: 100%;color: white;" *ngIf="mobileNav.isMobileNav"
+                [ngClass]="mobileNav.showMobileNav?'expand':''">
+                <div style="padding: 10px 4px;">
+                    <div style="width: 100%;height: 40px;" *ngFor="let item of menuItems; let i=index"
+                        [attr.data-index]="i" appDebounceClick [debounceTime]="400" (debounceClick)="changePath(item.path)" class="cp">
+                        <div style="display: inline-block;float: left;margin-right: 10px;" class="side-menu__icon">
+                            <span [ngClass]="item.icon"> </span>
+                        </div>
+                        <div class="side-menu__title" style="padding: 4px;"> {{item.title}} </div>
+                    </div>
+                </div>
+            </div>
+            <div [ngClass]="mobileNav.isMobileNav?'col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12':'col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10'"
+                class="pl-sm-0 px-0">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,137 @@
+<div class="row py-1 mx-0 header-wrapper">
+    <div class="col-6 pl-md-3">
+        <a href="/" class="pl-0 pl-sm-2">
+            <img src="assets/images/emro-logo-white.svg" class="logoImage" />
+            <img src="assets/images/emro-logo-blue.svg" class="logoPrint" />
+        </a>
+    </div>
+    <div class="col-6 pr-md-3 text-right d-flex align-items-center justify-content-end">
+        <div class="bell-notify-count-dv-cls">
+            <span class="bell-notify-count-cls"
+                *ngIf="(notificationsCount && notificationsCount > 10); else countElse">10+</span>
+            <ng-template #countElse>
+                <span class="bell-notify-count-cls" *ngIf="notificationsCount">{{notificationsCount}}</span>
+            </ng-template>
+            <span class="material-icons text-white mr-2 printHide" [matMenuTriggerFor]="menuBell"
+                (click)="getCustomNotificationClk()">
+                notifications
+            </span>
+        </div>
+        <mat-menu #menuBell="matMenu">
+            <div class="notification-dropdown">
+                <div class="no-not-msg-cls" *ngIf="notifications.length == 0">
+                    {{noNotificationsMsg}}
+                </div>
+                <ul *ngIf="notifications.length > 0">
+                    <li class="mb-3" *ngFor="let notification of notifications; let i=index"
+                        [ngClass]="notification.state?'read-notifi':'unread-notifi'" [attr.data-index]="i">
+                        <div class="ico-close" (click)="deleteCustomNotificationClk($event,notification.id)">
+                            <span class="flaticon-cancel"></span>
+                        </div>
+                        <div class="cp-cls" (click)="setCustomNotificationClk($event, notification.id)">
+                            <h6> {{notification?.notification?.data?.message}}</h6>
+                            <p class="mb-0"> {{formatDateTimeToUTC(notification?.notification?.creationTime) | date:
+                                'MM/dd - hh:mm a': userTimezone?.offset}} {{userTimezone?.abbr}} </p>
+                        </div>
+                    </li>
+                    <!-- <li class="mb-3 read-notifi">
+                        <div class="ico-close"><span class="flaticon-cancel"></span></div>
+                        <h6> You have appointment with Dr Rishabh on 21-May-2021 at 8:00 PM IST</h6>
+                        <p class="mb-0"> 5/20 - 8:00 PM </p>
+                    </li>
+                    <li class="mb-3 unread-notifi">
+                        <div class="ico-close"><span class="flaticon-cancel"></span></div>
+                        <h6> You have appointment with Dr Rishabh on 21-May-2021 at 8:00 PM IST</h6>
+                        <p class="mb-0"> 5/20 - 8:00 PM </p>
+                    </li>
+                    <li class="mb-3 read-notifi">
+                        <div class="ico-close"><span class="flaticon-cancel"></span></div>
+                        <h6> You have appointment with Dr Rishabh on 21-May-2021 at 8:00 PM IST</h6>
+                        <p class="mb-0"> 5/20 - 8:00 PM </p>
+                    </li>
+                    <li class="mb-3 read-notifi">
+                        <div class="ico-close"><span class="flaticon-cancel"></span></div>
+                        <h6> You have appointment with Dr Rishabh on 21-May-2021 at 8:00 PM IST</h6>
+                        <p class="mb-0"> 5/20 - 8:00 PM </p>
+                    </li> -->
+                </ul>
+                <div *ngIf="isShowMore" class="d-flex align-itmes-center justify-content-center mb-3">
+                    <button class="submit-btn" (click)="showMoreNotifications($event)"> Show More</button>
+                </div>
+            </div>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="menuSett" #triggerSett="matMenuTrigger"
+            class="d-flex align-items-center pr-0 pr-sm-2 printHide">
+            <span class="user-name d-flex align-items-center justify-content-center" *ngIf="user">
+                {{ user.name | firstChar }}{{ user.surname | firstChar }}
+            </span>
+            <span class="material-icons text-white">
+                keyboard_arrow_down
+            </span>
+        </button>
+        <div class="icon mobile-nav-menu-icon-cls ml-2 printHide" *ngIf="user?.roleNames[0] == 'ADMIN'">
+            <span class="material-icons text-white cp" appDebounceClick [debounceTime]="400"
+                (debounceClick)="toggleMobileNav()">
+                menu
+            </span>
+        </div>
+        <div class="icon mobile-nav-menu-icon-cls ml-2 printHide" *ngIf="isShowSamvaadMenuIcon && user?.roleNames[0] != 'ADMIN'">
+            <span class="material-icons text-white cp" appDebounceClick [debounceTime]="400"
+                (debounceClick)="toggleSamvaadNav()">
+                menu
+            </span>
+        </div>
+        <mat-menu #menuSett="matMenu" class="dropdown-header-wrapper">
+            <p class="pl-3 pt-2" *ngIf="user"> {{user.name}} {{user.surname}} </p>
+            <button mat-menu-item class="dropdown-header" appDebounceClick [debounceTime]="400"
+                (debounceClick)="profileClick()">
+                <img src="assets/images/Profile.svg" alt="ico-account" />
+                Profile
+            </button>
+            <button mat-menu-item class="dropdown-header" appDebounceClick [debounceTime]="400"
+                (debounceClick)="changePasswordClick()">
+                <img src="assets/images/Reset Password.svg" alt="ico-change-password" />
+                Change Password
+            </button>
+            <!-- <button mat-menu-item class="dropdown-header">
+                <img src="assets/images/Account.svg" alt="ico-help" />
+                Account
+            </button> -->
+            <button mat-menu-item class="dropdown-header">
+                <img src="assets/images/Help.svg" alt="ico-help" />
+                Help
+            </button>
+            <button mat-menu-item class="dropdown-header msg-dropdown d-flex align-items-center" appDebounceClick
+                [debounceTime]="400" (debounceClick)="messagingClick()">
+                <span class="material-icons mt-1">
+                    message
+                </span>
+                Messaging
+            </button>
+            <button mat-menu-item class="dropdown-header msg-dropdown d-flex align-items-center" appDebounceClick
+                [debounceTime]="400" (debounceClick)="addNotesClick()">
+                <span class="material-icons">
+                    notes
+                </span>
+                Notes
+            </button>
+            <button mat-menu-item class="dropdown-header msg-dropdown d-flex align-items-center" appDebounceClick
+                [debounceTime]="400" (debounceClick)="auditReportClick()">
+                <span class="material-icons">
+                    insert_drive_file
+                    </span>
+                Audit Report
+            </button>
+            <button [hidden]="IsImpersonating" mat-menu-item class="dropdown-header-logout" appDebounceClick
+                [debounceTime]="400" (debounceClick)="logoutClick()">
+                <img src="assets/images/Logout.svg" alt="ico-help" />
+                Logout
+            </button>
+            <button [hidden]="!IsImpersonating" mat-menu-item class="dropdown-header-logout" appDebounceClick
+                [debounceTime]="400" (debounceClick)="stopImpersonation()">
+                <img src="assets/images/Logout.svg" alt="ico-help" />
+                Stop Impersonation
+            </button>
+        </mat-menu>
+    </div>
+</div>

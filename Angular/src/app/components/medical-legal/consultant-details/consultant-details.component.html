@@ -1,0 +1,130 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper mt-0 pb-4 pr-4 pb-4 pl-4">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="row content-row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+                <div class="profile-detail-wrapper rounded col-12 py-3">
+                    <div class="py-2 d-block d-md-flex align-items-center text-center text-md-left">
+                        <img [src]="profileUrl ? profileUrl : 'assets/images/user-default.svg'" class="profile-img" />
+                        <span class="ml-0 ml-md-4 doc-profile-detail">
+                            <h2 class="mb-1 mt-2 mt-md-0"> {{consultant?.title}} {{consultant?.name}}&nbsp;{{consultant?.surname}} </h2>
+                            <p class="mb-1"> {{consultant?.oncologySpecialty}} </p>
+                            <p class="mb-1"> {{consultant?.currentAffiliation}} </p>
+                        </span>
+                    </div>
+                    <div class="col-12 px-0 my-5 text-center text-md-left about-wrapper">
+                        <h3 class="mb-2"> About </h3>
+                        <p>{{consultant?.professionalBio}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 qualifications-sec">
+                            <ul class="pl-0">
+                                <h3> Qualifications </h3>
+                                <li class="d-block mb-3">
+                                    <p>
+                                        <strong> Hospital Affiliations:</strong>
+                                        {{consultant?.hospitalAffiliation}}
+                                    </p>
+                                </li>
+                                <li class="d-block mb-3">
+                                    <p><strong> Residency1:</strong> {{consultant?.residency1}} </p>
+                                    <p><strong> Residency2:</strong> {{consultant?.residency2}} </p>
+                                </li>
+                                <li class="d-block mb-3">
+                                    <p><strong> Certifications:</strong> {{consultant?.certificate}}</p>
+                                </li>
+                                <li class="d-block mb-3">
+                                    <p><strong> Gender:</strong> {{consultant?.gender}} </p>
+                                </li>
+                                <li class="d-block mb-3">
+                                    <p><strong> Experience / Training:</strong> {{consultant?.experienceOrTraining}}
+                                    </p>
+                                </li>
+                                <li class="d-block mb-3">
+                                    <p><strong> Fellowship:</strong> {{consultant?.fellowship}} </p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6 specialties-sec-wrapper">
+                            <ul class="pl-0">
+                                <h3> Specialties </h3>
+                                <li class="d-flex align-items-center mb-3">
+                                    <span class="material-icons">
+                                        arrow_forward
+                                    </span>
+                                    <p class="mb-0 ml-2"> {{consultant?.oncologySpecialty}} </p>
+                                </li>
+                            </ul>
+                            <ul class="pl-0">
+                                <h3> Sub Specialties </h3>
+                                <li *ngFor="let subSpecialty of subSpecialtiesArray"
+                                    class="d-flex align-items-center mb-3">
+                                    <span class="material-icons">
+                                        arrow_forward
+                                    </span>
+                                    <p class="mb-0 ml-2"> {{subSpecialty}} </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 mt-4 col-lg-4 mt-lg-0">
+                <div class="appointment-sec rounded pt-3 col-12">
+                    <div class="book-later-btn row align-items-center justify-content-start px-0 mb-4">
+                        <div class="col-6 col-sm-6 d-flex align-items-center">
+                            <h3 class="mb-0"> Availability </h3>
+                        </div>
+                        <div class="col-6 col-sm-6 d-flex align-items-center justify-content-end cp-cls" appDebounceClick [debounceTime]="400" (debounceClick)="showAvailabilityBookSlotModel('00000000-0000-0000-0000-000000000000', userId);">
+                            <span class="material-icons">
+                                schedule
+                            </span>
+                            Book Later
+                        </div>
+                    </div>    
+                    <!-- <h3> Availability </h3>
+                    <div
+                        class="col-12 col-sm-4 col-xl-3 col-lg-4 col-md-3 d-flex align-items-center justify-content-end">
+                        <button
+                            class="d-flex align-items-center w-100 justify-content-center mt-3 mt-sm-0"
+                            appDebounceClick [debounceTime]="400" (debounceClick)="showAvailabilityBookSlotModel('00000000-0000-0000-0000-000000000000', userId);">
+                            <span class="mr-1 material-icons">
+                                event_available
+                            </span>
+                            Book Later
+                        </button>
+                    </div> -->
+                    <ul class="pl-0">
+                        <ng-container *ngFor="let availabilitySlot of availabilitySlots; let i=index">
+                            <li *ngIf="availabilitySlot.isBooked == 0" class="row align-items-center py-3">
+                                <div class="col-md-9 col-12 col-lg-8 col-sm-8 col-xl-9 col-md-7">
+                                    <span>
+                                        <p class="mb-0">
+                                            {{formatDateTimeToUTC(availabilitySlot?.slotStartTime) | date: 'dd MMM, yyyy' : userTimezone?.offset}}&nbsp;&nbsp;
+                                            {{formatDateTimeToUTC(availabilitySlot?.slotStartTime) | date: 'h:mm a': userTimezone?.offset}}
+                                            to
+                                            {{formatDateTimeToUTC(availabilitySlot?.slotEndTime) | date: 'h:mm a': userTimezone?.offset}}
+                                            {{userTimezone?.abbr}}</p>
+                                    </span>
+                                </div>
+                                <div
+                                    class="col-12 col-sm-4 col-xl-3 col-lg-4 col-md-3 d-flex align-items-center justify-content-end">
+                                    <button *ngIf="availabilitySlot.isBooked == 0"
+                                        class="d-flex align-items-center w-100 justify-content-center mt-3 mt-sm-0"
+                                        appDebounceClick [debounceTime]="400" (debounceClick)="showAvailabilityBookSlotModel(availabilitySlot?.id, availabilitySlot?.userId);">
+                                        <span class="mr-1 material-icons">
+                                            event_available
+                                        </span>
+                                        Book
+                                    </button>
+                                </div>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

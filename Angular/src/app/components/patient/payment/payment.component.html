@@ -1,0 +1,197 @@
+<div class="container-fluid px-0 px-md-3 container-wrapper">
+    <div class="inner-content-wrapper mt-0 pb-4 pr-4 pb-4 pl-4">
+        <span class="material-icons home-ico" appDebounceClick [debounceTime]="400" (debounceClick)="homeClick()">
+            home
+        </span>
+        <div class="row mx-0 h-100">
+            <div class="col-12 payment-wrapper p-4">
+                <mat-tab-group #tabs (selectedTabChange)="tabClick($event)" class="payment-wrapper">
+                 
+                    <mat-tab label="Pay by Credit Card">
+                        <div class="col-12 col-sm-12 col-lg-8 col-xl-5 px-0">
+                            <div class="row mx-3 pt-4">
+                                <div class="col-12 col-sm-4 d-flex align-items-center">
+                                    <h3 class="mr-2 mr-sm-4"> Payments </h3>
+                                </div>
+                                <div
+                                    class="col-12 col-sm-8 d-flex align-items-center justify-content-center justify-content-sm-end py-3 py-sm-0">
+                                    <img src="./assets/images/payment-stripe.png" alt="payment-stripe"
+                                        class="payment-strip-ico" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-3">
+                            <div class="col-12 col-sm-12 col-lg-8 col-xl-5 px-0">
+                                <div class="col-12 mt-3">
+                                    <h5> Coupon Code </h5>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-8">
+                                            <mat-form-field class="fields-mat">
+                                                <input matInput type="text" [(ngModel)]="paymentForm.couponId"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    (keypress)="validatorPress($event, 'couponId')"
+                                                    (input)="validatorPress($event, 'couponId')" autocomplete="off"
+                                                    (focusout)="couponCodeFocusOut()" />
+                                                <mat-placeholder class="placeholder">Enter Coupon Code</mat-placeholder>
+                                            </mat-form-field>
+                                            <div *ngIf="eR && eR.key == 'couponId'" class="err-msg-cls">
+                                                {{eR.message}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                            <ng-template [ngIf]="paymentForm.couponId" [ngIfElse]="disableApply">
+                                                <button class="pay-btn" appDebounceClick [debounceTime]="400" (debounceClick)="validateCoupon(false)"> Apply </button>
+                                            </ng-template>
+                                            <ng-template #disableApply>
+                                                <button class="pay-btn" disabled> Apply </button>
+                                            </ng-template>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <h5> Name on card </h5>
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" name="nameOnCard" [(ngModel)]="paymentForm.nameOnCard"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (keypress)="validatorPress($event, 'nameOnCard')"
+                                            (input)="validatorPress($event, 'nameOnCard')" autocomplete="off" />
+                                        <mat-placeholder class="placeholder">Enter Name</mat-placeholder>
+                                    </mat-form-field>
+                                    <div *ngIf="eR && eR.key == 'nameOnCard'" class="err-msg-cls">
+                                        {{eR.message}}
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <h5> Card number </h5>
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" name="cardNumber" [(ngModel)]="paymentForm.cardNumber"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (keypress)="validatorPress($event, 'cardNumber')"
+                                            (input)="validatorPress($event, 'cardNumber')" autocomplete="off"
+                                            mask="0000 0000 0000 0999999" inputDigitsOnly />
+                                        <mat-placeholder class="placeholder">**** **** **** ****</mat-placeholder>
+                                    </mat-form-field>
+                                    <div *ngIf="eR && eR.key == 'cardNumber'" class="err-msg-cls">
+                                        {{eR.message}}
+                                    </div>
+                                </div>
+                                <div class="row mx-0 mt-3">
+                                    <div class="col-12 col-sm-4">
+                                        <h5> CVV </h5>
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="password" name="cvv" [(ngModel)]="paymentForm.cvc"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keypress)="validatorPress($event, 'cvv')"
+                                                (input)="validatorPress($event, 'cvv')" autocomplete="off" mask="0009"
+                                                inputDigitsOnly />
+                                            <mat-placeholder class="placeholder">Ex 311</mat-placeholder>
+                                        </mat-form-field>
+                                        <div *ngIf="eR && eR.key == 'cvv'" class="err-msg-cls">
+                                            {{eR.message}}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <h5> Exp Month/Year </h5>
+                                        <mat-form-field class="fields-mat">
+                                            <input matInput type="text" name="expirationMonthYear" [(ngModel)]="expirationMonthYear"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keypress)="validatorPress($event, 'expirationMonthYear')"
+                                                autocomplete="off"
+                                                (input)="validatorPress($event, 'expirationMonthYear')" mask="00/0000"
+                                                inputDigitsOnly />
+                                            <mat-placeholder class="placeholder">MM/YYYY</mat-placeholder>
+                                        </mat-form-field>
+                                        <div *ngIf="eR && eR.key == 'expirationMonthYear'" class="err-msg-cls">
+                                            {{eR.message}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <h5> Description </h5>
+                                    <mat-form-field class="fields-mat">
+                                        <input matInput type="text" [(ngModel)]="paymentForm.description"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (keypress)="validatorPress($event, 'description')"
+                                            (input)="validatorPress($event, 'description')" autocomplete="off" />
+                                        <mat-placeholder class="placeholder">Enter Description</mat-placeholder>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row px-3">
+                                <div class="col-6 d-flex align-items-center justify-content-start mb-4">
+                                <button appDebounceClick [debounceTime]="400" (debounceClick)="moveIntackForm()"
+                                        class="pay-btn mr-3 d-flex align-items-center justify-content-center mb-3 mb-sm-0 mt-3">
+                                        <span class="material-icons">
+                                            keyboard_arrow_left
+                                        </span>
+                                        Previous
+                                </button>
+                               </div>
+                                <div class="col-6 d-flex align-items-center justify-content-end mb-4">
+                                    <button class="pay-btn mt-3" appDebounceClick [debounceTime]="400" (debounceClick)="payClick()"> Pay
+                                        ${{amount | number : '1.2-2'}} </button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Pay by PayPal" class="p-4">
+                        <div class="col-12 col-sm-12 col-lg-8 col-xl-5 px-0 pt-4">
+                            <div class="row mx-3">
+                                <div class="col-12 col-sm-4 d-flex align-items-center">
+                                    <h3 class="mr-2 mr-sm-4"> Payments </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-3">
+                            <div class="col-12 col-sm-12 col-lg-8 col-xl-5 px-0">
+                                <div class="col-12 mt-3">
+                                    <h5> Coupon Code </h5>
+                                    <div class="row align-items-center">
+                                        <div class="col-12 col-sm-8">
+                                            <mat-form-field class="fields-mat">
+                                                <input matInput type="text" [(ngModel)]="paymentForm.couponId"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    (keypress)="validatorPress($event, 'couponId')"
+                                                    (input)="validatorPress($event, 'couponId')" autocomplete="off"
+                                                    (focusout)="couponCodeFocusOut()" />
+                                                <mat-placeholder class="placeholder">Enter Coupon Code</mat-placeholder>
+                                            </mat-form-field>
+                                            <div *ngIf="eR && eR.key == 'couponId'" class="err-msg-cls px-0">
+                                                {{eR.message}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4 mt-4 mt-sm-0">
+                                            <ng-template [ngIf]="paymentForm.couponId" [ngIfElse]="disableApply">
+                                                <button class="pay-btn" appDebounceClick [debounceTime]="400" (debounceClick)="validateCoupon(false)"> Apply </button>
+                                            </ng-template>
+                                            <ng-template #disableApply>
+                                                <button class="pay-btn" disabled> Apply </button>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-10 mt-3">
+                                <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                               </div>
+                                <!-- <div class="col-12 mt-5 mt-sm-3 d-block d-sm-flex align-items-center">
+                                        <button appDebounceClick [debounceTime]="400" (debounceClick)="moveIntackForm()"
+                                        class="pay-btn mr-3 d-flex align-items-center justify-content-center mb-3 mb-sm-0">
+                                        <span class="material-icons">
+                                            keyboard_arrow_left
+                                        </span>
+                                        Previous
+                                    </button>
+                                    <button class="pay-btn" *ngIf="!showPaypalButton" appDebounceClick [debounceTime]="400" (debounceClick)="showPaypalBtn()"> Pay by PayPal </button>
+                                </div>
+                                <div class="col-12 col-lg-10 mt-3">
+                                    <ngx-paypal [config]="payPalConfig" *ngIf="showPaypalButton"></ngx-paypal>
+                                </div> -->
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

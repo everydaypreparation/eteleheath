@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-12">
+        <h5 class="pl-3"> Request Test </h5>
+        <div class="col-12 heading-wrapper">
+            <h6 class="my-3"> <span> Patient Name: </span> {{patientName}} &nbsp;&nbsp;<span *ngIf="id"> ID-</span>{{id}}</h6>
+            <h6 class="mb-3"> <span> Appointment Date/ Time: </span> {{formatDateTimeToUTC(appointmentDate) | date:
+                'MMMM dd, yyyy': userTimezone?.offset}} {{formatDateTimeToUTC(appointmentDate) | date: 'h:mm a':
+                userTimezone?.offset}} {{appointmentDate ? userTimezone?.abbr: ''}}</h6>
+        </div>
+        <div class="col-12 my-4">
+            <mat-form-field appearance="fill" class="dropdown-field">
+                <mat-label class="label-field">Select Diagnostic*</mat-label>
+                <mat-select [(ngModel)]="diagnosticId" [ngModelOptions]="{standalone: true}">
+                    <input (input)="searchDiagnostic($event.target.value)" placeholder="Search" class="search-input-time">
+                    <mat-option *ngFor="let diagnostic of diagnosticsFiltered" [value]="diagnostic.value">
+                        {{diagnostic.viewValue}}
+                    </mat-option>
+                    <mat-option *ngIf="diagnosticsFiltered.length==0" disabled>No matches found</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div *ngIf="eR && eR.key == 'diagnostic'" class="err-msg-cls">
+                {{eR.message}}
+            </div>
+        </div>
+        <div class="col-12 my-4">
+            <mat-form-field class="fields-mat">
+                <input matInput type="text" [(ngModel)]="requestTestForm.reportDetails" />
+                <mat-placeholder class="placeholder">Detail of Test *</mat-placeholder>
+            </mat-form-field>
+            <div *ngIf="eR && eR.key == 'reportDetails'" class="err-msg-cls">
+                {{eR.message}}
+            </div>
+        </div>
+        <div class="col-12 my-4">
+            <mat-form-field appearance="fill" class="dropdown-field">
+                <mat-label class="label-field">Report Type *</mat-label>
+                <mat-select [(ngModel)]="requestTestForm.reportType">
+                    <mat-option *ngFor="let report of reportType" [value]="report">
+                        {{report}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div *ngIf="eR && eR.key == 'reportType'" class="err-msg-cls">
+                {{eR.message}}
+            </div>
+        </div>
+        <div class="col-12 my-4">
+            <mat-form-field appearance="fill" class="date-picker-field">
+                <mat-label>Due Date *</mat-label>
+                <div class="d-flex align-items-center DOB-field">
+                    <input matInput #dob [matDatepicker]="dobpicker" [(ngModel)]="requestTestForm.dueDate"
+                        [ngModelOptions]="{standalone: true}" (focus)="dobpicker.open()"
+                        class="mat-datepicker-input pb-0">
+                    <mat-icon matDatepickerToggleIcon
+                        *ngIf="requestTestForm.dueDate && requestTestForm.dueDate!='Invalid Date'" appDebounceClick
+                        [debounceTime]="400" (debounceClick)="clearDOB($event)">
+                        <span class="flaticon-cancel"></span>
+                    </mat-icon>
+                </div>
+                <mat-datepicker-toggle matSuffix [for]="dobpicker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dobpicker (closed)="dob.blur()"></mat-datepicker>
+            </mat-form-field>
+            <div *ngIf="eR && eR.key == 'dueDate'" class="err-msg-cls">
+                {{eR.message}}
+            </div>
+        </div>
+        <div class="col-12 d-flex align-items-center justify-content-end mt-0 mt-sm-4">
+            <button class="prev-btn d-flex justify-content-center align-items-center mr-4" appDebounceClick
+                [debounceTime]="400" (debounceClick)="onDismiss()">
+                Cancel
+            </button>
+            <button class="next-btn d-flex justify-content-center align-items-center" appDebounceClick
+                [debounceTime]="400" (debounceClick)="saveRequestTest()">
+                Submit
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - 'Aspdotnetcore/*'
+
+variables:
+  acrServiceConnection: 'EmroThinkAICorpACR'
+  releaseBranchName: 'master'
+
+stages:
+- stage: 'Build'
+  displayName: 'Build DotNetCore API'
+
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build job'
+
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    variables:
+      dotnetcoreSDKVersion: '3.1.404'
+      buildConfiguration: 'Debug'
+      buildFrom: 'Aspdotnetcore/src/'
+    
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core SDK $(dotnetcoreSDKVersion)'
+      inputs:
+        packageType: sdk
+        version: '$(dotnetcoreSDKVersion)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore project dependencies'
+      inputs:
+        command: 'restore'
+        projects: '$(buildFrom)**/*.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build the project - $(buildConfiguration)'
+      inputs:
+        command: 'build'
+        arguments: '--no-restore --configuration $(buildConfiguration)'
+        projects: '$(buildFrom)**/*.csproj'
+    
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish the project - $(buildConfiguration)'
+      inputs:
+        command: 'publish'
+        projects: '$(buildFrom)**/*.csproj'
+        publishWebProjects: false
+        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: false
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      inputs:
+        artifactName: output
+      condition: succeeded()
+
+- stage: 'Release'
+  displayName: 'Prepare docker container image for API'
+  dependsOn: Build
+  condition: |
+    and
+    (
+      succeeded(),
+      eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
+    )
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+    ConnectionStrings.Default: 'Server=ajrjvgfohuwfqfl12qgiahdpnheo7iy1.postgres.database.azure.com;Database=EMRO_DB;Port=5432;User Id=emro_admin@ajrjvgfohuwfqfl12qgiahdpnheo7iy1;Password=Password!23;Ssl Mode=Require;'
+    App.ServerRootAddress: 'https://devapi.emro.cloud/'
+    App.ClientRootAddress: 'https://devportal.emro.cloud/'
+    App.CorsOrigins: 'https://devportal.emro.cloud/,http://devapi.emro.cloud/,http://localhost:4200/,https://medstackstoragedelw07goc.blob.core.windows.net/'
+    Abp.RedisCache.ConnectionString: 'redis:6379,password=Password!23'
+    Kestrel.Endpoints.Http.Url: 'http://devapi.emro.cloud/'
+    Twilio.AccountSID: ''
+    Twilio.AuthToken: ''
+    SmtpSettings.Server: 'smtp.gmail.com'
+    SmtpSettings.Port: '587'
+    SmtpSettings.SenderName: 'Emro Admin'
+    SmtpSettings.SenderEmail: 'emrohealth@gmail.com'
+    SmtpSettings.Username: 'emrohealth@gmail.com'
+    SmtpSettings.Password: 'UR%@D#EBYkc$Jgt5EQ!9U'
+    UplodedFilePath.Slash: '/'
+    UplodedFilePath.DocumentPath: 'App_Data/Documents/'
+    UplodedFilePath.ProfilePicturePath: 'App_Data/ProfilePictures/'
+    UplodedFilePath.Signatures: 'App_Data/Signatures/'
+    UplodedFilePath.MailAttachment: 'App_Data/MailAttachment/'
+    UplodedFilePath.MyDocument: 'App_Data/MyDocument/'
+    UplodedFilePath.ConsultSignature: '/App_Data/ConsultReport/Signatures/'
+    UplodedFilePath.ConsultReport: 'App_Data/ConsultReport/Report/'
+    Stripe.SecretKey: 'sk_test_51IB8jOBYbOkOIhskbw835g58pNq6fy6JgGT7sOrTzD4A5GHR30If7pBTOkTpGrwzT2tKdVhAKuOJd477L4XjlMvu00ZMoQkvSq'
+    Stripe.PublicKey: 'pk_test_51IB8jOBYbOkOIhskKEIZXjtL5uWH09OANuabRYG5HOo6A7zijkQkXzwK1m0lIl0789YWrJ9gkFccITAekani5a0e008Kt4cWpD'
+    PORTAL_URL: 'https://devportal.emro.cloud'
+    BlobContainer: 'https://medstackstoragedelw07goc.blob.core.windows.net/emro-docs-storage?sp=racwdl&sv=2018-11-09&sr=c&st=2021-04-12T09%3A03%3A00Z&se=2024-04-30T12%3A00%3A00Z&spr=https&sig=mR21eVxqTuO%2FuYSqeix99CddUIHwL6OYNLhgQTMQCj4%3D'
+  jobs:
+  - job: 'Containerize'
+    displayName: 'Containerize APIs'
+
+    steps:
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Downloading all artifacts to destination directory'
+      inputs:
+        targetPath: Aspdotnetcore/build
+
+    - task: FileTransform@2
+      displayName: "Transform Json"
+      inputs:
+        folderPath: '$(System.DefaultWorkingDirectory)/**/'
+        xmlTransformationRules: ''
+        jsonTargetFiles: '**/appsettings.json'
+
+    - bash: 'cat Aspdotnetcore/build/output/EMRO.Migrator/appsettings.json'
+      displayName: "Show EMRO.Migrator/appsettings.json"
+
+    - bash: 'cat Aspdotnetcore/build/output/EMRO.Web.Host/appsettings.json'
+      displayName: "Show EMRO.Web.Host/appsettings.json"
+
+    # - task: FileTransform@2
+    #   displayName: "Transform Json"
+    #   inputs:
+    #     folderPath: '$(System.DefaultWorkingDirectory)/**/'
+    #     xmlTransformationRules: ''
+    #     jsonTargetFiles: '**/appsettings.staging.json'
+
+    # - bash: 'cat Aspdotnetcore/build/output/EMRO.Migrator/appsettings.staging.json'
+    #   displayName: "Show EMRO.Migrator/appsettings.staging.json"
+
+    # - bash: 'cat Aspdotnetcore/build/output/EMRO.Web.Host/appsettings.staging.json'
+    #   displayName: "Show EMRO.Web.Host/appsettings.staging.json"
+
+    - task: Docker@2
+      displayName: 'Build and Push docker image'
+      inputs:
+        command: buildAndPush
+        repository: 'emrocloud/api'
+        dockerfile: 'Aspdotnetcore/Dockerfile'
+        containerRegistry: '$(acrServiceConnection)'
+        tags: |
+          latest
+      condition: succeeded()

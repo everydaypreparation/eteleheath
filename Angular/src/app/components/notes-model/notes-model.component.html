@@ -1,0 +1,30 @@
+<div mat-dialog-actions class="add-notes-modal">
+  <div class="form-group w-100 mb-0">
+    <div class="row w-100 mx-0">
+      <div class="col-12">
+        <h6 class="mb-3" *ngIf="noteId == ''">Add Notes</h6>
+        <h6 class="mb-3" *ngIf="noteId != ''">Update Notes</h6>
+        <!-- <mat-form-field>
+                  <mat-label>Select timezone</mat-label>
+                  <mat-select [(ngModel)]="noteBody.slotId" [ngModelOptions]="{standalone: true}">
+                    <mat-option *ngFor="let timezone of availabilitySlots" [value]="timezone?.abbr">{{timezone?.abbr}}</mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+        <!-- <textarea placeholder="Message" [(ngModel)]="noteBody.notes" [ngModelOptions]="{standalone: true}" maxlength="2000"></textarea> -->
+        <ckeditor #ckeditor [config]="defaultConfig" [editor]="Editor" [(ngModel)]="noteBody.notes">
+        </ckeditor>
+        <div *ngIf="eR && eR.key == 'notes'" class="err-msg-cls pt-0 pb-2">
+          {{eR.message}}
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mt-5 d-flex align-items-center justify-content-end mb-4">
+      <button mat-button class="btn btn-primary submit-button mr-2" appDebounceClick [debounceTime]="400"
+        (debounceClick)="onDismiss()">Cancel</button>
+      <button mat-raised-button class="btn btn-primary submit-button" *ngIf="noteId == ''" appDebounceClick
+        [debounceTime]="400" (debounceClick)="saveNotes()">Save</button>
+      <button mat-raised-button class="btn btn-primary submit-button" *ngIf="noteId != ''" appDebounceClick
+        [debounceTime]="400" (debounceClick)="updateNotes()">Update</button>
+    </div>
+  </div>
+</div>

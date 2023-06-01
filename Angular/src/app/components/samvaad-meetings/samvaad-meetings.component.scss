@@ -1,0 +1,371 @@
+@import '../../../variables.scss';
+
+.outer-samvaad {
+  min-height: 91vh;
+
+  @media screen and (min-width: 2000px) {
+    min-height: 91vh;
+  }
+
+  .pageheading {
+    color: $white;
+  }
+
+  .inner-content-wrapper {
+    background-color: #267399;
+    border-radius: 15px;
+    font-family: $font-roboto;
+
+    .video-sec {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      .samvaad-container {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .fullvideoscreen {
+      flex-direction: row;
+      flex:100;
+    }
+
+    .samvaad-container {
+      background-color: #267399;
+      border-radius: 5px;
+
+      @media screen and (max-width: 576px) {
+        height: auto;
+      }
+
+      .wrapper-notes {
+        height: 100%;
+
+        ckeditor {
+          height: 100%;
+          display: block;
+
+          ::ng-deep .ck.ck-editor {
+            height: 100%;
+            overflow: hidden;
+
+            ::ng-deep .ck.ck-editor__main {
+              height: 100%;
+
+              ::ng-deep .ck-content {
+                height: 100%;
+              }
+            }
+          }
+        }
+      }
+
+      .page-heading {
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      iframe {
+        width: 100%;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+
+        @media screen and (max-width: 767px) {
+          border-radius: 0px;
+        }
+      }
+
+      // ::ng-deep .ck-editor__editable_inline {
+      //   min-height: 93.5vh;
+      // }
+
+      .chats {
+        background-color: white;
+        padding-right: 5px;
+        overflow: hidden;
+        
+        .msg-inner {
+          max-height: 100vh;
+          overflow-y: auto;
+        }
+        .msg-wrapper {
+          text-align: left;
+          background: #3c8bb2;
+          display: inline-block;
+          padding: 10px;
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;
+          border-bottom-left-radius: 15px;
+          color: #fff;
+
+          p {
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        
+        }
+      }
+      .msg-date {
+        font-size: 12px;
+        padding-right: 18px;
+        color: #919bb0;
+      }
+        .msg-wrapper-1 {
+          text-align: left;
+          background: #ecf7fe;
+          display: inline-block;
+          padding: 10px;
+          border-top-right-radius: 10px;
+          border-top-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+
+          p {
+            font-size: 14px;
+            letter-spacing: 0.3px;
+          }
+        }
+
+        .msg-date-1 {
+          font-size: 12px;
+          padding-left: 18px;
+          color: #919bb0;
+        }
+      }
+      .upload {
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .col-4.samvaad-container{
+      overflow: hidden !important;
+    }
+
+    .loading-shade {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.15);
+      z-index: 1;
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+:host ::ng-deep .mat-tab-label-container{
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  @media screen and (max-width: 767px) {
+    border-radius: 0px;
+  }
+}
+:host ::ng-deep .mat-tab-group {
+  flex-direction: row-reverse;
+}
+:host ::ng-deep .mat-tab-header {
+  border-bottom: none;
+  // position: absolute;
+  // width: 100%;
+  border-top-right-radius: 5px;
+}
+:host ::ng-deep .mat-tab-header-pagination {
+  display: none !important;
+}
+:host ::ng-deep .mat-tab-labels {
+  flex-direction: column;
+  height: 100%;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 0px;
+  background-color: #12628a;
+
+  @media screen and (max-width: 767px) {
+    border-radius: 0px;
+  }  
+}
+
+:host ::ng-deep .mat-tab-label {
+  /*display: initial;*/
+  justify-content: flex-end;
+  background-color: #12628a;
+  border-color: $white;
+  color: white;
+  border-right: 0;
+  opacity: revert;
+  padding: 0 3px;
+  align-items: flex-end;
+  width: 60px;
+  height: 60px;
+}
+
+:host ::ng-deep .mat-tab-label-content {
+  /*display: initial;*/
+  font-size: 7px;
+  flex-wrap: wrap!important;
+  color: $white;
+  word-break: break-word;
+  white-space: normal !important;
+}
+
+:host ::ng-deep .mat-tab-label {
+  min-width: auto  !important;
+  justify-content: center;
+  align-items: center;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+  /*display: initial;*/
+  justify-content: flex-end;
+  color: #307398 !important;
+  background-color: white;
+  border-top-left-radius: 0px;
+
+  .mat-tab-label-content {
+    color: #307398;
+  }
+}
+
+:host ::ng-deep .mat-ink-bar {
+  /* height: 100%;
+  left: 98% !important; */
+  display: none !important;
+}
+:host ::ng-deep .mat-tab-body-wrapper {
+  flex: 1 1 auto;
+  max-width: 90% !important;
+  text-align: center;
+
+  @media screen and (max-width: 767px) {
+    max-width: 100% !important;
+  }  
+}
+
+::ng-deep.mat-tab-label .mat-tab-label-content span{
+  /* display: flex !important; */
+  flex: 1 0 100% !important;
+  justify-content: center !important;
+  text-align: center;
+}
+::ng-deep.mat-tab-label .mat-tab-label-content p{
+  font-size: 10px;
+  margin: 0px;
+}
+::ng-deep.mat-tab-body-content {
+  background-color: #fff;
+}
+.patient-records {
+  padding: 0px !important;
+  height: 100vh;
+
+  @media screen and (max-width: 767px) {
+    height: auto;
+  }
+
+  li {
+    list-style: none;
+    border-bottom: 1px solid #f1f4f8;
+    padding: 10px;
+
+    &:last-child {
+      border-bottom:0px;
+    }
+
+    .date-sec {
+      border-right: 1px solid #12628a ;
+      color: #267399;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .report-name {
+      font-size: 14px;
+      font-weight: 400;
+      color: #4a5568;
+      letter-spacing: 0.94px;
+    }
+    .detail-by-name{
+      font-size: 14px;
+      color: #2d3748;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: 0.94px;
+    }
+    .delete-ico{
+      color: #267399;
+      font-size: 30px;
+      margin-right: 8px;
+      font-weight: 400;
+    }
+  }
+}
+.chatsInner {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  input {
+    border-radius: 30px;
+    border: 1px solid #e3e3ee;
+    background: $light-gray;
+    padding-left: 10px;
+    width: 90%;
+    height: 35px;
+    font-size: 14px;
+    padding-right: 35px;
+  }
+  button {
+    background: transparent;
+    border: 0;
+    width: 100px;
+    position: absolute;
+    right: 0;
+    margin-top: -4px;
+    margin-right: -10px;
+  }
+  .icon-msg {
+    background-color: $primary-color;
+    color: $white;
+    border-radius: 30px;
+    padding: 9px;
+    font-size: 16px;
+  }
+}
+
+.m-fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  display: none !important;
+  transition: visibility 0s linear 300ms, opacity 300ms;
+}
+
+.m-fadeIn {
+  visibility: visible;
+  opacity: 1;
+  display: block !important;
+  transition: visibility 0s linear 0s, opacity 300ms;
+}
+
+.samvaad-nav-cls{
+    display: block;
+    flex: 1;
+
+    @media (max-width:768px) { 
+      display: none;
+    }
+}
+.mobile-samvaad-nav-cls{
+    display: none;
+
+    @media (max-width:768px) { 
+      display: block;
+    }
+}
+
+.ht-50-cls{
+    height: 50%;
+}

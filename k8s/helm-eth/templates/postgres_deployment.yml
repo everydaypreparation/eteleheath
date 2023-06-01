@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.postgresql.name }}
+spec:
+  replicas: {{.Values.postgresql.replicas }}
+  selector:
+    matchLabels:
+      app: {{.Values.postgresql.name }}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.postgresql.name }}
+    spec:
+      containers:
+      - name: {{.Values.postgresql.name }}
+        image: "{{.Values.postgresql.image.name }}:{{.Values.postgresql.image.tag }}"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: POSTGRES_USER
+          value: {{.Values.postgresql.env.POSTGRES_USER }}
+        - name: POSTGRES_PASSWORD
+          value: {{.Values.postgresql.env.POSTGRES_PASSWORD }}
+        - name: POSTGRES_DB
+          value: {{.Values.postgresql.env.POSTGRES_DB }}
+        - name: PGDATA
+          value: {{.Values.postgresql.env.PGDATA }}
+        ports:
+        - containerPort: {{.Values.postgresql.image.targetPort }}
+        volumeMounts:
+          - name: {{.Values.postgresql.volumeMounts.name }}
+            mountPath: {{.Values.postgresql.volumeMounts.mountPath }}
+      volumes:
+      - name: {{.Values.postgresql.volumes.name }}
+        persistentVolumeClaim:
+          claimName: {{.Values.postgresql.volumes.claimName }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{.Values.postgresql.volumes.name }}
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: {{ .Values.postgresql.postgresPVC.storageSize }}
+  accessModes:
+    - {{ .Values.postgresql.postgresPVC.accessModes }}
+  hostPath:
+    path: "/home/ubuntu/postgres/data"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{.Values.postgresql.volumes.claimName }}
+spec:
+  storageClassName: manual
+  accessModes:
+    - {{ .Values.postgresql.postgresPVC.accessModes }}
+  resources:
+    requests:
+      storage: 1Gi

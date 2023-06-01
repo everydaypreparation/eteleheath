@@ -1,0 +1,15 @@
+<div *ngIf="loader.state" class="center_loader_gif-cls">
+  <div>
+    <img src="assets/images/loading.gif" class="loading-bg-cls"/>
+  </div>
+</div>
+
+<div *ngIf="successSticky.state" class="alert alert-success alert-dismissible confirm_alert_cls" role="alert"
+  data-dismiss="alert">
+  <p [innerHTML]="successSticky.message"></p>
+</div>
+
+<div *ngIf="errorSticky.state" class="alert alert-danger alert-dismissible confirm_alert_cls" role="alert"
+  data-dismiss="alert">
+  <p [innerHTML]="errorSticky.message"></p>
+</div>

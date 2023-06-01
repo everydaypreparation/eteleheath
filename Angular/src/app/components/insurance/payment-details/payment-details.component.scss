@@ -1,0 +1,114 @@
+@import '../../../../variables.scss';
+
+.inner-content-wrapper {
+    background-color: $light-gray;
+    border-radius: 15px;  
+    min-height: 100vh;
+
+    @media screen and  (min-width: 2000px) {
+        min-height:90vh;
+    }
+
+    @media print {
+        min-height:40vh !important;
+        .home-ico {
+            display: none;
+        }
+    } 
+    
+    .payment-details {
+
+        h3 {
+            font-size: 20px;
+            font-weight: 500;
+        }
+        .sec-1 {
+            background-color: $white;
+            border-radius: 5px;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+
+            .ico-visa {
+                width: 80px;
+            }
+            p {
+                font-size: 35px;
+                font-weight: 500;
+                color: $dark-gray-light;
+                letter-spacing: 1.65px;
+            }
+
+            .print-btn {
+                background-color: transparent;
+                border: 1px solid $primary-color;
+                color: $primary-color;
+                border-radius: 30px;
+                padding: 0px 20px;
+                box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+                font-size: 16px;
+                letter-spacing: 0.85px;
+
+                &:hover {
+                    background-color: $primary-color;
+                    color: $white;
+                }               
+            }
+
+            @media print {
+                display: none;
+            }       
+        }
+        .sec-2 {
+            background-color: $white;
+            border-radius: 5px;
+
+            img {
+                width: 20px;
+            }
+            h3 {
+                font-size: 23px;
+                letter-spacing: 0.92px;
+            }
+            .heading-text {
+                font-size: 13px;
+                color: $dark-gray-light;
+                letter-spacing: 0.52px;
+            }
+            ul {
+                li {
+                    font-size: 13px;
+                    color: $dark-gray-light;
+                    letter-spacing: 0.52px;
+                    color: 500;
+                    span {
+                        font-weight: 500;
+    
+                        @media screen and (max-width: 575px) {
+                            color: $gray;
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .next-btn {
+        border-radius: 31px;
+        background-color: $primary-color;
+        border-color:$primary-color;
+        font-family: $font-roboto;
+        color: $white;
+        border: 0px;    
+        padding: 0px 15px 0px 25px;
+        font-size: 16px;
+        letter-spacing: 0.85px;
+
+        &:hover {
+            background-color: #1e6385;
+            color: $white;
+        }
+    
+        @media print {
+            display: none !important;
+        }
+    }
+}    

@@ -1,0 +1,630 @@
+@import '../../../../variables.scss';
+
+.inner-content-wrapper {
+    background-color: #f1f4f8;
+    border-radius: 15px;
+    min-height: 100vh;
+
+    @media screen and (min-width: 2000px) {
+        min-height: 91vh;
+    }
+
+    .AI-summary-sec {
+        // height: 250px;
+
+        @media screen and (min-width: 1201px) and (max-width:1600px){
+            height: auto;
+        } 
+
+        @media screen and (min-width: 2000px) {
+            height: 300px;
+        }
+
+        @media screen and (max-width: 1199px) {
+            height: auto;
+        } 
+    }
+
+    .sec-1 {
+        background-image: url('../../../../assets/images/landing-sec-BG.png');
+        background-position: -5px -30px;
+        background-repeat: no-repeat;
+        min-height: 90px;
+        box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+    
+        h1 {
+            font-size: 36px;
+        }
+        p {
+            font-size: 16px;
+        }
+    }
+    .doctor-patient-sec {
+        background-color: $white;
+
+        @media screen and (min-width: 1201px) and (max-width:1600px){
+           align-items: flex-start !important;
+        } 
+
+        @media screen and (min-width: 2000px) {
+            height: 100%;
+         } 
+
+        @media screen and (max-width: 575px) {
+            min-height: 162px;
+            height: auto;
+        } 
+
+        h4 {
+            color: $dark-gray;         
+            font-size: 13px;  
+        }
+        h3 {
+            color: $dark-gray;
+            font-weight: 500;
+            font-size: 18px;
+            letter-spacing: 0.72px;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+
+            @media screen and (min-width: 2000px) {
+                width: 150px;
+            } 
+
+            @media screen and (min-width: 900px) and (max-width:1100px){
+                width: 170px;
+            } 
+
+            @media screen and (min-width: 1101px) and (max-width:1600px){
+                width: 80px;
+                height: 80px;
+             } 
+        }
+        p {
+            color: $dark-gray-light;
+        }
+        
+        .doctor-patient-detail {
+            height: 220px;  
+
+            @media screen and (max-width: 575px) {
+                height: auto;
+            } 
+
+            @media screen and (min-width: 1201px) and (max-width:1600px){
+                height: auto;
+             } 
+
+            @media screen and (min-width: 900px) and (max-width:1200px){
+                font-size: 20px;
+            } 
+            h3 {
+                @media screen and (min-width: 900px) and (max-width:1200px){
+                    font-size: 20px;
+                } 
+            }        
+
+            .right-doc-detail {
+                color: $dark-gray-light;
+                font-size: 13px;
+                color: $dark-gray;
+                font-weight: 500;
+                letter-spacing: 0.66px;
+
+                @media screen and (max-width: 575px) {
+                    border-right:0px; 
+                } 
+                span {
+                    font-size: 13px;
+                    color: $dark-gray;
+                    font-weight: 500;
+
+                    @media screen and (min-width: 900px) and (max-width:1200px){
+                        font-size: 16px;
+                    } 
+                }               
+            }
+            ul {
+                height: auto;
+                overflow: inherit !important;
+                li {
+                    color: $dark-gray;
+                    font-size: 12px;
+                    padding: 3px 0px;
+                    border-bottom: 0px;
+                    line-height: 16px;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+    .sec-2 {
+        .inner-sec-1 {
+            background: rgb(142,217,234);
+            background: linear-gradient(42deg, rgba(142,217,234,1) 6%, rgba(134,245,185,1) 95%);
+            min-height: 120px;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+
+            h1 {
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+                font-size: 40px;
+                font-weight: 500;
+            }
+            p {
+                font-size: 15px;
+                font-weight: 500;
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+            }
+        }
+        .inner-sec-2 {
+            background: rgb(170,145,212);
+            background: linear-gradient(-315deg, rgba(170,145,212,1) 1%, rgba(233,183,230,1) 100%);
+            min-height: 120px;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+
+            h1 {
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+                font-size: 40px;
+                font-weight: 500;
+            }
+            p {
+                font-size: 15px;
+                font-weight: 500;
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+            }
+        }
+        .inner-sec-3 {
+            background: rgb(115,196,255);
+            background: linear-gradient(-315deg, rgba(115,196,255,1) 1%, rgba(133,238,255,1) 97%);
+            min-height: 120px;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+
+            h1 {
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+                font-size: 40px;
+                font-weight: 500;
+            }
+            p {
+                font-size: 15px;
+                font-weight: 500;
+                text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+            }
+        }
+    }
+    .sec-3 {
+        background-color: #fff;
+        min-height: 90px;
+        box-shadow: 0 0 9px 0 rgba(252, 109, 109, 0.59);
+        
+        h2 {
+            font-size: 18px;
+        }
+        h4 {
+            font-size: 15px;
+        }
+
+        p {
+            font-size: 13px;
+            line-height: 16px;
+            letter-spacing: 0.39px;
+            color: #979faa;
+        }
+    }
+    .invite-doc {
+        background-color: $white;
+        height: 195px;
+
+        h4 {
+            color: $dark-gray;         
+            font-size: 13px;  
+        }
+        h3 {
+            color: $dark-gray;
+            font-size: 26px;
+        }
+        img {
+            width: 120px;
+        }
+        p {
+            color: $dark-gray-light;
+        }
+    }
+    .doctor-detail-sec {
+        background-color: $white;
+        height: 163px;        
+
+        @media screen and (max-width: 575px) {
+           min-height: 170px;
+           height: auto;
+        } 
+
+        h4 {
+            color: $dark-gray;         
+            font-size: 13px;  
+        }
+        h3 {
+            color: $dark-gray;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            @media screen and (min-width: 1201px) and (max-width:1600px){
+                width: 80px;
+                height: 80px;
+            } 
+        }
+        p {
+            color: $dark-gray-light;
+            font-size: 14px;
+        }
+        .doctor-inner-detail {
+            h3 {
+                font-size: 18px;
+                font-weight: 500;
+                color: $dark-gray;
+            }
+            h4 {
+                font-size: 14px;
+                font-weight: normal;
+                color: $dark-gray-light;
+            }
+            button {
+                background-color: transparent;
+                border:1px solid $primary-color;
+                color: $primary-color;
+
+                &:hover {
+                    background-color: $primary-color;
+                    color: $white;
+                }
+                span {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+    .next-appoint-sec {
+        background-color:$primary-color;
+        height: 170px;
+
+        @media screen and (max-width: 1200px) {
+            min-height: 180px;
+            height: auto;
+        } 
+
+        h3 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        h4 {
+            font-size: 27px;
+            letter-spacing: 0.81px;
+            font-weight: normal;
+
+            @media screen and (max-width: 575px) {
+                font-size: 18px;
+                font-weight: 400;
+            } 
+            @media screen and (min-width: 1201px) and (max-width:1600px){
+                font-size: 20px;
+            } 
+        }
+        button {
+            background-color: transparent;
+            border: 1px solid $white;
+            border-radius: 20px;
+            height: 28px;
+            font-size: 15px;
+            letter-spacing: 0.71px;
+            font-weight: 300;
+
+            &:hover {
+                background-color: #195979;
+                border: 1px solid #195979;
+                color: $white;
+            }
+
+            span {
+                font-size: 16px;
+            }
+        }
+        .button-wrap {
+            border-top: 1px solid #3885ab;
+        }
+        .video-cam {
+            width: 100%;
+
+            @media screen and (min-width: 2000px) {
+                width: auto;
+            }
+        }
+    }
+    
+    .fam-video-cam {        
+        @media screen and (min-width: 1201px){
+            width: 80% !important;
+         } 
+    }
+    .upcoming-appoint-sec, .docotor-report {
+        background-color: $white;   
+
+        h3 {
+            font-weight: 500;
+            font-size: 18px;
+            letter-spacing: 0.72px;
+            color: $dark-gray;
+
+
+            @media screen and (min-width: 1201px) and (max-width:1600px){
+                font-size: 16px;
+             } 
+        }   
+
+        ul {
+            height: 196px;
+            overflow: auto;
+
+            @media screen and (min-width: 2000px) {
+                height: 247px;
+            }
+
+            @media screen and (min-width: 1201px) and (max-width:1600px){
+                height: 145px;
+             } 
+
+            li {
+                border-bottom: solid 1px #f1f4f8;
+                padding: 10px 0px;
+
+                .date-sec {
+                    color: $primary-color;
+                    font-size: 16px;
+                    font-weight: 500;
+                    border-right: 1px solid $primary-color;
+                    width: 50px;
+                }
+                .detail-by-name {
+                   color: $dark-gray !important;
+                   font-style: italic;
+                   font-weight: 500 !important;
+                }
+                .detail-sec {
+                    width: 100%;
+
+                    p {
+                        font-size: 14px;
+                        font-weight: 400;
+                        color: $dark-gray-light;
+                    }
+                    .time-detail {
+                        color: $primary-color; 
+                        font-size: 12px;
+                        font-weight: normal;
+                    }
+                }
+                .detail-by-name {
+                    color: $dark-gray !important;
+                    font-style: italic;
+                    margin-top: 5px;
+                    font-weight: 500 !important;
+                }
+                .icon-sec {
+                    color: $primary-color;   
+                    
+                    span {
+                        font-size: 30px;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+    .docotor-report {
+        .patient-rec-head {
+            @media screen and (min-width: 1201px) and (max-width:1600px){
+                padding-right: 3px !important;
+            } 
+        }
+        .right-btn-wrapper {
+            @media screen and (min-width: 1201px) and (max-width:1600px){
+                padding-left: 3px !important;
+            } 
+        }
+        ul {
+            overflow: auto;
+            height: 313px;
+        }
+        span {
+            font-size: 20px;
+        }
+        .request-test {
+
+            @media screen and (max-width: 1400px) and (min-width: 1200px) {
+                width: 135px;
+                margin-right: 5px;
+                font-size: 13px;
+            }           
+
+            &:hover {
+                background-color: #195979;
+            }
+            span {
+                font-size: 18px;
+                margin-right: 3px;
+            }
+        }
+        .compose-btn {
+            font-size: 13px;
+
+            &:hover {
+                background-color: #195979;
+            }
+        }      
+    }
+    .active-cases-sec {
+        ul {
+            height: 468px;
+        }
+    }
+    .messaged-sec {
+        box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+        background-color: $white;   
+        
+        h3 {
+            font-weight: 400;
+            font-size: 18px;
+            letter-spacing: 0.72px;
+        }        
+    }
+        
+        ul {
+            overflow: auto;
+            height: 286px;
+
+            @media screen and (max-width: 768px) {
+                height: auto;
+            }
+
+            li {
+                list-style: none;
+                border-bottom: 2px solid $light-gray;
+                padding: 10px 0px;
+
+                .date-sec {
+                    color: $primary-color;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border-right: 1px solid $primary-color;
+                }
+                .detail-sec {
+
+                    p {
+                        font-size: 12px;
+                        line-height: 16px;
+                        letter-spacing: 0.39px;
+                        color: #4a5568;
+                    }
+                }
+                .icon-sec {
+                    color: #267399;                       
+                }                   
+                button {
+                    background-color: transparent;
+                    border: 1px solid $primary-color;
+                    border-radius: 20px;
+                    font-size: 14px;
+                    color: $primary-color;
+                    height: 28px;
+                    padding: 2px 8px;
+    
+                    &:hover {
+                        background-color: #1b5e80;
+                        border: 1px solid #1b5e80;
+                        color: $white;
+                    }
+    
+                    span {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+} 
+  .icon-btn {     
+    background-color: $primary-color;
+    border: 0px;
+    color: $white;
+    border-radius: 30px;
+    font-size: 14px;
+    height: 30px;
+    letter-spacing: 0.71px;
+    font-weight: 400;
+    padding: 4px 12px 4px 7px;
+    margin-top: 7px;
+
+    span {
+        font-size: 20px;
+    }
+
+    &:hover {
+        background-color: #195979;
+        color: $white;
+    }
+
+    @media screen and (min-width: 1201px) and (max-width:1600px){
+        font-size: 12px;
+    } 
+}
+
+.icon-btn-disable {
+    background-color: #84c2e0;     
+    border: 0px;
+    color: $white;
+    border-radius: 30px;
+    font-size: 14px;
+    height: 30px;
+    letter-spacing: 0.71px;
+    font-weight: 400;
+    padding: 4px 12px 4px 7px;
+    margin-top: 7px;
+
+    span {
+        font-size: 20px;
+    }
+
+    &:hover {
+        background-color:#84c2e0;
+        color: $white;
+    }
+
+    @media screen and (min-width: 1201px) and (max-width:1600px){
+        font-size: 12px;
+    } 
+}
+.req-btn {
+    background-color: $primary-color;
+    border: 0px;
+    color: $white;
+    border-radius: 30px;
+    font-size: 14px;
+    height: auto;
+    letter-spacing: 0.71px;
+    font-weight: 400;
+    padding: 4px 12px 4px 10px;
+
+    @media screen and (min-width: 768px) and (max-width:1200px){
+        padding: 4px 7px 4px 7px;
+
+    } 
+
+    span {
+        font-size: 20px;
+    }
+    &:hover {
+        background-color: #195979;
+        color: $white;
+    }
+
+    @media screen and (min-width: 1201px) and (max-width:1600px){
+        font-size: 12px;
+    } 
+}
+.doctor-inner-img {
+
+    img {
+        border-radius: 8px;
+    }
+    .fam-video-cam {
+        @media screen and (min-width: 576px) and (max-width: 1200px) {
+            width: 90px !important;
+        }
+    }
+    
+}
+
+.remove-pointer{
+    cursor: default;
+}
